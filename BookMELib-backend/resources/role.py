@@ -19,8 +19,8 @@ class RoleList(MethodView):
         return RoleModel.query.all()
 
     @blp.arguments(RoleSchema)
-    @jwt_required()
-    @role_required("super_admin")
+    # @jwt_required()
+    # @role_required("super_admin")
     def post(self, role_data):
         """Create a new role this is """
         role = RoleModel(**role_data)
