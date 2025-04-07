@@ -6,7 +6,7 @@ import { mdiMenu, mdiClose, mdiAccountCircle } from "@mdi/js";
 import { Button } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 
-import useAuthStore from "../../src/stores/authStore";
+import useAuthStore from "../stores/authStore";
 
 const AdminHeaderNav = () => {
   // State for managing dropdowns and mobile menu
@@ -43,13 +43,13 @@ const AdminHeaderNav = () => {
   return (
     <header>
       {/* Main Navigation Bar */}
-      <nav className="fixed top-0 left-1/6 right-0 z-50 flex w-[100%] md:w-[82%] lg:w-[80%] lg:flex-wrap lg:py-1 bg-nav">
+      <nav className="fixed top-0 left-1/6 right-0 z-50 flex w-[100%] md:w-[82%] lg:w-[80%] lg:flex-wrap lg:py-1 bg-teal-500">
         <div className="flex w-full flex-wrap items-center justify-between md:px-3">
           <div className="flex justify-between w-full items-center">
             {/* Left Side - Branding */}
             <div>
               <a className="text-2xl text-white font-semibold" href="#">
-                DirtMan
+                Admin Dashboard
               </a>
             </div>
 

@@ -9,13 +9,12 @@ import {
 // This is the Authentication for the login screen
 import Login from "./components/Login";
 
-// These are the pages for the Admin end
-import AdminLayout from "./components/AdminLayout";
-import SendNotification from "./Pages/Admin/SendNotification";
-import RequestManagement from "./Pages/Admin/RequestManagement";
-import TaskManagement from "./Pages/Admin/TaskManagement";
+import Admindashboard from "./Pages/Admin/AdminDashBoard";
+import BusinessManagement from "./Pages/Admin/business";
+import Settings from "./Pages/Admin/setting";
 import UserManagement from "./Pages/Admin/UserManagement";
-// import AdminManagementContainer from "./Pages/Admin/AdminDashBoard";
+import Appointments from "./Pages/Admin/Appointment";
+import AdminLayout from "./components/AdminLayout";
 
 // These are the pages for the user end
 import UserLayout from "./components/UserLayout";
@@ -38,12 +37,11 @@ function App() {
 
         {/* This is the nested route for the Admin board */}
         <Route path="Admindashboard" element={<AdminLayout />}>
-          {/* <Route index element={<Navigate to="adminboard" />} /> */}
-          {/* <Route path="adminboard" element={<AdminManagementContainer />} /> */}
-          <Route path="sendnotification" element={<SendNotification />} />
-          <Route path="servicerequest" element={<RequestManagement />} />
-          <Route path="taskmanagement" element={<TaskManagement />} />
-          <Route path="usermanagement" element={<UserManagement />} />
+          <Route path="business" element={<BusinessManagement />} />
+          <Route path="Admindashboard" element={<Admindashboard />} />
+          <Route path="appointments" element={<Appointments />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="user" element={<UserManagement />} />
           <Route path="adminprofile" element={<AdminProfile />} />
         </Route>
 
