@@ -1,8 +1,4 @@
-import SearchBusiness from "../../components/Admin/Dashboard/SearchBusiness";
-import { businessData } from "../../data/BusinesseData";
-import { columns } from "../../components/Admin/Dashboard/BusinessColumns";
-import DataTable from "../../components/common/DataTable";
-import BusinessRow from "../../components/Admin/Dashboard/BusinessRow";
+import SearchBusiness from "../../components/Admin/Dashboard/SearchBusinessStatus";
 
 // Root container for the admin dashboard
 // It contains the sidebar and the main content area
@@ -21,15 +17,6 @@ const AdminDashboard = () => {
   return (
     <>
       <SearchBusiness />
-      <div>
-        <DataTable
-          columns={columns}
-          data={businessData}
-          renderRow={(item, index) => (
-            <BusinessRow key={index} business={item} />
-          )}
-        />
-      </div>
     </>
   );
 };

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import Icon from "@mdi/react";
-import SidebarBusinessDropdown from "./SidebarNavSection.jsx.jsx";
+import SidebarBusinessDropdown from "./SidebarNavSection.jsx";
 
 const SidebarNavDropdown = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);

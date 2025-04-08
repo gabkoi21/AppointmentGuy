@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import Icon from "@mdi/react";
 import {
   mdiViewDashboard,
   mdiOfficeBuilding,
@@ -24,7 +22,7 @@ export const NAV_ITEMS = [
     ariaLabel: "Business Management",
     subItems: [
       {
-        to: "all",
+        to: "allbusiness",
         label: "All Business",
         ariaLabel: "All Business",
       },

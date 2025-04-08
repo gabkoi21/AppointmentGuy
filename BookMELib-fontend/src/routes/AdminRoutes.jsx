@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Icon from "@mdi/react";
-import { mdiViewDashboard, mdiChevronDown, mdiChevronUp } from "@mdi/js";
-// Internal Dependencies
+import { mdiViewDashboard } from "@mdi/js";
 import AdminHeaderNav from "../components/AdminHeaderNav";
 import { NAV_ITEMS } from "../components/Admin/AdminRoutesComponent/NavItems";
 import SidebarNavLink from "../components/Admin/AdminRoutesComponent/SidebarNavLink";
-import SidebarBusinessDropdown from "../components/Admin/AdminRoutesComponent/SidebarNavSection.jsx";
+import SidebarBusinessDropdown from "../components/Admin/AdminRoutesComponent/SidebarNavSection";
 import SidebarNavDropdown from "../components/Admin/AdminRoutesComponent/SidebarSubMenu.jsx";
 
 export const AdminNav = () => {
