@@ -5,6 +5,7 @@ import Icon from "@mdi/react";
 import { mdiMenu, mdiClose, mdiAccountCircle } from "@mdi/js";
 import { Button } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
+import React from "react";
 
 import useAuthStore from "../stores/authStore";
 

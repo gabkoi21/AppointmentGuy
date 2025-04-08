@@ -4,10 +4,10 @@ import Icon from "@mdi/react";
 import { mdiViewDashboard, mdiChevronDown, mdiChevronUp } from "@mdi/js";
 // Internal Dependencies
 import AdminHeaderNav from "../components/AdminHeaderNav";
-import { NAV_ITEMS } from "../components/AdminRoutesComponent/NavItems";
-import SidebarNavLink from "../components/AdminRoutesComponent/SidebarNavLink";
-import SidebarBusinessDropdown from "../components/AdminRoutesComponent/SidebarNavSection.jsx";
-import SidebarNavDropdown from "../components/AdminRoutesComponent/SidebarSubMenu.jsx";
+import { NAV_ITEMS } from "../components/Admin/AdminRoutesComponent/NavItems";
+import SidebarNavLink from "../components/Admin/AdminRoutesComponent/SidebarNavLink";
+import SidebarBusinessDropdown from "../components/Admin/AdminRoutesComponent/SidebarNavSection.jsx";
+import SidebarNavDropdown from "../components/Admin/AdminRoutesComponent/SidebarSubMenu.jsx";
 
 export const AdminNav = () => {
   // State to track dropdown open state for Business nav

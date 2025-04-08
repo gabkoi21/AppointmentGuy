@@ -2,6 +2,7 @@ import { useState } from "react";
 import Icon from "@mdi/react";
 import { notifications } from "../../data/Notification";
 import { mdiCheck, mdiClose, mdiSend, mdiBell } from "@mdi/js";
+import React from "react";
 
 // Mock notification data
 

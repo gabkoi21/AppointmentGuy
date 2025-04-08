@@ -5,6 +5,7 @@ import {
   Navigate,
   BrowserRouter,
 } from "react-router-dom";
+import React from "react";
 
 // This is the Authentication for the login screen
 import Login from "./components/Login";
