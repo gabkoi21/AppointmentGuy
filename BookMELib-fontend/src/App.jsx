@@ -36,6 +36,8 @@ function App() {
 
         {/* Admin Routes */}
         <Route path="Admindashboard" element={<AdminLayout />}>
+          <Route index element={<Navigate to="Admindashboard" />} />
+          {/* This is the navigation for the  drop down naivgation for the business */}
           <Route path="business" element={<Outlet />}>
             <Route index element={<BusinessManagement />} />
             <Route path="allbusiness" element={<AllBusiness />} />

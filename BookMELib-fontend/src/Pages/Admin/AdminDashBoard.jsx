@@ -1,4 +1,5 @@
 import SearchBusiness from "../../components/Admin/Dashboard/SearchBusinessStatus";
+import TableBottomNavigation from "@/components/common/TableBottomNivigation";
 
 // Root container for the admin dashboard
 // It contains the sidebar and the main content area
@@ -17,6 +18,7 @@ const AdminDashboard = () => {
   return (
     <>
       <SearchBusiness />
+      <TableBottomNavigation />
     </>
   );
 };
