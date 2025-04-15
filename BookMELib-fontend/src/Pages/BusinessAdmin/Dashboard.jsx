@@ -1,5 +1,7 @@
 import ComponentAriaChart from "@/components/BusinessAdmin/BusinessDashboard/AppointmentLineChart";
 import ComponentServices from "@/components/BusinessAdmin/BusinessDashboard/ServiceDonutChart";
+import RecntAppointments from "@/components/BusinessAdmin/BusinessDashboard/RecntAppointment";
+
 import Icon from "@mdi/react";
 import {
   mdiCalendarCheck,
@@ -7,6 +9,19 @@ import {
   mdiCurrencyUsd,
   mdiCancel,
 } from "@mdi/js";
+
+const BusinessAdminContainer = () => {
+  return (
+    <div className="flex">
+      <aside className="md:w-[20%] lg:w-[23%] h-screen " />
+      <main className="md:w-[98%] w-full mx-3 px-3 mt-20">
+        <Dashboard />
+        <RecntAppointments />
+        <Copyright />
+      </main>
+    </div>
+  );
+};
 
 const stats = [
   {
@@ -38,17 +53,6 @@ const stats = [
     color: "#EF4444", // red
   },
 ];
-
-const BusinessAdminContainer = () => {
-  return (
-    <div className="flex">
-      <aside className="md:w-[20%] lg:w-[23%] h-screen " />
-      <main className="md:w-[98%] w-full mx-3 px-3 mt-20">
-        <Dashboard />
-      </main>
-    </div>
-  );
-};
 
 const Dashboard = () => {
   return (
@@ -84,19 +88,25 @@ const Dashboard = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-2xl shadow">
-          <h3 className="text-lg font-semibold mb-4">Appointments This Week</h3>
+          <h3 className="text-lg font-semibold mb-4">Appointment Trends</h3>
           <ComponentAriaChart />
         </div>
 
         <div className="bg-white p-6 rounded-2xl shadow">
-          <h3 className="text-lg font-semibold mb-4">
-            Appointments by Service
-          </h3>
+          <h3 className="text-lg font-semibold mb-4">Visitors Overview</h3>
           <ComponentServices />
         </div>
       </div>
     </div>
   );
 };
+
+const Copyright = () => (
+  <div className="ml-5">
+    <span style={{ fontSize: "14px", color: "#666", fontWeight: "lighter" }}>
+      © 2025 Appointmentguy
+    </span>
+  </div>
+);
 
 export default BusinessAdminContainer;
