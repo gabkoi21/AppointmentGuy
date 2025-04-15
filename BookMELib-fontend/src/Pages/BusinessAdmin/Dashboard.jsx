@@ -1,6 +1,8 @@
 import ComponentAriaChart from "@/components/BusinessAdmin/BusinessDashboard/AppointmentLineChart";
 import ComponentServices from "@/components/BusinessAdmin/BusinessDashboard/ServiceDonutChart";
 import RecntAppointments from "@/components/BusinessAdmin/BusinessDashboard/RecntAppointment";
+// import ApppintmentContainer from "../BusinessAdmin/Appointment";
+import BusinessAppointmentContainer from "./Appointment";
 
 import Icon from "@mdi/react";
 import {
