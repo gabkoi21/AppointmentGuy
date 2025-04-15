@@ -18,6 +18,8 @@ const BusinessRow = ({ business }) => {
         {businessName}
       </td>
       <td className="px-6 py-4">{owner}</td>
+      <td className="px-6 py-4">{registered}</td>
+      <td className="px-6 py-4">{appointments}</td>
       <td className="px-6 py-4">
         <span
           className={`px-2 py-1 rounded-full text-xs font-semibold ${
@@ -27,8 +29,6 @@ const BusinessRow = ({ business }) => {
           {status}
         </span>
       </td>
-      <td className="px-6 py-4">{registered}</td>
-      <td className="px-6 py-4">{appointments}</td>
       <td className="px-6 py-4 text-right">
         <Icon path={mdiDotsVertical} size={0.9} className="cursor-pointer" />
       </td>

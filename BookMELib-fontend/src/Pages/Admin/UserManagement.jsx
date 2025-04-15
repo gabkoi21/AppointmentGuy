@@ -6,6 +6,9 @@ import DataTable from "@/components/common/DataTable";
 import { User } from "@/data/UserData";
 import GlobalFilter from "@/components/common/globalFilter";
 import GlobalSearchBar from "@/components/common/globalSearchBar";
+import Icon from "@mdi/react";
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+import TableBottomNavigation from "@/components/common/TableBottomNivigation";
 
 const UserManagement = () => (
   <div className="flex">
@@ -40,7 +43,6 @@ const UserManagementwork = () => {
             </div>
           </GlobalSearchBar>
         </div>
-
         <UserStatus />
       </div>
       <UserTable activeTab={activeTab} />
@@ -50,18 +52,45 @@ const UserManagementwork = () => {
 
 const UserTable = ({ activeTab }) => {
   return (
-    <div className="mt-5">
-      {activeTab === "alluser" && (
-        <DataTable
-          columns={Usercolumns}
-          data={User}
-          renderRow={(item, index) => <UserRow key={index} user={item} />}
-        />
-      )}
-      {activeTab === "customer" && <p>customer information</p>}
-      {activeTab === "businessowners" && <p>Tbusinessowners</p>}
-      {activeTab === "admins" && <p>Suspended businesses</p>}
-    </div>
+    <>
+      <div className="mt-5">
+        {activeTab === "alluser" && (
+          <DataTable
+            columns={Usercolumns}
+            data={User}
+            renderRow={(item, index) => <UserRow key={index} user={item} />}
+          />
+        )}
+        {activeTab === "customer" && <p>customer information</p>}
+        {activeTab === "businessowners" && <p>Tbusinessowners</p>}
+        {activeTab === "admins" && <p>Suspended businesses</p>}
+      </div>
+
+      <TableBottomNavigation>
+        <>
+          <div className="flex justify-between items-center mt-8 ml-1 mb-10">
+            <div>
+              <p className="text-md text-gray-500">
+                Showing <span className="font-bold text-gray-600">1-5</span> of{" "}
+                <span className="font-bold text-gray-600">2,853</span> users
+              </p>
+            </div>
+
+            <div className="flex gap-4">
+              <button className=" border px-2.5 py-0.5 rounded-md">
+                <Icon path={mdiChevronLeft} size={1} />
+              </button>
+              <button className=" border px-2.5 py-0.5 rounded-md">1</button>
+              <button className=" border px-2.5 py-0.5 rounded-md">2</button>
+              <button className=" border px-2.5 py-0.5 rounded-md">3</button>
+              <button className=" border px-2.5 py-0.5 rounded-md">
+                {<Icon path={mdiChevronRight} size={1} />}
+              </button>
+            </div>
+          </div>
+        </>
+      </TableBottomNavigation>
+    </>
   );
 };
 
