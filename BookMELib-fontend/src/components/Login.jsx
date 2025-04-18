@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const login = useAuthStore((state) => state.login);
@@ -18,7 +19,7 @@ function Login() {
     e.preventDefault();
 
     if (email && password) {
-      const isSuccess = login(email, password);
+      const isSuccess = login(email, password, rememberMe); // You can later pass rememberMe to your auth logic
 
       if (isSuccess) {
         if (user?.role === "admin") {
@@ -48,25 +49,29 @@ function Login() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white shadow-md rounded-md p-6">
+      <div className="w-full max-w-sm bg-white shadow-lg rounded-xl p-8">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">AppointmentGuy</h2>
+          <h2 className="text-2xl font-semibold text-gray-900">
+            AppointmentGuy
+          </h2>
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Your Email <span className="text-red-500">*</span>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Email <span className="text-red-500">*</span>
             </label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-gray-100 focus:border-gray-100 text-gray-900 p-2.5"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
               placeholder="Enter your email"
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
               Password <span className="text-red-500">*</span>
             </label>
             <div className="relative">
@@ -74,7 +79,7 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 type={showPassword ? "text" : "password"}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-gray-100 focus:border-gray-100 text-gray-900 p-2.5 pr-10"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm pr-10"
                 placeholder="Enter your password"
                 required
               />
@@ -91,9 +96,23 @@ function Login() {
               </button>
             </div>
           </div>
+
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="rememberMe"
+              checked={rememberMe}
+              onChange={() => setRememberMe(!rememberMe)}
+              className="h-4 w-4 text-teal-500 focus:ring-teal-400 border-gray-300 rounded"
+            />
+            <label htmlFor="rememberMe" className="text-sm text-gray-700">
+              Remember me
+            </label>
+          </div>
+
           <button
             type="submit"
-            className="w-full bg-teal-300 text-white font-medium py-2 rounded-sm focus:outline-none"
+            className="w-full bg-teal-500 hover:bg-teal-600 uppercase text-white font-semibold text-sm py-2.5 rounded-md transition"
           >
             Sign In
           </button>

@@ -58,7 +58,7 @@ function App() {
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="appointment" element={<Appointment />} />
-          <Route path="assignedpickup" element={<AssignedPickup />} />
+          {/* <Route path="assignedpickup" element={<AssignedPickup />} /> */}
         </Route>
 
         {/* This is the the nested routes for the  User  board */}
