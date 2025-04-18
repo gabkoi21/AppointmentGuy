@@ -6,6 +6,7 @@ import SidebarNavLink from "../components/Admin/AdminRoutes/SidebarNavLink";
 import SidebarBusinessDropdown from "../components/Admin/AdminRoutes/BusinessSideBarNavDropdown";
 import SidebarNavDropdown from "../components/Admin/AdminRoutes/SidebarSubMenu.jsx";
 import { NAV_ITEMS } from "../components/BusinessAdmin/BusinessRoutes/BusinessNavItems";
+import { Link } from "react-router";
 
 const BusinessAdminNav = () => {
   // State to track dropdown open state for Business nav
@@ -22,10 +23,12 @@ const BusinessAdminNav = () => {
         </div>
       </AdminHeaderNav>
       <nav className="fixed top-0 left-0 right-2 h-full w-[20%] bg-gray-100 overflow-y-auto z-10">
-        <button className="lg:mt-2 ml-4 mb-5 flex items-center space-x-2">
-          <Icon className="mt-4" path={mdiCrown} size={1} />
-          <h3 className="text-2xl mt-3 font-semibold">Elite Salon</h3>
-        </button>
+        <div className="lg:mt-2 ml-4 mb-5 flex items-center space-x-2">
+          <Link to={"dashboard"} className="flex gap-2">
+            <Icon className="mt-4" path={mdiCrown} size={1} />
+            <h3 className="text-2xl mt-3 font-semibold">Elite Salon</h3>
+          </Link>
+        </div>
 
         <hr className="mb-4" />
 

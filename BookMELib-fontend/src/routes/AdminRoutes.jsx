@@ -6,6 +6,7 @@ import { NAV_ITEMS } from "../components/Admin/AdminRoutes/NavItems";
 import SidebarNavLink from "../components/Admin/AdminRoutes/SidebarNavLink";
 import SidebarBusinessDropdown from "../components/Admin/AdminRoutes/BusinessSideBarNavDropdown";
 import SidebarNavDropdown from "../components/Admin/AdminRoutes/SidebarSubMenu.jsx";
+import { Link } from "react-router";
 
 export const AdminNav = () => {
   const [showBusinessDropdown, setShowBusinessDropdown] = useState(false);
@@ -16,8 +17,10 @@ export const AdminNav = () => {
       {/* Main Navigation Sidebar */}
       <nav className="fixed top-0 left-0 right-2 h-full w-[20%] bg-gray-100 overflow-y-auto z-10">
         <div className="lg:mt-2 ml-4 mb-5 flex items-center space-x-2">
-          <Icon className="mt-4" path={mdiViewDashboard} size={1} />
-          <h3 className="text-2xl mt-3 font-semibold">BookingAdmin</h3>
+          <Link className="flex gap-3" to={"Admindashboard"}>
+            <Icon className="mt-4" path={mdiViewDashboard} size={1} />
+            <h3 className="text-2xl mt-3 font-semibold">BookingAdmin</h3>
+          </Link>
         </div>
         <hr className="mb-4" />
         {/* Navigation Links */}

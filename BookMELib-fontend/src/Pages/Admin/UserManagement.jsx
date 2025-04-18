@@ -51,6 +51,7 @@ const UserManagementwork = () => {
 };
 
 const UserTable = ({ activeTab }) => {
+  const hasData = activeTab === "alluser" && User?.length > 0;
   return (
     <>
       <div className="mt-5">
@@ -65,7 +66,34 @@ const UserTable = ({ activeTab }) => {
         {activeTab === "businessowners" && <p>Tbusinessowners</p>}
         {activeTab === "admins" && <p>Suspended businesses</p>}
       </div>
+      {hasData && <ExtendedBottomComponent />}
+    </>
+  );
+};
 
+export default UserManagement;
+
+const UserStatus = ({ value, onChange, active }) => {
+  return (
+    <div className="flex flex-col gap-2 mt-5 w-full md:w-[30%] lg:w-[20%]">
+      <select
+        id="category"
+        value={value}
+        onChange={onChange}
+        className="border border-gray-300 rounded-lg py-2.5 text-sm focus:outline-none focus:ring-0 focus:border-gray-300 active:outline-none active:ring-0 active:border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+      >
+        <option value="">All Status</option>
+        <option value="business">Active</option>
+        <option value="individual">Inactive</option>
+        <option value="individual">Suspended</option>
+      </select>
+    </div>
+  );
+};
+
+const ExtendedBottomComponent = () => {
+  return (
+    <>
       <TableBottomNavigation>
         <>
           <div className="flex justify-between items-center mt-8 ml-1 mb-10">
@@ -91,25 +119,5 @@ const UserTable = ({ activeTab }) => {
         </>
       </TableBottomNavigation>
     </>
-  );
-};
-
-export default UserManagement;
-
-const UserStatus = ({ value, onChange, active }) => {
-  return (
-    <div className="flex flex-col gap-2 mt-5 w-full md:w-[30%] lg:w-[20%]">
-      <select
-        id="category"
-        value={value}
-        onChange={onChange}
-        className="border border-gray-300 rounded-lg py-2.5 text-sm focus:outline-none focus:ring-0 focus:border-gray-300 active:outline-none active:ring-0 active:border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-      >
-        <option value="">All Status</option>
-        <option value="business">Active</option>
-        <option value="individual">Inactive</option>
-        <option value="individual">Suspended</option>
-      </select>
-    </div>
   );
 };

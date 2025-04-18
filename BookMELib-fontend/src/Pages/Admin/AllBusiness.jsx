@@ -13,7 +13,7 @@ import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 const AllBusinessContainer = () => (
   <div className="flex">
     <aside className="md:w-[20%] lg:w-[23%] h-screen bg-gray-100 dark:bg-gray-800" />
-    <main className="md:w-[98%] w-full mx-3 px-3 mt-28">
+    <main className="md:w-[98%] w-full mx-3 px-3 mt-20">
       <AllBusiness />
     </main>
   </div>
@@ -24,7 +24,7 @@ const AllBusiness = () => {
 
   return (
     <>
-      <div className="flex  gap-4 justify-between items-center mb-4">
+      <div className="flex gap-4 justify-between items-center mb-4">
         <div>
           <ActiveStatusNavigation
             activeTab={activeTab}
@@ -55,10 +55,13 @@ const AllBusiness = () => {
 };
 
 const BusinessTable = ({ activeTab }) => {
+  const hasData = activeTab === "allbusiness" && businessData?.length > 0;
+
   return (
-    <>
-      <div className="mt-5">
-        {activeTab === "allbusiness" && (
+    <div className="mt-5">
+      {/* All Businesses Table */}
+      {activeTab === "allbusiness" && (
+        <>
           <DataTable
             columns={columns}
             data={businessData}
@@ -66,36 +69,38 @@ const BusinessTable = ({ activeTab }) => {
               <BusinessRow key={index} business={item} />
             )}
           />
-        )}
-        {activeTab === "pendingapproved" && <p>Pending approval businesses</p>}
-        {activeTab === "Active" && <p>Active businesses</p>}
-        {activeTab === "suspend" && <p>Suspended businesses</p>}
-      </div>
-      <TableBottomNavigation>
-        <>
-          <div className="flex justify-between items-center mt-5 ml-1">
-            <div>
-              <p className="text-md text-gray-500">
-                Showing <span className="font-bold text-gray-600">1-5</span> of{" "}
-                <span className="font-bold text-gray-600">100</span> businesses
-              </p>
-            </div>
 
-            <div className="flex gap-4">
-              <button className=" border px-2.5 py-0.5 rounded-md">
-                <Icon path={mdiChevronLeft} size={1} />
-              </button>
-              <button className=" border px-2.5 py-0.5 rounded-md">1</button>
-              <button className=" border px-2.5 py-0.5 rounded-md">2</button>
-              <button className=" border px-2.5 py-0.5 rounded-md">3</button>
-              <button className=" border px-2.5 py-0.5 rounded-md">
-                {<Icon path={mdiChevronRight} size={1} />}
-              </button>
-            </div>
-          </div>
+          {hasData && (
+            <TableBottomNavigation>
+              <div className="flex justify-between items-center mt-5 ml-1">
+                <p className="text-md text-gray-500">
+                  Showing <span className="font-bold text-gray-600">1-5</span>{" "}
+                  of <span className="font-bold text-gray-600">100</span>{" "}
+                  businesses
+                </p>
+
+                <div className="flex gap-4">
+                  <button className="border px-2.5 py-0.5 rounded-md">
+                    <Icon path={mdiChevronLeft} size={1} />
+                  </button>
+                  <button className="border px-2.5 py-0.5 rounded-md">1</button>
+                  <button className="border px-2.5 py-0.5 rounded-md">2</button>
+                  <button className="border px-2.5 py-0.5 rounded-md">3</button>
+                  <button className="border px-2.5 py-0.5 rounded-md">
+                    <Icon path={mdiChevronRight} size={1} />
+                  </button>
+                </div>
+              </div>
+            </TableBottomNavigation>
+          )}
         </>
-      </TableBottomNavigation>
-    </>
+      )}
+
+      {/* Other Tab Views */}
+      {activeTab === "pendingapproved" && <p>Pending approval businesses</p>}
+      {activeTab === "Active" && <p>Active businesses</p>}
+      {activeTab === "suspend" && <p>Suspended businesses</p>}
+    </div>
   );
 };
 

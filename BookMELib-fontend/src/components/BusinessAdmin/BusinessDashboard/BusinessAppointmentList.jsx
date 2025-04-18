@@ -1,14 +1,15 @@
+import Icon from "@mdi/react";
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+import { Calendar } from "@/components/ui/calendar";
 import React, { useState } from "react";
 import { Appointmentcolumns } from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentColumns";
 import DataTable from "@/components/common/DataTable";
 import BusinessAppointmentActiveStatusNavigation from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentActiveStatusNavigation";
 import GlobalFilter from "@/components/common/globalFilter";
-import { AppointmentData } from "@/data/AppointmentData"; // Or wherever you store it
+import { AppointmentData } from "@/data/AppointmentData";
 import AppointmentRow from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentRow";
 import GlobalSearchBar from "@/components/common/globalSearchBar";
 import TableBottomNavigation from "@/components/common/TableBottomNivigation";
-import Icon from "@mdi/react";
-import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 
 const ApppintmentContainer = () => {
   const [activeTab, setActiveTab] = useState("allappointment");
@@ -40,52 +41,39 @@ const ApppintmentContainer = () => {
 };
 
 const AppointmentTable = ({ activeTab }) => {
+  const [activeRowId, setActiveRowId] = useState(null);
+
+  const hasData = activeTab === "allappointment" && AppointmentData?.length > 0;
+
+  const toggleRow = (id) => {
+    setActiveRowId((prev) => (prev === id ? null : id));
+  };
+
   return (
-    <>
-      <div className="mt-5">
-        {activeTab === "allappointment" && (
+    <div className="mt-5">
+      {activeTab === "allappointment" && (
+        <>
           <DataTable
             columns={Appointmentcolumns}
             data={AppointmentData}
             renderRow={(item, index) => (
-              <AppointmentRow key={index} appointment={item} />
+              <AppointmentRow
+                key={item.id || index}
+                appointment={item}
+                isOpen={activeRowId === item.id}
+                onToggle={() => toggleRow(item.id)}
+              />
             )}
           />
-        )}
-        {activeTab === "completed" && <p>customer information</p>}
-        {activeTab === "cancelled" && <p>Tbusinessowners</p>}
-        {activeTab === "admins" && <p>Suspended businesses</p>}
-      </div>
-
-      <TableBottomNavigation>
-        <>
-          <div className="flex justify-between items-center mt-8 ml-1 mb-10">
-            <div>
-              <p className="text-md text-gray-500">
-                Showing <span className="font-bold text-gray-600">1-5</span> of{" "}
-                <span className="font-bold text-gray-600">2,853</span>{" "}
-                appointment
-              </p>
-            </div>
-
-            <div className="flex gap-4">
-              <button className=" border px-2.5 py-0.5 rounded-md">
-                <Icon path={mdiChevronLeft} size={1} />
-              </button>
-              <button className=" border px-2.5 py-0.5 rounded-md">1</button>
-              <button className=" border px-2.5 py-0.5 rounded-md">2</button>
-              <button className=" border px-2.5 py-0.5 rounded-md">3</button>
-              <button className=" border px-2.5 py-0.5 rounded-md">
-                {<Icon path={mdiChevronRight} size={1} />}
-              </button>
-            </div>
-          </div>
+          {hasData && <ExtendedBottomComponent />}
         </>
-      </TableBottomNavigation>
-    </>
+      )}
+      {activeTab === "calendarview" && <CalendarData />}
+    </div>
   );
 };
 
+// export default AppointmentTable;
 const BusinessCategory = ({ value, onChange, active }) => {
   return (
     <div className="flex flex-col gap-2 mt-5 w-full md:w-[30%] lg:w-[20%]">
@@ -104,3 +92,48 @@ const BusinessCategory = ({ value, onChange, active }) => {
 };
 
 export default ApppintmentContainer;
+
+const CalendarData = () => {
+  const [date, setDate] = React.useState(new Date());
+
+  return (
+    <div className=" mb-10">
+      <Calendar
+        mode="single"
+        selected={date}
+        onSelect={setDate}
+        className="rounded-md border w-full"
+      />
+    </div>
+  );
+};
+
+const ExtendedBottomComponent = () => {
+  return (
+    <>
+      <TableBottomNavigation>
+        <div className="flex justify-between items-center mt-8 ml-1 mb-10">
+          <div>
+            <p className="text-md text-gray-500">
+              Showing <span className="font-bold text-gray-600">1-5</span> of{" "}
+              <span className="font-bold text-gray-600">2,853</span>{" "}
+              appointments
+            </p>
+          </div>
+
+          <div className="flex gap-4">
+            <button className="border px-2.5 py-0.5 rounded-md">
+              <Icon path={mdiChevronLeft} size={1} />
+            </button>
+            <button className="border px-2.5 py-0.5 rounded-md">1</button>
+            <button className="border px-2.5 py-0.5 rounded-md">2</button>
+            <button className="border px-2.5 py-0.5 rounded-md">3</button>
+            <button className="border px-2.5 py-0.5 rounded-md">
+              <Icon path={mdiChevronRight} size={1} />
+            </button>
+          </div>
+        </div>
+      </TableBottomNavigation>
+    </>
+  );
+};

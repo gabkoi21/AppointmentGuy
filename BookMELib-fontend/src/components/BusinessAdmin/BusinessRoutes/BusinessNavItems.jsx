@@ -21,12 +21,12 @@ export const NAV_ITEMS = [
     ariaLabel: "Appointments",
   },
 
-  {
-    to: "user",
-    label: "Staff Management",
-    icon: mdiAccountGroup,
-    ariaLabel: "User Management",
-  },
+  // {
+  //   to: "user",
+  //   label: "Staff Management",
+  //   icon: mdiAccountGroup,
+  //   ariaLabel: "User Management",
+  // },
   {
     to: "settings",
     label: "Settings",

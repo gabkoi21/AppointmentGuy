@@ -9,7 +9,7 @@ const BusinessAppointmentActiveStatusNavigation = ({
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="bg-gray-100 py-6 px-4 rounded-lg">
           <TabsTrigger value="allappointment">All Appointment</TabsTrigger>
-          <TabsTrigger value="customer">Calendar View </TabsTrigger>
+          <TabsTrigger value="calendarview">Calendar View</TabsTrigger>
           {/* <TabsTrigger value="admins">Camcelled</TabsTrigger> */}
         </TabsList>
       </Tabs>
