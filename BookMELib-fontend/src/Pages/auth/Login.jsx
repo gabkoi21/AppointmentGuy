@@ -1,8 +1,10 @@
 import { mdiEye, mdiEyeOff } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useEffect, useState } from "react";
-import useAuthStore from "../stores/authStore";
+import useAuthStore from "../../stores/authStore";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router";
+// import Register from "./Register";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -51,9 +53,11 @@ function Login() {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-sm bg-white shadow-lg rounded-xl p-8">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-semibold text-gray-900">
-            AppointmentGuy
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-900">Welcome Back 👋</h2>
+          <p className="text-sm text-gray-600 mt-1">
+            Sign in to continue using{" "}
+            <span className="font-medium text-teal-600">AppointmentGuy</span>
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -97,17 +101,9 @@ function Login() {
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id="rememberMe"
-              checked={rememberMe}
-              onChange={() => setRememberMe(!rememberMe)}
-              className="h-4 w-4 text-teal-500 focus:ring-teal-400 border-gray-300 rounded"
-            />
-            <label htmlFor="rememberMe" className="text-sm text-gray-700">
-              Remember me
-            </label>
+          <div className="flex items-center justify-between space-x-2">
+            <span>No account?</span>
+            <Link to="/register">Register</Link>
           </div>
 
           <button

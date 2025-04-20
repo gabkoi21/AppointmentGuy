@@ -6,7 +6,8 @@ import {
   Outlet,
 } from "react-router-dom";
 import React from "react";
-import Login from "./components/Login";
+import Login from "./Pages/auth/Login";
+import Register from "./Pages/auth/Register";
 
 // This is for the Admin Routes
 import AdminLayout from "./components/AdminLayout";
@@ -35,6 +36,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Login />} />
+        <Route path="register" element={<Register />} />
 
         {/* Admin Routes */}
         <Route path="Admindashboard" element={<AdminLayout />}>
