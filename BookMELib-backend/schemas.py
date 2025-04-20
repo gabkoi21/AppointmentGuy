@@ -6,7 +6,8 @@ from marshmallow import Schema, fields
 class RoleSchema(Schema):
     id = fields.Int(dump_only=True)
     role = fields.Str(required=True)
-    timestamp = fields.DateTime(required=True)  
+    timestamp = fields.DateTime(dump_only=True)  
+    # timestamp = fields.DateTime(required=True)  
 
 # ==============================
 # User Schema

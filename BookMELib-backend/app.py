@@ -6,7 +6,6 @@ from flask_jwt_extended import JWTManager
 from db import db
 from dotenv import load_dotenv
 
-
 import os
 from blocklist import BLOCKLIST
 from resources.business import blp as BusinessBlueprint
@@ -18,7 +17,7 @@ from resources.category import blp as CategoryBlueprint
 from resources.appointment import blp as AppointmentBlueprint
 
 def create_app(db_url=None):
-    load_dotenv(".env.dev") # Load environment variables from .env file
+    load_dotenv(".env.dev")  # Load environment variables from .env file
     app = Flask(__name__)
     app.config["PROPAGATE_EXCEPTIONS"] = True
     app.config["API_TITLE"] = "BookMeLib REST API"
@@ -27,24 +26,21 @@ def create_app(db_url=None):
     app.config["OPENAPI_URL_PREFIX"] = "/"
     app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
     app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
-    app.config["SQLALCHEMY_DATABASE_URI"] = db_url or os.getenv("DATABASE_URL")
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_url or "sqlite:///database.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["PROPAGATE_EXCEPTIONS"] = True
 
-    # Load environment variables from .env file
-    # load_dotenv(".env.dev")  # or .env.prod
-    
     # Initialize database
     db.init_app(app)
-    
+
     # Initialize Flask-Migrate for database migrations
     Migrate(app, db)
 
     # Initialize Flask-Smorest for API management
     api = Api(app)
-    
+
     # Enable CORS (Cross-Origin Resource Sharing)
-    CORS(app)  # Enables CORS for all routes by default
+    CORS(app)
 
     # Initialize JWT for authentication
     app.config["JWT_SECRET_KEY"] = "your-secure-random-key-here"
@@ -85,8 +81,19 @@ def create_app(db_url=None):
             {"description": "Signature verification failed.", "error": "invalid_token"}
         ), 401
 
+    # 👇🏽 This is where we create the Super Admin role automatically
     with app.app_context():
         db.create_all()
+
+        from models.role import RoleModel
+
+        if not RoleModel.query.filter_by(role="super_admin").first():
+            super_admin_role = RoleModel(role="super_admin")
+            db.session.add(super_admin_role)
+            db.session.commit()
+            print("✅ Super Admin role created.")
+        else:
+            print("ℹ️ Super Admin role already exists.")
 
     # Register the Blueprints
     api.register_blueprint(RoleBlueprint)

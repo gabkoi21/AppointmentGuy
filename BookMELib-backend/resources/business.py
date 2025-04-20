@@ -48,6 +48,7 @@ def create_admin_user(admin_data, business):
         last_name=admin_data['last_name'],
         phone_number=admin_data["phone_number"],
         user_type="business_admin",
+        address=admin_data['address'],
         business=business  # Associate with the actual business object
     )
     
