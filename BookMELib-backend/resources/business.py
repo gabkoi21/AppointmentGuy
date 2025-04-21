@@ -108,6 +108,8 @@ class BusinessDetails(MethodView):
         
         return {"message": "Business and all associated users deleted successfully."}
     
+    
+    
 @blp.route('/update/<int:business_id>')
 class BusinessUpdateView(MethodView):
     @blp.arguments(BusinessUpdateSchema)
@@ -127,10 +129,38 @@ class BusinessUpdateView(MethodView):
         db.session.commit()
 
         return {"message": "Business updated successfully."}
-
-
-
     
+
+    # @blp.arguments(BusinessSchema)
+    # @blp.response(200, BusinessSchema)
+    # @role_required('business_admin')
+    # def get(self, business_id):
+    #     business = BusinessModel.query.get_or_404(business_id)
+    #     return business
+
+@blp.route('/<int:business_id>')
+class BusinessDetailsView(MethodView):
+    @blp.response(200, BusinessSchema)
+    # @role_required('business_admin')
+    def get(self, business_id):
+        """Get business details by ID. Only accessible by business admin."""
+        business = BusinessModel.query.get_or_404(business_id)
+        return business
+
+
+@blp.route('/')
+class BusinessList(MethodView):
+    @blp.response(200, BusinessSchema(many=True))
+    # @role_required('super_admin')
+    def get(self):
+        """Get all businesses. Only accessible by super admin."""
+        businesses = BusinessModel.query.all()
+        return businesses
+
+
+
+
+
 
 
 
