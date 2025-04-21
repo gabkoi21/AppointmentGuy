@@ -1,6 +1,57 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuthStore from "@/stores/authStore";
+import useBusinessStore from "@/stores/businessStore";
+
 const Register = () => {
+  const { register, loading, error } = useAuthStore();
+  const navigate = useNavigate();
+
+  const {
+    businesses,
+    fetchBusinesses,
+    loading: businessLoading,
+    error: businessError,
+  } = useBusinessStore();
+
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    address: "",
+    business_id: "",
+    phone_number: "",
+    user_type: "customer",
+  });
+
+  useEffect(() => {
+    fetchBusinesses();
+  }, [fetchBusinesses]);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    const { confirmPassword, ...registrationData } = formData;
+    const success = await register(registrationData);
+
+    if (success) {
+      navigate("/");
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 py-10">
       <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8">
         <div className="text-center mb-6">
           <h2 className="text-2xl font-semibold text-gray-900">
@@ -8,14 +59,21 @@ const Register = () => {
           </h2>
         </div>
 
-        <form className="space-y-5">
+        <form onSubmit={handleSignUp} className="space-y-5 mb-5">
           {/* First Name */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
-              First Name <span className="text-red-500">*</span>
+            <label
+              htmlFor="first_name"
+              className="block text-sm font-semibold text-gray-700 mb-1"
+            >
+              First Name
             </label>
             <input
               type="text"
+              id="first_name"
+              name="first_name"
+              value={formData.first_name}
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
               placeholder="Enter your first name"
               required
@@ -24,11 +82,18 @@ const Register = () => {
 
           {/* Last Name */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
-              Last Name <span className="text-red-500">*</span>
+            <label
+              htmlFor="last_name"
+              className="block text-sm font-semibold text-gray-700 mb-1"
+            >
+              Last Name
             </label>
             <input
               type="text"
+              id="last_name"
+              name="last_name"
+              value={formData.last_name}
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
               placeholder="Enter your last name"
               required
@@ -37,11 +102,18 @@ const Register = () => {
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
-              Email <span className="text-red-500">*</span>
+            <label
+              htmlFor="email"
+              className="block text-sm font-semibold text-gray-700 mb-1"
+            >
+              Email
             </label>
             <input
               type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
               placeholder="Enter your email"
               required
@@ -50,24 +122,59 @@ const Register = () => {
 
           {/* Password */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
-              Password <span className="text-red-500">*</span>
+            <label
+              htmlFor="password"
+              className="block text-sm font-semibold text-gray-700 mb-1"
+            >
+              Password
             </label>
             <input
               type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
-              placeholder="Create a password"
+              placeholder="Enter your password"
+              required
+              minLength="6"
+            />
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-semibold text-gray-700 mb-1"
+            >
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
+              placeholder="Confirm your password"
               required
             />
           </div>
 
           {/* Phone Number */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
-              Phone Number <span className="text-red-500">*</span>
+            <label
+              htmlFor="phone_number"
+              className="block text-sm font-semibold text-gray-700 mb-1"
+            >
+              Phone Number
             </label>
             <input
               type="tel"
+              id="phone_number"
+              name="phone_number"
+              value={formData.phone_number}
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
               placeholder="Enter your phone number"
               required
@@ -76,51 +183,76 @@ const Register = () => {
 
           {/* Address */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
+            <label
+              htmlFor="address"
+              className="block text-sm font-semibold text-gray-700 mb-1"
+            >
               Address
             </label>
             <input
               type="text"
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
               placeholder="Enter your address"
             />
           </div>
 
-          {/* Business ID */}
+          {/* Business Dropdown */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
-              Select Business <span className="text-red-500">*</span>
+            <label
+              htmlFor="business_id"
+              className="block text-sm font-semibold text-gray-700 mb-1"
+            >
+              Select Business
             </label>
             <select
+              id="business_id"
+              name="business_id"
+              value={formData.business_id}
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
               required
+              disabled={businessLoading}
             >
-              <option value="">Select a business</option>
-              {/* Options will be added dynamically later */}
-              <option value="1">Business One</option>
-              <option value="2">Business Two</option>
+              <option value="">-- Select a Business --</option>
+              {businesses.length > 0 ? (
+                businesses.map((business) => (
+                  <option key={business.id} value={business.id}>
+                    {business.name}
+                  </option>
+                ))
+              ) : (
+                <option disabled>No businesses available</option>
+              )}
             </select>
+            {businessLoading && (
+              <p className="text-sm text-gray-500 mt-1">
+                Loading businesses...
+              </p>
+            )}
+            {businessError && (
+              <p className="text-red-500 text-sm mt-1">{businessError}</p>
+            )}
           </div>
 
-          {/* User Type */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
-              User Type
-            </label>
-            <select className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm">
-              <option value="user">business Admin</option>
-              <option value="admin">super Admin</option>
-              <option value="staff">customer</option>
-            </select>
-          </div>
+          {/* Hidden user_type */}
+          <input type="hidden" name="user_type" value="customer" />
 
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-teal-500 hover:bg-teal-600 uppercase text-white font-semibold text-sm py-2.5 rounded-md transition"
+            disabled={loading}
+            className={`w-full bg-teal-500 hover:bg-teal-600 uppercase text-white font-semibold text-sm py-2.5 rounded-md transition ${
+              loading ? "opacity-70 cursor-not-allowed" : ""
+            }`}
           >
-            Register
+            {loading ? "Registering..." : "Register"}
           </button>
+
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
         </form>
       </div>
     </div>

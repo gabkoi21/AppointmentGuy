@@ -41,6 +41,7 @@ function App() {
         {/* Admin Routes */}
         <Route path="Admindashboard" element={<AdminLayout />}>
           <Route index element={<Navigate to="Admindashboard" />} />
+          {/* <Route index element={<Admindashboard />} /> */}
           {/* This is the navigation for the  drop down naivgation for the business */}
           <Route path="business" element={<Outlet />}>
             <Route index element={<BusinessManagement />} />
@@ -56,7 +57,7 @@ function App() {
         </Route>
 
         {/* This is the the nested routes for the  Busnesss Admin  board */}
-        <Route path="Driversboard" element={<BusinessAdminLayout />}>
+        <Route path="bussinessadminboard" element={<BusinessAdminLayout />}>
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="appointment" element={<Appointment />} />
@@ -64,7 +65,7 @@ function App() {
         </Route>
 
         {/* This is the the nested routes for the  User  board */}
-        <Route path="Userdashboard" element={<UserLayout />}>
+        <Route path="userdashboard" element={<UserLayout />}>
           <Route index element={<Navigate to="requests" />} />
           <Route path="requests" element={<MyRequest />} />
           <Route path="notification" element={<Notification />} />

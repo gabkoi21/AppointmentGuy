@@ -1,66 +1,58 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import api from "@/api/axios";
 
-// Fake Admin, User & Driver Data
-const FAKE_Admin = {
-  name: "Jack",
-  email: "Admin",
-  password: "Admin",
-  role: "admin",
-};
+const useAuthStore = create((set) => ({
+  user: null,
+  token: null,
+  loading: false,
+  error: null,
 
-const FAKE_USER = {
-  name: "John",
-  email: "User",
-  password: "User",
-  role: "user",
-};
+  login: async (credentials) => {
+    set({ loading: true, error: null });
 
-const FAKE_DRIVER = {
-  name: "Mary",
-  email: "Driver",
-  password: "Driver",
-  role: "driver",
-};
+    try {
+      const res = await api.post("/auth/login", credentials);
+      const { access_token, refresh_token, user_type } = res.data;
 
-// Create Zustand Store
-const useAuthStore = create(
-  persist(
-    (set) => ({
-      user: null,
-      isAuthenticated: false,
+      // Create a user object with the user_type
+      const user = { user_type };
 
-      // Login function
-      login: (email, password) => {
-        let loggedInUser = null;
+      set({
+        user,
+        token: access_token, // Use access_token as the token
+        loading: false,
+        error: null,
+      });
 
-        if (email === FAKE_Admin.email && password === FAKE_Admin.password) {
-          loggedInUser = FAKE_Admin;
-        } else if (
-          email === FAKE_USER.email &&
-          password === FAKE_USER.password
-        ) {
-          loggedInUser = FAKE_USER;
-        } else if (
-          email === FAKE_DRIVER.email &&
-          password === FAKE_DRIVER.password
-        ) {
-          loggedInUser = FAKE_DRIVER;
-        }
+      return true;
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "Login failed. Try again.";
+      set({ error: errorMessage, loading: false });
+      return false;
+    }
+  },
 
-        if (loggedInUser) {
-          set({ user: loggedInUser, isAuthenticated: true });
-          return true;
-        }
+  register: async (userData) => {
+    set({ loading: true, error: null });
 
-        return false;
-      },
+    try {
+      const res = await api.post("/auth/register", userData);
+      const { user, token } = res.data;
 
-      // Logout function
-      logout: () => set({ user: null, isAuthenticated: false }),
-    }),
-    { name: "auth-storage" }
-  )
-);
+      set({ user, token, loading: false, error: null });
+      return true;
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "Registration failed. Try again.";
+      set({ error: errorMessage, loading: false });
+      return false;
+    }
+  },
+
+  logout: () => {
+    set({ user: null, token: null });
+  },
+}));
 
 export default useAuthStore;

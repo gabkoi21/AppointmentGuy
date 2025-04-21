@@ -1,53 +1,46 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import useAuthStore from "@/stores/authStore";
 import { mdiEye, mdiEyeOff } from "@mdi/js";
 import Icon from "@mdi/react";
-import { useEffect, useState } from "react";
-import useAuthStore from "../../stores/authStore";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router";
-// import Register from "./Register";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
-  const login = useAuthStore((state) => state.login);
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const user = useAuthStore((state) => state.user);
+  const { login, loading, error, user } = useAuthStore();
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const success = await login(formData);
 
-    if (email && password) {
-      const isSuccess = login(email, password, rememberMe); // You can later pass rememberMe to your auth logic
+    if (success) {
+      const { user_type } = useAuthStore.getState().user || {};
 
-      if (isSuccess) {
-        if (user?.role === "admin") {
-          navigate("/Admindashboard", { replace: true });
-        } else if (user?.role === "user") {
-          navigate("/Userdashboard", { replace: true });
-        } else {
-          navigate("/Driversboard", { replace: true });
-        }
-      } else {
-        alert("Invalid email or password!");
-      }
-    }
-  }
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      if (user?.role === "admin") {
+      // Check user type and navigate accordingly
+      if (user_type === "super_admin") {
         navigate("/Admindashboard", { replace: true });
-      } else if (user?.role === "user") {
-        navigate("/Userdashboard", { replace: true });
+      } else if (user_type === "customer") {
+        navigate("/userdashboard", { replace: true });
+      } else if (user_type === "business_admin") {
+        navigate("/bussinessadminboard", { replace: true });
       } else {
-        navigate("/Driversboard", { replace: true });
+        useAuthStore.setState({
+          error: "Unknown user type. Please contact support.",
+        });
+        console.error("Error: Unknown user type:", user_type);
       }
+    } else {
+      useAuthStore.setState({
+        error: "Invalid email or password!",
+      });
     }
-  }, [isAuthenticated, user, navigate]);
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -66,8 +59,10 @@ function Login() {
               Email <span className="text-red-500">*</span>
             </label>
             <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
               placeholder="Enter your email"
               required
@@ -80,9 +75,10 @@ function Login() {
             </label>
             <div className="relative">
               <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm pr-10"
                 placeholder="Enter your password"
                 required
@@ -101,16 +97,32 @@ function Login() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between space-x-2">
-            <span>No account?</span>
-            <Link to="/register">Register</Link>
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-right text-sm text-gray-600">
+                Don’t have an account?{" "}
+              </p>
+            </div>
+
+            <div>
+              <Link
+                to="/register"
+                className="text-teal-600 font-medium hover:underline"
+                aria-label="Register a new account"
+              >
+                Register
+              </Link>
+            </div>
           </div>
+
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full bg-teal-500 hover:bg-teal-600 uppercase text-white font-semibold text-sm py-2.5 rounded-md transition"
           >
-            Sign In
+            {loading ? "Signing In..." : "Sign In"}
           </button>
         </form>
       </div>
