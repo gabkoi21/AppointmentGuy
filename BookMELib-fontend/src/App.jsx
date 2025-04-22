@@ -8,6 +8,7 @@ import {
 import React from "react";
 import Login from "./Pages/auth/Login";
 import Register from "./Pages/auth/Register";
+import ProtectedRoute from "./components/ProtectedRoutes";
 
 // This is for the Admin Routes
 import AdminLayout from "./components/AdminLayout";
@@ -39,16 +40,19 @@ function App() {
         <Route path="register" element={<Register />} />
 
         {/* Admin Routes */}
-        <Route path="Admindashboard" element={<AdminLayout />}>
+        <Route
+          path="Admindashboard"
+          element={
+            <ProtectedRoute allowedTypes={["super_admin"]}>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Navigate to="Admindashboard" />} />
-          {/* <Route index element={<Admindashboard />} /> */}
-          {/* This is the navigation for the  drop down naivgation for the business */}
           <Route path="business" element={<Outlet />}>
-            <Route index element={<BusinessManagement />} />
             <Route index element={<Navigate to="allbusiness" />} />
             <Route path="allbusiness" element={<AllBusiness />} />
           </Route>
-
           <Route path="Admindashboard" element={<Admindashboard />} />
           <Route path="appointments" element={<Appointments />} />
           <Route path="settings" element={<Settings />} />
@@ -56,16 +60,27 @@ function App() {
           <Route path="adminprofile" element={<AdminProfile />} />
         </Route>
 
-        {/* This is the the nested routes for the  Busnesss Admin  board */}
-        <Route path="bussinessadminboard" element={<BusinessAdminLayout />}>
+        <Route
+          path="bussinessadminboard"
+          element={
+            <ProtectedRoute allowedTypes={["business_admin"]}>
+              <BusinessAdminLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="appointment" element={<Appointment />} />
-          {/* <Route path="assignedpickup" element={<AssignedPickup />} /> */}
         </Route>
 
-        {/* This is the the nested routes for the  User  board */}
-        <Route path="userdashboard" element={<UserLayout />}>
+        <Route
+          path="userdashboard"
+          element={
+            <ProtectedRoute allowedTypes={["customer"]}>
+              <UserLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Navigate to="requests" />} />
           <Route path="requests" element={<MyRequest />} />
           <Route path="notification" element={<Notification />} />

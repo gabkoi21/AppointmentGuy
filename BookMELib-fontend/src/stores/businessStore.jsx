@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import api from "@/api/axios";
+import { useEffect } from "react";
 
 const useBusinessStore = create((set, get) => ({
   businesses: [],
@@ -8,10 +9,11 @@ const useBusinessStore = create((set, get) => ({
   error: null,
 
   // Fetch all businesses
+
   fetchBusinesses: async () => {
     set({ loading: true, error: null });
     try {
-      const response = await api.get("/business"); // Change this to your endpoint for all businesses
+      const response = await api.get("/business/");
       set({ businesses: response.data, loading: false });
     } catch (error) {
       const errorMessage =

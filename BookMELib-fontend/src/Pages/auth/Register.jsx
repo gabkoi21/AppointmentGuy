@@ -2,9 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/authStore";
 import useBusinessStore from "@/stores/businessStore";
+import { mdiEye, mdiEyeOff } from "@mdi/js";
+import Icon from "@mdi/react";
+import { set } from "date-fns";
 
 const Register = () => {
   const { register, loading, error } = useAuthStore();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -34,6 +39,8 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {}, []);
+
   const handleSignUp = async (e) => {
     e.preventDefault();
 
@@ -48,6 +55,7 @@ const Register = () => {
     if (success) {
       navigate("/");
     }
+    nn;
   };
 
   return (
@@ -121,6 +129,7 @@ const Register = () => {
           </div>
 
           {/* Password */}
+
           <div>
             <label
               htmlFor="password"
@@ -128,17 +137,27 @@ const Register = () => {
             >
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
-              placeholder="Enter your password"
-              required
-              minLength="6"
-            />
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
+                placeholder="Enter your password"
+                required
+                minLength="6"
+              />
+
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray-500"
+              >
+                <Icon path={showPassword ? mdiEyeOff : mdiEye} size={0.7} />
+              </span>
+            </div>
           </div>
 
           {/* Confirm Password */}
@@ -149,16 +168,29 @@ const Register = () => {
             >
               Confirm Password
             </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
-              placeholder="Confirm your password"
-              required
-            />
+
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
+                placeholder="Confirm your password"
+                required
+              />
+
+              <span
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray-500"
+              >
+                <Icon
+                  path={showConfirmPassword ? mdiEyeOff : mdiEye}
+                  size={0.8}
+                />
+              </span>
+            </div>
           </div>
 
           {/* Phone Number */}
@@ -201,6 +233,7 @@ const Register = () => {
           </div>
 
           {/* Business Dropdown */}
+
           <div>
             <label
               htmlFor="business_id"
