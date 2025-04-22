@@ -15,6 +15,9 @@ from resources.user import blp as UserBlueprint
 from resources.service import blp as ServiceBlueprint
 from resources.category import blp as CategoryBlueprint
 from resources.appointment import blp as AppointmentBlueprint
+from flask_cors import CORS
+
+
 
 def create_app(db_url=None):
     load_dotenv(".env.dev")  # Load environment variables from .env file
@@ -29,6 +32,8 @@ def create_app(db_url=None):
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url or "sqlite:///database.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["PROPAGATE_EXCEPTIONS"] = True
+
+    CORS(app)
 
     # Initialize database
     db.init_app(app)
