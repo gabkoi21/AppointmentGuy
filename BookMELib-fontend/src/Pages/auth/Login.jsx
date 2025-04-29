@@ -6,7 +6,7 @@ import { mdiEye, mdiEyeOff } from "@mdi/js";
 import Icon from "@mdi/react";
 
 function Login() {
-  const { login, loading, error, user } = useAuthStore();
+  const { login, loading, error } = useAuthStore();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -17,28 +17,28 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await login(formData);
+    useAuthStore.setState({ loading: true, error: "" });
 
-    if (success) {
-      const { user_type } = useAuthStore.getState().user || {};
+    try {
+      const userType = await login(formData); // ✅ Get user_type directly
 
-      // Check user type and navigate accordingly
-      if (user_type === "super_admin") {
-        navigate("/Admindashboard", { replace: true });
-      } else if (user_type === "customer") {
-        navigate("/userdashboard", { replace: true });
-      } else if (user_type === "business_admin") {
-        navigate("/bussinessadminboard", { replace: true });
+      if (userType) {
+        if (userType === "super_admin") {
+          navigate("/Admindashboard", { replace: true });
+        } else if (userType === "customer") {
+          navigate("/userdashboard", { replace: true });
+        } else if (userType === "business_admin") {
+          navigate("/bussinessadminboard", { replace: true });
+        } else {
+          useAuthStore.setState({
+            error: "Unknown user type. Please contact support.",
+          });
+        }
       } else {
-        useAuthStore.setState({
-          error: "Unknown user type. Please contact support.",
-        });
-        console.error("Error: Unknown user type:", user_type);
+        useAuthStore.setState({ error: "Invalid email or password!" });
       }
-    } else {
-      useAuthStore.setState({
-        error: "Invalid email or password!",
-      });
+    } finally {
+      useAuthStore.setState({ loading: false });
     }
   };
 
@@ -98,21 +98,14 @@ function Login() {
           </div>
 
           <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-right text-sm text-gray-600">
-                Don’t have an account?{" "}
-              </p>
-            </div>
-
-            <div>
-              <Link
-                to="/register"
-                className="text-teal-600 font-medium hover:underline"
-                aria-label="Register a new account"
-              >
-                Register
-              </Link>
-            </div>
+            <p className="text-sm text-gray-600">Don’t have an account?</p>
+            <Link
+              to="/register"
+              className="text-teal-600 font-medium hover:underline"
+              aria-label="Register a new account"
+            >
+              Register
+            </Link>
           </div>
 
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}

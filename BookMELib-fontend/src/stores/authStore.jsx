@@ -4,9 +4,10 @@ import api from "@/api/axios";
 
 const useAuthStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       token: null,
+      refreshToken: null,
       loading: false,
       error: null,
 
@@ -14,53 +15,61 @@ const useAuthStore = create(
         set({ loading: true, error: null });
 
         try {
-          const res = await api.post("/auth/login", credentials);
-          const { access_token, refresh_token, user_type } = res.data;
+          const { data } = await api.post("/auth/login", credentials);
+          const { access_token, refresh_token, user_type } = data;
 
-          const user = { user_type };
+          localStorage.setItem("accessToken", access_token);
+          localStorage.setItem("refreshToken", refresh_token);
 
           set({
-            user,
+            user: { user_type },
             token: access_token,
+            refreshToken: refresh_token,
             loading: false,
-            error: null,
           });
-
-          return true;
+          return user_type;
         } catch (error) {
-          const errorMessage =
-            error?.response?.data?.message || "Login failed. Try again.";
-          set({ error: errorMessage, loading: false });
-          return false;
-        }
-      },
-
-      register: async (userData) => {
-        set({ loading: true, error: null });
-
-        try {
-          const res = await api.post("/auth/register", userData);
-          const { user, token } = res.data;
-
-          set({ user, token, loading: false, error: null });
-          return true;
-        } catch (error) {
-          const errorMessage =
-            error?.response?.data?.message || "Registration failed. Try again.";
-          set({ error: errorMessage, loading: false });
-          return false;
+          set({
+            error: error?.response?.data?.message || "Login failed.",
+            loading: false,
+          });
+          return null;
         }
       },
 
       logout: () => {
-        set({ user: null, token: null, loading: false, error: null });
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         localStorage.removeItem("auth-storage");
+
+        set({ user: null, token: null, refreshToken: null });
       },
-    })
-    // {
-    //   name: "auth-storage", // LocalStorage key
-    //   getStorage: () => localStorage,
-    // }
+
+      getAccessToken: () => localStorage.getItem("accessToken") || get().token,
+      getRefreshToken: () =>
+        localStorage.getItem("refreshToken") || get().refreshToken,
+      setToken: (token) => {
+        localStorage.setItem("accessToken", token);
+        set({ token });
+      },
+      setRefreshToken: (refreshToken) => {
+        localStorage.setItem("refreshToken", refreshToken);
+        set({ refreshToken });
+      },
+
+      updateUserData: (userData) =>
+        set({ user: { ...get().user, ...userData } }),
+      getUserData: () => get().user,
+      isAuthenticated: () => !!get().token,
+    }),
+    {
+      name: "auth-storage",
+      partialize: (state) => ({
+        user: state.user,
+        token: state.token,
+        refreshToken: state.refreshToken,
+      }),
+    }
   )
 );
 

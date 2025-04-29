@@ -29,6 +29,7 @@ const Register = () => {
     business_id: "",
     phone_number: "",
     user_type: "customer",
+    status: "Active",
   });
 
   useEffect(() => {
@@ -38,8 +39,6 @@ const Register = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  useEffect(() => {}, []);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -261,6 +260,7 @@ const Register = () => {
                 <option disabled>No businesses available</option>
               )}
             </select>
+
             {businessLoading && (
               <p className="text-sm text-gray-500 mt-1">
                 Loading businesses...
@@ -273,6 +273,7 @@ const Register = () => {
 
           {/* Hidden user_type */}
           <input type="hidden" name="user_type" value="customer" />
+          <input type="hidden" name="status" value="Active" />
 
           {/* Submit Button */}
           <button
