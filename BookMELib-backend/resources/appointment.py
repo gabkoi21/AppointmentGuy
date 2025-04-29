@@ -14,12 +14,32 @@ blp = Blueprint("Appointment", __name__, url_prefix="/appointment", description=
 @blp.route("/")
 class AppointmentList(MethodView):
     @blp.response(200, AppointmentSchema(many=True))
-    @role_required("business_admin")
+    @jwt_required()
     def get(self):
-        """Get all appointments for the authenticated business."""
-        business_id = get_jwt()["business_id"]
-        appointments = AppointmentModel.query.filter_by(business_id=business_id).all()
+        """Get all appointments based on the user role."""
+        claims = get_jwt()
+        user_type = claims.get("user_type")
+        business_id = claims.get("business_id")
+        user_id = get_jwt_identity()  # get the user ID from the token
+
+        if user_type == "super_admin":
+            # Super Admin sees all appointments
+            appointments = AppointmentModel.query.all()
+
+        elif user_type == "business_admin" and business_id:
+            # Business Admin sees appointments of their business
+            appointments = AppointmentModel.query.filter_by(business_id=business_id).all()
+
+        elif user_type == "customer":
+            # Customer sees only their own appointments
+            appointments = AppointmentModel.query.filter_by(user_id=user_id).all()
+
+        else:
+            # Other users not allowed
+            abort(403, message="You are not authorized to view appointments.")
+        
         return appointments
+
 
     @blp.arguments(AppointmentSchema)
     @blp.response(201, AppointmentSchema)

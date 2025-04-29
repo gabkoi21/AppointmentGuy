@@ -10,10 +10,9 @@ from utils.decorators import role_required
 
 blp = Blueprint("User", __name__, url_prefix="/auth", description="Operations on User Model models")
 
-
 @blp.route("/<int:user_id>")
 class ManageUser(MethodView):
-    @jwt_required()
+    # @jwt_required()
     @blp.arguments(UserupdateSchema (partial=True))
     def put(self, user_data, user_id):
         """Update user details (customer, business_admin)"""
@@ -82,3 +81,40 @@ class ManageUser(MethodView):
         
         except OperationalError:
             return {"message": "Can not find user with this id in the database"}, 500
+        
+
+@blp.route("/getuser")
+class ManageUser(MethodView):
+    @jwt_required()
+    @blp.arguments(UserupdateSchema)
+    def get(self , user):
+        user = UserModel.query.get_or_404()
+
+@blp.route("/users")
+class UserList(MethodView):
+    @jwt_required()
+    @blp.response(200, UserSchema(many=True))
+    @role_required("super_admin", "business_admin")
+    def get(self):
+        """Get all users based on role authorization"""
+        try:
+            claims = get_jwt()
+            current_user_roles = claims.get("roles", [])
+            
+            if "super_admin" in current_user_roles:
+                # Super admin can see all users
+                users = UserModel.query.all()
+            elif "business_admin" in current_user_roles:
+                # Business admin can only see users in their business
+                business_id = claims.get("business_id")
+                users = UserModel.query.filter_by(business_id=business_id).all()
+            else:
+                abort(403, message="Unauthorized to view users")
+                
+            return users
+            
+        except OperationalError:
+            abort(500, message="Database error occurred")
+
+
+

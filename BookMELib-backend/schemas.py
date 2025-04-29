@@ -24,7 +24,10 @@ class UserSchema(Schema):
     phone_number = fields.Str(required=True)
     address = fields.Str(required=False)
     timestamp = fields.DateTime(dump_only=True)  
-    roles = fields.List(fields.Nested(RoleSchema), dump_only=True) 
+    roles = fields.List(fields.Nested(RoleSchema), dump_only=True)
+    status = fields.Str(required=True) 
+    business = fields.Nested("BusinessSchema", only=("name",))
+
 
 # ==============================
 # User Update Schema
@@ -63,6 +66,7 @@ class BusinessSchema(Schema):
     address = fields.Str(required=False)
     phone_number = fields.Str(required=False)
     email = fields.Email(required=False)
+    status = fields.Str(required=True) 
 
 # ===============================
 # BusinessSchema
@@ -75,6 +79,7 @@ class BusinessUpdateSchema(Schema):
     address = fields.Str(required=False)
     phone_number = fields.Str(required=False)
     email = fields.Email(required=False)
+    status = fields.Str(required=False)
 
 # ===============================
 # AppointmentSchema
@@ -88,6 +93,7 @@ class AppointmentSchema(Schema):
     timestamp = fields.DateTime(dump_only=True)  
     user = fields.Nested(UserSchema, dump_only=True) 
     business = fields.Nested(BusinessSchema, dump_only=True)
+    status = fields.Str(required=True) 
 
 # ===============================
 # AppointmentUpdateSchema
@@ -98,7 +104,9 @@ class AppointmentUpdateSchema(Schema):
     business_id = fields.Int(required=False)
     service_id = fields.Int(required=False)
     date_time = fields.DateTime(required=False)
+    status = fields.Str(required=False) 
     timestamp = fields.DateTime(dump_only=True)
+    
 
 # ===============================
 # ServiceSchema

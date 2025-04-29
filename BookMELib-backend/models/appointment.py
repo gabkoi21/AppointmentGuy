@@ -10,6 +10,7 @@ class AppointmentModel(db.Model):
     service_id = db.Column(db.Integer, db.ForeignKey('services.id', name='fk_appointment_service'), nullable=False)
     date_time = db.Column(db.DateTime, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now)
+    status = db.Column(db.String(20), default="Sheduled")
 
     # Relationships
     user = db.relationship('UserModel', back_populates='appointments') 

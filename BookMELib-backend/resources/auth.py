@@ -1,7 +1,7 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from passlib.hash import pbkdf2_sha256
-from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt, get_jwt_identity
 from db import db
 from models import UserModel, RoleModel, BusinessModel
 from sqlalchemy.exc import OperationalError
@@ -98,10 +98,33 @@ class AuthLogin(MethodView):
                 identity=str(user.id),
                 additional_claims={
                     "roles": [r.role for r in user.roles],
-                    "user_type": user.user_type
+                    "user_type": user.user_type,
+                    "business_id": user.business_id   # ✅ Added here
                 }
             ),
             "refresh_token": create_refresh_token(identity=str(user.id)),
             "user_type": user.user_type
         }
         return tokens, 200
+
+
+
+@blp.route('/refresh')
+class TokenRefresh(MethodView):
+    @jwt_required(refresh=True)
+    def post(self):
+        """Refresh access token using refresh token"""
+        current_user_id = get_jwt_identity()
+        user = UserModel.query.get_or_404(current_user_id)
+        
+        new_token = {
+            "access_token": create_access_token(
+                identity=current_user_id,
+                additional_claims={
+                    "roles": [r.role for r in user.roles],
+                    "user_type": user.user_type
+                }
+            )
+        }
+        
+        return new_token, 200

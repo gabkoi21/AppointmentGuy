@@ -29,7 +29,8 @@ def create_business(business_data):
         timestamp=business_data.get('timestamp'),
         address=business_data.get('address'),
         phone_number=business_data.get('phone_number'),
-        email=business_data.get('email')
+        email=business_data.get('email'),
+        status=business_data.get('status')
     )
     db.session.add(business)
     db.session.commit()
@@ -49,7 +50,8 @@ def create_admin_user(admin_data, business):
         phone_number=admin_data["phone_number"],
         user_type="business_admin",
         address=admin_data['address'],
-        business=business  # Associate with the actual business object
+        status=admin_data['status'],
+        business=business
     )
     
     admin_role = RoleModel.query.filter_by(role='business_admin').first()
@@ -109,7 +111,6 @@ class BusinessDetails(MethodView):
         return {"message": "Business and all associated users deleted successfully."}
     
     
-    
 @blp.route('/update/<int:business_id>')
 class BusinessUpdateView(MethodView):
     @blp.arguments(BusinessUpdateSchema)
@@ -131,22 +132,21 @@ class BusinessUpdateView(MethodView):
         return {"message": "Business updated successfully."}
     
 
-    # @blp.arguments(BusinessSchema)
-    # @blp.response(200, BusinessSchema)
-    # @role_required('business_admin')
-    # def get(self, business_id):
-    #     business = BusinessModel.query.get_or_404(business_id)
-    #     return business
+    @blp.arguments(BusinessSchema)
+    @blp.response(200, BusinessSchema)
+    @role_required('business_admin')
+    def get(self, business_id):
+        business = BusinessModel.query.get_or_404(business_id)
+        return business
 
 @blp.route('/<int:business_id>')
 class BusinessDetailsView(MethodView):
     @blp.response(200, BusinessSchema)
-    # @role_required('business_admin')
+    @role_required('business_admin')
     def get(self, business_id):
         """Get business details by ID. Only accessible by business admin."""
         business = BusinessModel.query.get_or_404(business_id)
         return business
-
 
 @blp.route('/')
 class BusinessList(MethodView):
@@ -156,8 +156,6 @@ class BusinessList(MethodView):
         """Get all businesses. Only accessible by super admin."""
         businesses = BusinessModel.query.all()
         return businesses
-
-
 
 
 

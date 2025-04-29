@@ -11,6 +11,7 @@ class BusinessModel(db.Model):
     phone_number = db.Column(db.String(50), nullable=True)
     email = db.Column(db.String(100), nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.now)
+    status = db.Column(db.String(20), default="Pending")
     
     # Relationships
     appointments = db.relationship('AppointmentModel', back_populates='business')  # Matches 'business' in AppointmentModel

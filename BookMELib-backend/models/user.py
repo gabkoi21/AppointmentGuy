@@ -15,6 +15,7 @@ class UserModel(db.Model):
     address = db.Column(db.String(255), nullable=True)
     phone_number = db.Column(db.String(255), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now)
+    status = db.Column(db.String(20), default="Pending")
 
 # Relationships
     appointments = db.relationship('AppointmentModel', back_populates='user')
