@@ -4,6 +4,7 @@ from models import UserModel, RoleModel, BusinessModel
 from passlib.hash import pbkdf2_sha256
 from schemas import BusinessSchema, UserSchema ,BusinessUpdateSchema
 from utils.decorators import role_required
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from db import db
 
 # Initialize the Blueprint for business-related routes
@@ -159,6 +160,18 @@ class BusinessList(MethodView):
 
 
 
+@blp.route('/my')
+class MyBusinessView(MethodView):
+    @jwt_required()
+    @blp.response(200, BusinessSchema)
+    @role_required('business_admin')
+    def get(self):
+        """Get the business of the logged-in business admin."""
+        current_user_id = get_jwt_identity()
+        user = UserModel.query.get_or_404(current_user_id)
 
-
-
+        if not user.business_id:
+            abort(404, message="No business associated with this admin.")
+        
+        business = BusinessModel.query.get_or_404(user.business_id)
+        return business

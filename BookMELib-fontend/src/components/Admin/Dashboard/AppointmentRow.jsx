@@ -1,7 +1,6 @@
 import React from "react";
-import Icon from "@mdi/react";
-import { mdiDotsVertical } from "@mdi/js";
 import dayjs from "dayjs";
+import AppointmentAction from "./AppointmentAction";
 
 const statusColor = {
   Active: "bg-green-100 text-green-700",
@@ -78,10 +77,9 @@ const AppointmentRow = ({
           {status}
         </span>
       </td>
-      <td className="px-4 py-4 text-right">
-        <div className="relative inline-block">
-          <Icon path={mdiDotsVertical} size={0.9} className="cursor-pointer" />
-        </div>
+
+      <td className=" ">
+        <AppointmentAction appointment={appointment} />
       </td>
     </tr>
   );

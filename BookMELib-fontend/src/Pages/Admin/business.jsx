@@ -1,10 +1,3 @@
-import { useState } from "react";
-import { requests } from "../../data/ServiceRequest";
-import Icon from "@mdi/react";
-import { drivers } from "../../data/TaskManagementData";
-import { mdiMagnify, mdiDotsHorizontal, mdiDelete, mdiClose } from "@mdi/js";
-import PickupScheduler from "../../components/UserPickUpCalendar";
-
 // Main Container Component
 const BusinessContainer = () => (
   <div className="flex">

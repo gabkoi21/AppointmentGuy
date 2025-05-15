@@ -34,7 +34,7 @@ export const NAV_ITEMS = [
     ],
   },
   {
-    to: "user",
+    to: "usermanagement",
     label: "User Management",
     icon: mdiAccountGroup,
     ariaLabel: "User Management",

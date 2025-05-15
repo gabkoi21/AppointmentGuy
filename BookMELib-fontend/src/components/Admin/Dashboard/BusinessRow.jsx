@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
-import useAppointment from "@/stores/appointmentStore";
-import BusinessAction from "./DeleteBusinessAction";
+// import useAppointment from "@/stores/appointmentStore";
+import BusinessAction from "./BusinessAction";
 import { useEffect } from "react";
 
 const statusColor = {
@@ -9,15 +9,9 @@ const statusColor = {
   Inactive: "bg-red-100 text-red-700",
 };
 
-const BusinessRow = ({ business }) => {
+const BusinessRow = ({ business, appointments }) => {
   const { id, name, status, timestamp, users = [] } = business || {};
   const admin = users.find((user) => user.user_type === "business_admin");
-
-  const { fetchAppointment, appointments } = useAppointment();
-
-  useEffect(() => {
-    fetchAppointment();
-  }, [fetchAppointment]);
 
   // Filter appointments for the current business
   const appointmentCount =
@@ -28,14 +22,14 @@ const BusinessRow = ({ business }) => {
       <td className="px-4 py-2 font-medium text-gray-900 dark:text-white">
         {name || "N/A"}
       </td>
-      <td className="px-4 py-4">
+      <td className="px-4 py-2">
         {admin ? `${admin.first_name} ${admin.last_name}` : "N/A"}
       </td>
       <td className="px-4 py-4">
         {timestamp ? dayjs(timestamp).format("MMM DD, YYYY") : "N/A"}
       </td>
-      <td className="px-4 py-4">{appointmentCount}</td>
-      <td className="px-4 py-4">
+      <td className="px-14 py-2">{appointmentCount}</td>
+      <td className="px-4 py-2">
         <span
           className={`px-2 py-1 rounded-full text-xs font-semibold ${
             statusColor[status] || "bg-gray-200 text-gray-700"
@@ -45,7 +39,7 @@ const BusinessRow = ({ business }) => {
         </span>
       </td>
 
-      <td className="px-4 py-4 relative">
+      <td className=" py-2">
         <BusinessAction business={business} />
       </td>
     </tr>

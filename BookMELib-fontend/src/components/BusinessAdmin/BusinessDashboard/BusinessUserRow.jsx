@@ -6,51 +6,38 @@ import {
   mdiTrashCanOutline,
 } from "@mdi/js";
 
+// This is the action component for the business user row
 const statusColor = {
   Active: "bg-green-100 text-green-700",
-  // Pending: "bg-yellow-100 text-yellow-700",
   Inactive: "bg-red-100 text-red-700",
 };
 
-const AppointmentRow = ({ appointment, services }) => {
-  const {
-    user: { first_name, last_name } = {},
-    date_time,
-    status,
-    service_id,
-  } = appointment || {};
-
-  // 🔍 Find service name from the list
-  const serviceName =
-    services.find((service) => service.id === service_id)?.name ||
-    "Service Not Found";
+// This component is for the business user row
+const BusinessUserRow = ({ user }) => {
+  const { first_name, last_name, address, status, email, phone_number } = user;
 
   return (
-    <tr className="bonprder-b hover:bg-gray-50 dark:hover:bg-gray-700 relative">
+    <tr className="border-b hover:bg-gray-50 dark:hover:bg-gray-700 relative">
       <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
-        {`${first_name || ""} ${last_name || ""}`}
+        {`${first_name} ${last_name}`}
       </td>
-      <td className="px-6 py-4 capitalize">{serviceName}</td>
-      <td className="px-6 py-4">{new Date(date_time).toLocaleString()}</td>
+      <td className="px-6 py-4">{email}</td>
+      <td className="px-6 py-4">{phone_number}</td>
+      <td className="px-6 py-4">{address}</td>
       <td className="px-6 py-4">
-        <span
-          className={`px-2 py-1 rounded-full text-xs font-semibold ${
-            statusColor[status] || "bg-gray-200 text-gray-700"
-          }`}
-        >
+        <span className="px-2 py-1 rounded-full text-xs font-semibold bg-gray-200 text-gray-700">
           {status}
         </span>
       </td>
       <td className="px-6 py-4">
-        <AppointmentAction />
+        <BusinessUserAction />
       </td>
     </tr>
   );
 };
 
-export default AppointmentRow;
-
-const AppointmentAction = () => {
+// This is the action component for the business user row
+const BusinessUserAction = () => {
   return (
     <div className="flex justify-end items-center space-x-2">
       {/* Edit Button */}
@@ -89,3 +76,5 @@ const AppointmentAction = () => {
     </div>
   );
 };
+
+export default BusinessUserRow;

@@ -15,6 +15,7 @@ const UserManagementContainer = () => (
         Manage Users & View Data
       </h1>
       <UserManagement />
+      <UserTable />
       <UserPaginationFooter />
     </main>
   </div>
@@ -22,12 +23,6 @@ const UserManagementContainer = () => (
 
 // Ths is to manage user si in this the user is fecth and the other state are also call
 const UserManagement = () => {
-  const { users, loading, error, fetchUser } = useUserStore();
-
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
-
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap gap-4 justify-between items-center">
@@ -40,20 +35,23 @@ const UserManagement = () => {
           </GlobalSearchBar>
         </div>
       </div>
-      <UserTable users={users} loading={loading} error={error} />
     </div>
   );
 };
 
 // This is the table to display the user so in here all the user is pass in the data and the column
-const UserTable = ({ users, loading, error, statusFilter }) => {
-  const filteredUsers = users?.filter(
-    (u) =>
-      u.user_type !== "super_admin" &&
-      (!statusFilter || u.status === statusFilter)
-  );
+const UserTable = () => {
+  const { users, loading, error, fetchUser } = useUserStore();
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+  // Filter users based on the status filter and user type
+  const filteredUsers = users?.filter((u) => u.user_type !== "super_admin");
+
   return (
-    <div>
+    <div className="mt-5">
       <DataTable
         columns={Usercolumns}
         data={filteredUsers}

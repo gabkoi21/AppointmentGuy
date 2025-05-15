@@ -4,8 +4,8 @@
 export const Appointmentcolumns = [
   { key: "customer", label: "Customer" },
   { key: "Business", label: "Business" },
-  { key: "service", label: "Service" },
   { key: "data&Time", label: "Date & Time" },
+  { key: "service", label: "Service" },
   { key: "status", label: "Status" },
   { key: "actions", label: "Actions" },
 ];

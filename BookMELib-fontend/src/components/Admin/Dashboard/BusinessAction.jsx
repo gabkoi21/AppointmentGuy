@@ -22,7 +22,10 @@ const BusinessAction = ({ business }) => {
 
   return (
     <>
-      <div className="flex justify-end items-center space-x-2">
+      <div
+        className="flex justify-end items-ce
+      nter space-x-2"
+      >
         {/* Edit Button */}
         <button
           className="text-gray-600 hover:text-blue-600 p-1"

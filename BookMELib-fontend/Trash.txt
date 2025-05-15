@@ -274,3 +274,42 @@ const useAuthStore = create(
 );
 
 export default useAuthStore;
+
+
+
+
+const RowUpdate = () => {
+  return (
+    <div className="absolute right-10 mt-2 w-64 bg-white rounded-xl shadow-xl z-10 border border-gray-200">
+      <div className="px-4 py-3 border-b border-gray-200">
+        <p className="text-sm font-semibold text-gray-600">
+          Manage Appointment
+        </p>
+        <p className="text-xs text-gray-400 mt-1">
+          Choose an action to update this booking.
+        </p>
+      </div>
+
+      <div className="flex flex-col text-sm">
+        <button
+          className="px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
+          title="Change the date or time of this appointment"
+        >
+          📅 Reschedule
+        </button>
+        <button
+          className="px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
+          title="Mark this appointment as completed, confirmed, or pending"
+        >
+          🔄 Update Status
+        </button>
+        <button
+          className="px-4 py-2 text-red-600 hover:bg-red-50 w-full text-left"
+          title="Permanently cancel this appointment"
+        >
+          ❌ Cancel Appointment
+        </button>
+      </div>
+    </div>
+  );
+};

@@ -1,6 +1,5 @@
-import Icon from "@mdi/react";
-import { mdiDotsVertical } from "@mdi/js";
 import dayjs from "dayjs";
+import UserAction from "./UserAction";
 
 const statusColor = {
   Active: "bg-green-100 text-green-700",
@@ -39,8 +38,9 @@ const UserRow = ({ users }) => {
           {status || "Unknown"}
         </span>
       </td>
-      <td className="px-4 py-2 text-right">
-        <Icon path={mdiDotsVertical} size={0.9} className="cursor-pointer" />
+
+      <td className="px-4 py-2 relative">
+        <UserAction users={users} />
       </td>
     </tr>
   );

@@ -10,23 +10,23 @@ import Login from "./Pages/auth/Login";
 import Register from "./Pages/auth/Register";
 import ProtectedRoute from "./components/ProtectedRoutes";
 
-// This is for the Admin Routes
+// This is the layout for the admin
 import AdminLayout from "./components/AdminLayout";
 import Admindashboard from "./Pages/Admin/AdminDashBoard";
-import BusinessManagement from "./Pages/Admin/business";
 import AllBusiness from "./Pages/Admin/AllBusiness";
 import Appointments from "./Pages/Admin/Appointment";
 import Settings from "./Pages/Admin/setting";
 import UserManagement from "./Pages/Admin/UserManagement";
 import AdminProfile from "./Pages/Admin/AdminProfile";
 
-// These are the pages for the for Business Admin
+// This is the layout for the business admin
 import BusinessAdminLayout from "./components/BusinessAdminlayout";
 import Dashboard from "./Pages/BusinessAdmin/Dashboard";
 import Appointment from "./Pages/BusinessAdmin/Appointment";
-import AssignedPickup from "./Pages/BusinessAdmin/Stafff";
+import BusinessUser from "./Pages/BusinessAdmin/BusinessUser";
+// import BusinessUserContainer from "./Pages/BusinessAdmin/BusinessUser";
 
-// These are the pages for the user end
+// This is the layout for the user
 import UserLayout from "./components/UserLayout";
 import MyRequest from "./Pages/User/MyRequest";
 import Notification from "./Pages/User/Notification";
@@ -34,6 +34,7 @@ import Profile from "./Pages/User/Profile";
 
 function App() {
   return (
+    //
     <BrowserRouter>
       <Routes>
         <Route index element={<Login />} />
@@ -56,10 +57,11 @@ function App() {
           <Route path="Admindashboard" element={<Admindashboard />} />
           <Route path="appointments" element={<Appointments />} />
           <Route path="settings" element={<Settings />} />
-          <Route path="user" element={<UserManagement />} />
+          <Route path="usermanagement" element={<UserManagement />} />
           <Route path="adminprofile" element={<AdminProfile />} />
         </Route>
 
+        {/* Business Admin Routes */}
         <Route
           path="bussinessadminboard"
           element={
@@ -71,8 +73,11 @@ function App() {
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="appointment" element={<Appointment />} />
+          <Route path="usermanagement" element={<BusinessUser />} />
+          {/* <Route path="businessuser" element={<BusinessUserContainer />} /> */}
         </Route>
 
+        {/* Business User Routes */}
         <Route
           path="userdashboard"
           element={

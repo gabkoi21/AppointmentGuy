@@ -5,6 +5,9 @@ import { columns } from "../../components/Admin/Dashboard/BusinessColumns";
 import BusinessRow from "../../components/Admin/Dashboard/BusinessRow";
 import TableBottomNavigation from "@/components/common/TableBottomNivigation";
 import AddBusiness from "@/components/BusinessAdmin/BusinessDashboard/AddBusiness";
+
+//  This component is for the business admin layout
+import useAppointment from "@/stores/appointmentStore";
 import useBusinessStore from "@/stores/businessStore";
 import Icon from "@mdi/react";
 import { mdiPlus } from "@mdi/js";
@@ -17,20 +20,18 @@ const AllBusinessContainer = () => (
         Manage your registered businesses
       </h1>
       <ManageBusiness />
+      <BusinessTable />
+      <TableBottomNavigation />
     </main>
   </div>
 );
 
 const ManageBusiness = () => {
   const [isAddBusinessOpen, setIsAddBusinessOpen] = useState(false);
-  const { businesses, loading, error, fetchBusinesses } = useBusinessStore();
-
-  useEffect(() => {
-    fetchBusinesses();
-  }, [fetchBusinesses]);
 
   return (
     <>
+      {/* Add Business Modal */}
       {isAddBusinessOpen && (
         <AddBusiness onClose={() => setIsAddBusinessOpen(false)} />
       )}
@@ -54,21 +55,34 @@ const ManageBusiness = () => {
           </button>
         </div>
       </div>
-
-      <BusinessTable businesses={businesses} loading={loading} error={error} />
     </>
   );
 };
 
-const BusinessTable = ({ businesses }) => {
+const BusinessTable = () => {
+  // Fetch businesses and appointments from the store
+  const { businesses, fetchBusinesses } = useBusinessStore();
+  const { fetchAppointment, appointments } = useAppointment();
+
+  // Fetch businesses and appointments when the component mounts
+  useEffect(() => {
+    fetchBusinesses();
+    fetchAppointment();
+  }, []);
+
   return (
     <div className="mt-5">
       <DataTable
         columns={columns}
         data={businesses}
-        renderRow={(item) => <BusinessRow key={item.id} business={item} />}
+        renderRow={(item) => (
+          <BusinessRow
+            key={item.id}
+            business={item}
+            appointments={appointments}
+          />
+        )}
       />
-      <TableBottomNavigation />
     </div>
   );
 };

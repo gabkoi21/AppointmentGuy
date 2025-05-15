@@ -1,10 +1,3 @@
-import { useState } from "react";
-// import { AdminNav } from "../../Routes/AdminRoutes";
-import { drivers, task, customers } from "../../data/TaskManagementData";
-
-import Icon from "@mdi/react";
-import { mdiDotsVertical } from "@mdi/js";
-
 const SettingContainer = () => (
   <div className="flex">
     <aside className="md:w-[16%] h-screen">{/* <AdminNav /> */}</aside>

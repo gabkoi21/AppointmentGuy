@@ -8,8 +8,6 @@ const useBusinessStore = create((set, get) => ({
   loading: false,
   error: null,
 
-  // Fetch all businesses
-
   fetchBusinesses: async () => {
     set({ loading: true, error: null });
     try {
@@ -22,7 +20,6 @@ const useBusinessStore = create((set, get) => ({
     }
   },
 
-  // Get business by ID
   getBusinessById: async (id) => {
     set({ loading: true, error: null, currentBusiness: null });
     try {
@@ -38,20 +35,15 @@ const useBusinessStore = create((set, get) => ({
     }
   },
 
-  // this function is used to delete a business
-
   deleteBusiness: async (id) => {
     set({ loading: true, error: null });
-
     try {
       const token = localStorage.getItem("token");
-
       await api.delete(`/business/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
       set((state) => ({
         businesses: state.businesses.filter((business) => business.id !== id),
         loading: false,
@@ -60,6 +52,27 @@ const useBusinessStore = create((set, get) => ({
       const errorMessage =
         error?.response?.data?.message || "Failed to delete business";
       set({ error: errorMessage, loading: false });
+    }
+  },
+
+  getBusinessByAdmid: async () => {
+    set({ loading: true, error: null });
+
+    try {
+      const token = localStorage.getItem("token"); // Retrieve token from localStorage
+      const response = await api.get(`/business/my`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      set({ currentBusiness: response.data, loading: false });
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || `Failed to load business`;
+      console.error("Business load error:", errorMessage);
+      set({ error: errorMessage, loading: false });
+      return null;
     }
   },
 }));

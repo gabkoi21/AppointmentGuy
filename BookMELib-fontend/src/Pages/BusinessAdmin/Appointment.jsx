@@ -1,92 +1,136 @@
-import ApppintmentContainer from "../../components/BusinessAdmin/BusinessDashboard/BusinessAppointmentList";
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+import { Calendar } from "@/components/ui/calendar";
+import React, { useEffect, useState } from "react";
+import { Appointmentcolumns } from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentColumns";
+import DataTable from "@/components/common/DataTable";
+import AppointmentStatusNavigation from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentActiveStatusNavigation";
+import AppointmentRow from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentRow";
+import GlobalSearchBar from "@/components/common/globalSearchBar";
+
 import Icon from "@mdi/react";
-import {
-  mdiCalendarMonth,
-  mdiCheckCircle,
-  mdiCancel,
-  mdiCalendarPlus,
-} from "@mdi/js";
+
+// This component is for the appointment page
+import useServiceStore from "@/stores/serviceStore";
+import useAppointment from "@/stores/appointmentStore";
 
 const BusinessAppointmentContainer = () => (
   <div className="flex">
     <aside className="md:w-[20%] lg:w-[23%] h-screen bg-gray-100" />
     <main className="md:w-[98%] w-full mx-3 px-4 mt-20">
-      <AppointmentInforHeader />
-      <DashboardOverview />
-      <ApppintmentContainer />
+      <h1 className="text-2xl capitalize font-semibold text-gray-800 dark:text-white mb-3">
+        Manage your User Appointments
+      </h1>
+      <Apppintment />
     </main>
   </div>
 );
 
-// --- Header Section ---
-const AppointmentInforHeader = () => {
+// This component is for the appointment page
+const Apppintment = () => {
+  const [activeTab, setActiveTab] = useState("allappointment");
+
   return (
-    <div className="space-y-2 relative">
-      <h1 className="text-2xl font-bold">Appointments Overview</h1>
-      <div className="flex justify-between items-center relative">
-        <h4 className="text-gray-700">
-          Manage and monitor all appointments across the platform.
-        </h4>
+    <>
+      <div className="flex mt-10">
+        <AppointmentStatusNavigation
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
       </div>
+      <div className="flex gap-4 mb-4">
+        <div className="w-full">
+          <GlobalSearchBar>
+            <div>
+              <input
+                placeholder="Search  Business"
+                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md block w-1/2 pl-10 py-2.5 dark:bg-white dark:border-gray-600 dark:text-white focus:outline-none focus:ring-0"
+              />
+            </div>
+          </GlobalSearchBar>
+        </div>
+      </div>
+      <AppointmentTable activeTab={activeTab} />
+    </>
+  );
+};
+
+// This component is for the appointment table
+const AppointmentTable = ({ activeTab }) => {
+  const { fetchAppointment, appointments } = useAppointment();
+  const { services, fetchServices } = useServiceStore();
+
+  useEffect(() => {
+    fetchServices();
+    fetchAppointment();
+  }, []);
+
+  // console.log("Fetched Appointments:", appointments);
+  console.log("Fetched Services:", services);
+
+  return (
+    <div className="mt-5">
+      {activeTab === "allappointment" && (
+        <>
+          <DataTable
+            columns={Appointmentcolumns}
+            data={appointments}
+            renderRow={(item, index) => (
+              <AppointmentRow
+                key={item.id || index}
+                appointment={item}
+                services={services}
+              />
+            )}
+          />
+        </>
+      )}
+      {activeTab === "calendarview" && <CalendarData />}
+      <AppointmentTableFooter />
     </div>
   );
 };
 
-// --- Dashboard Stats Section ---
-const stats = [
-  {
-    label: "Today Appointments",
-    value: "1.2k",
-    change: "+5%",
-    icon: mdiCalendarPlus,
-    color: "#3B82F6",
-  },
-  {
-    label: "Completed Today",
-    value: "300",
-    change: "+10%",
-    icon: mdiCheckCircle,
-    color: "#10B981",
-  },
+// This component is for the calendar view of the appointment table
+const CalendarData = () => {
+  const [date, setDate] = React.useState(new Date());
 
-  {
-    label: "Cancellations Today",
-    value: "15",
-    change: "+1%",
-    icon: mdiCancel,
-    color: "#EF4444",
-  },
-  {
-    label: "Upcoming (7 days)",
-    value: "12",
-    change: "-2%",
-    icon: mdiCalendarMonth,
-    color: "#F59E0B",
-  },
-];
-
-const DashboardOverview = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-      {stats.map((stat, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-4 p-5 bg-white rounded-2xl shadow-md transition hover:shadow-lg"
-        >
-          <div
-            className="p-3 rounded-full"
-            style={{ backgroundColor: `${stat.color}1A` }}
-          >
-            <Icon path={stat.icon} size={1.5} color={stat.color} />
-          </div>
-
-          <div className="space-y-1">
-            <p className="text-sm text-gray-500">{stat.label}</p>
-            <h2 className="text-2xl font-bold text-gray-800">{stat.value}</h2>
-          </div>
-        </div>
-      ))}
+    <div className=" mb-10">
+      <Calendar
+        mode="single"
+        selected={date}
+        onSelect={setDate}
+        className="rounded-md border w-full"
+      />
     </div>
+  );
+};
+
+// This component is for the footer of the appointment table
+const AppointmentTableFooter = () => {
+  return (
+    <>
+      <div className="flex justify-between items-center mt-8 ml-1 mb-10">
+        <div>
+          <p className="text-md text-gray-500">
+            Showing <span className="font-bold text-gray-600">1-5</span> of{" "}
+            <span className="font-bold text-gray-600">2,853</span> appointments
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button className="flex items-center gap-1 border border-gray-300 px-3 py-1 rounded-md text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+            <Icon path={mdiChevronLeft} size={0.9} />
+            Previous
+          </button>
+
+          <button className="flex items-center gap-1 border border-gray-300 px-3 py-1 rounded-md text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+            Next
+            <Icon path={mdiChevronRight} size={0.9} />
+          </button>
+        </div>
+      </div>
+    </>
   );
 };
 
