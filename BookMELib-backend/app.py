@@ -15,8 +15,7 @@ from resources.user import blp as UserBlueprint
 from resources.service import blp as ServiceBlueprint
 from resources.category import blp as CategoryBlueprint
 from resources.appointment import blp as AppointmentBlueprint
-from datetime import timedelta
-
+from flask_cors import CORS
 
 
 
@@ -50,9 +49,6 @@ def create_app(db_url=None):
 
     # Initialize JWT for authentication
     app.config["JWT_SECRET_KEY"] = "your-secure-random-key-here"
-    # Add these refresh token configurations
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)  # Access token expires in 1 hour
-    app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)  # Refresh token expires in 30 days
     jwt = JWTManager(app)
 
     # JWT token blacklist handling
@@ -100,9 +96,9 @@ def create_app(db_url=None):
             super_admin_role = RoleModel(role="super_admin")
             db.session.add(super_admin_role)
             db.session.commit()
-            # print("✅ Super Admin role created.")
-        # else:
-        #     print("ℹ️ Super Admin role already exists.")
+            print("✅ Super Admin role created.")
+        else:
+            print("ℹ️ Super Admin role already exists.")
 
     # Register the Blueprints
     api.register_blueprint(RoleBlueprint)
