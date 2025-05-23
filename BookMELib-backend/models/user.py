@@ -15,10 +15,14 @@ class UserModel(db.Model):
     address = db.Column(db.String(255), nullable=True)
     phone_number = db.Column(db.String(255), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now)
-    status = db.Column(db.String(20), default="Pending")
+    status = db.Column(db.String(20), default="Active")
 
-# Relationships
-    appointments = db.relationship('AppointmentModel', back_populates='user')
+    # Relationships
+    appointments = db.relationship(
+    'AppointmentModel',
+    back_populates='user',
+    cascade='all, delete',
+    passive_deletes=True
+)
     roles = db.relationship('RoleModel', secondary='user_roles', back_populates='users')
-    business = db.relationship('BusinessModel', back_populates='users')  # Add this line
-
+    business = db.relationship('BusinessModel', back_populates='users')

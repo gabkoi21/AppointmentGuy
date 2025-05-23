@@ -36,6 +36,21 @@ const useAuthStore = create(
           return null;
         }
       },
+      register: async (userData) => {
+        set({ loading: true, error: null });
+
+        try {
+          await api.post("/auth/register", userData);
+          set({ loading: false });
+          return true;
+        } catch (error) {
+          set({
+            error: error?.response?.data?.message || "Registration failed.",
+            loading: false,
+          });
+          return false;
+        }
+      },
 
       logout: () => {
         localStorage.removeItem("accessToken");

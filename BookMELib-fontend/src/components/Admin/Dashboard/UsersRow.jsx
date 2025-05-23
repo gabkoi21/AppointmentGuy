@@ -1,13 +1,19 @@
+import React from "react";
 import dayjs from "dayjs";
 import UserAction from "./UserAction";
 
+import {
+  mdiSquareEditOutline,
+  mdiAccountOff,
+  mdiTrashCanOutline,
+} from "@mdi/js";
+
 const statusColor = {
   Active: "bg-green-100 text-green-700",
-  Pending: "bg-yellow-100 text-yellow-700",
   Inactive: "bg-red-100 text-red-700",
 };
 
-const UserRow = ({ users }) => {
+const UserRow = ({ user }) => {
   const {
     first_name,
     last_name,
@@ -16,7 +22,7 @@ const UserRow = ({ users }) => {
     timestamp,
     business,
     status,
-  } = users || {};
+  } = user || {};
 
   return (
     <tr className="border-b hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -40,7 +46,7 @@ const UserRow = ({ users }) => {
       </td>
 
       <td className="px-4 py-2 relative">
-        <UserAction users={users} />
+        <UserAction user={user} />
       </td>
     </tr>
   );

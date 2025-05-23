@@ -22,14 +22,15 @@ export const NAV_ITEMS = [
     subItems: [
       {
         to: "allbusiness",
-        label: "All Business",
-        ariaLabel: "All Business",
+        label: "View Businesses",
+        ariaLabel: "View Business",
       },
       {
-        to: "active",
-        label: "Active Businesses",
-        ariaLabel: "Active Businesses",
+        to: "addbusiness",
+        label: "Add Business",
+        ariaLabel: "Add Business",
       },
+
       // Add more sub-items as needed...
     ],
   },

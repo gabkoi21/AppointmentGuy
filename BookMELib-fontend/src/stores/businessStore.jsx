@@ -8,6 +8,23 @@ const useBusinessStore = create((set, get) => ({
   loading: false,
   error: null,
 
+  registerBusiness: async (businessData) => {
+    set({ loading: true, error: null });
+    try {
+      const token = localStorage.getItem("token");
+      const response = await api.post("/business/create", businessData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      set({ businesses: [...get().businesses, response.data], loading: false });
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "Failed to register business";
+      set({ error: errorMessage, loading: false });
+    }
+  },
+
   fetchBusinesses: async () => {
     set({ loading: true, error: null });
     try {
