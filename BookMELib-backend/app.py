@@ -15,13 +15,23 @@ from resources.user import blp as UserBlueprint
 from resources.service import blp as ServiceBlueprint
 from resources.category import blp as CategoryBlueprint
 from resources.appointment import blp as AppointmentBlueprint
-from flask_cors import CORS
+
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
+
+# Enable foreign key constraint for SQLite
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
 
 
 
 def create_app(db_url=None):
-    load_dotenv(".env.dev")  # Load environment variables from .env file
+    load_dotenv(".env.dev")
     app = Flask(__name__)
+    
     app.config["PROPAGATE_EXCEPTIONS"] = True
     app.config["API_TITLE"] = "BookMeLib REST API"
     app.config["API_VERSION"] = "v1"
@@ -31,27 +41,23 @@ def create_app(db_url=None):
     app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url or "sqlite:///database.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["PROPAGATE_EXCEPTIONS"] = True
-
-    CORS(app)
+    app.config["JWT_SECRET_KEY"] = "your-secure-random-key-here"
 
     # Initialize database
     db.init_app(app)
 
-    # Initialize Flask-Migrate for database migrations
+    # Initialize Flask-Migrate
     Migrate(app, db)
 
-    # Initialize Flask-Smorest for API management
+    # Enable Flask-Smorest
     api = Api(app)
 
-    # Enable CORS (Cross-Origin Resource Sharing)
+    # ✅ Enable CORS with proper headers for Authorization and frontend access
     CORS(app)
 
-    # Initialize JWT for authentication
-    app.config["JWT_SECRET_KEY"] = "your-secure-random-key-here"
+    # Setup JWT
     jwt = JWTManager(app)
 
-    # JWT token blacklist handling
     @jwt.token_in_blocklist_loader
     def check_if_token_in_blocklist(jwt_header, jwt_payload):
         return jwt_payload["jti"] in BLOCKLIST
@@ -86,21 +92,19 @@ def create_app(db_url=None):
             {"description": "Signature verification failed.", "error": "invalid_token"}
         ), 401
 
-    # 👇🏽 This is where we create the Super Admin role automatically
+    # Ensure Super Admin role exists
     with app.app_context():
         db.create_all()
-
         from models.role import RoleModel
-
         if not RoleModel.query.filter_by(role="super_admin").first():
             super_admin_role = RoleModel(role="super_admin")
             db.session.add(super_admin_role)
             db.session.commit()
-            print("✅ Super Admin role created.")
+            print("Super Admin role created.")
         else:
-            print("ℹ️ Super Admin role already exists.")
+            print("Super Admin role already exists.")
 
-    # Register the Blueprints
+    # Register all API blueprints
     api.register_blueprint(RoleBlueprint)
     api.register_blueprint(AuthBlueprint)
     api.register_blueprint(UserBlueprint)

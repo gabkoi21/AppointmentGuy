@@ -39,7 +39,6 @@ const Register = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleSignUp = async (e) => {
     e.preventDefault();
 
@@ -52,9 +51,24 @@ const Register = () => {
     const success = await register(registrationData);
 
     if (success) {
+      // Clear form first
+      setFormData({
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        address: "",
+        business_id: "",
+        phone_number: "",
+        user_type: "customer",
+        status: "Active",
+      });
+
+      // Then show message and navigate
+      alert("Registration successful! Please log in.");
       navigate("/");
     }
-    nn;
   };
 
   return (
@@ -66,7 +80,25 @@ const Register = () => {
           </h2>
         </div>
 
-        <form onSubmit={handleSignUp} className="space-y-5 mb-5">
+        <form
+          onSubmit={async (e) => {
+            await handleSignUp(e);
+            // Clear form fields after successful registration
+            setFormData({
+              first_name: "",
+              last_name: "",
+              email: "",
+              password: "",
+              confirmPassword: "",
+              address: "",
+              business_id: "",
+              phone_number: "",
+              user_type: "customer",
+              status: "Active",
+            });
+          }}
+          className="space-y-5 mb-5"
+        >
           {/* First Name */}
           <div>
             <label

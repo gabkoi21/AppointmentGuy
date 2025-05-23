@@ -5,12 +5,13 @@ import AppointmentRow from "@/components/Admin/Dashboard/AppointmentRow";
 import DataTable from "@/components/common/DataTable";
 import GlobalSearchBar from "@/components/common/globalSearchBar";
 import { Appointmentcolumns } from "@/components/Admin/Dashboard/AppointmentColumns";
+import AppointmentsPagination from "@/components/Admin/Dashboard/AppointmentPaginationFooter";
 
-import AppointmentsPagination from "@/components/Admin/Dashboard/AppointmentsPagination";
+import useUserStore from "@/stores/userStore";
 
 // This component is used to display the appointment container
-import useAppointment from "@/stores/appointmentStore";
-import useUserStore from "@/stores/userStore";
+import useAppointmentStore from "@/stores/appointmentStore";
+// import useUserStore from "@/stores/userStore";
 import useBusinessStore from "@/stores/businessStore";
 import useServiceStore from "@/stores/serviceStore";
 
@@ -29,20 +30,6 @@ const Appointments = () => {
   // This is done using the useEffect hook to ensure that the data is fetched when the component mounts
   // and when the dependencies change
 
-  const { appointments, fetchAppointment } = useAppointment();
-  const { users, fetchUser } = useUserStore();
-  const { businesses, fetchBusinesses } = useBusinessStore();
-  const { fetchServices, services } = useServiceStore();
-
-  // Fetching the data when the component mounts
-  // Fetching the data when the dependencies change
-  useEffect(() => {
-    fetchAppointment();
-    fetchUser();
-    fetchBusinesses();
-    fetchServices();
-  }, [fetchAppointment, fetchUser, fetchBusinesses, fetchServices]);
-
   return (
     <div>
       <div className="flex flex-col md:flex-row gap-4">
@@ -56,17 +43,25 @@ const Appointments = () => {
         </div>
         <BusinessCategory />
       </div>
-      <AppointmentTable
-        appointments={appointments}
-        users={users}
-        businesses={businesses}
-        services={services}
-      />
+      <AppointmentTable />
     </div>
   );
 };
 
-const AppointmentTable = ({ appointments, users, businesses, services }) => {
+const AppointmentTable = () => {
+  const { appointments, fetchAppointment } = useAppointmentStore();
+  const { users, fetchUser } = useUserStore();
+  const { businesses, fetchBusinesses } = useBusinessStore();
+  const { fetchServices, services } = useServiceStore();
+
+  // Fetching the data when the component mounts
+  // Fetching the data when the dependencies change
+  useEffect(() => {
+    fetchAppointment();
+    fetchUser();
+    fetchBusinesses();
+    fetchServices();
+  }, [fetchAppointment, fetchUser, fetchBusinesses, fetchServices]);
   return (
     <>
       <div className="mt-5">

@@ -6,6 +6,8 @@ import {
   Outlet,
 } from "react-router-dom";
 import React from "react";
+
+// This is the layout for the login and register
 import Login from "./Pages/auth/Login";
 import Register from "./Pages/auth/Register";
 import ProtectedRoute from "./components/ProtectedRoutes";
@@ -18,6 +20,7 @@ import Appointments from "./Pages/Admin/Appointment";
 import Settings from "./Pages/Admin/setting";
 import UserManagement from "./Pages/Admin/UserManagement";
 import AdminProfile from "./Pages/Admin/AdminProfile";
+import AddBusiness from "./Pages/Admin/AddBusiness";
 
 // This is the layout for the business admin
 import BusinessAdminLayout from "./components/BusinessAdminlayout";
@@ -53,6 +56,8 @@ function App() {
           <Route path="business" element={<Outlet />}>
             <Route index element={<Navigate to="allbusiness" />} />
             <Route path="allbusiness" element={<AllBusiness />} />
+            <Route path="addbusiness" element={<AddBusiness />} />
+            {/* <Route path="businessuser" element={<BusinessUserContainer />} /> */}
           </Route>
           <Route path="Admindashboard" element={<Admindashboard />} />
           <Route path="appointments" element={<Appointments />} />

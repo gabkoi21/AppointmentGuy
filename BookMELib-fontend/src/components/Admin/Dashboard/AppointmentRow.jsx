@@ -1,6 +1,5 @@
 import React from "react";
 import dayjs from "dayjs";
-import AppointmentAction from "./AppointmentAction";
 
 const statusColor = {
   Active: "bg-green-100 text-green-700",
@@ -40,12 +39,6 @@ const AppointmentRow = ({
     return item?.name || <span className="text-gray-400 italic">Unknown</span>;
   };
 
-  // This is for debugging purposes and to check if the data is being passed correctly
-  console.log("These are the list of our Data ");
-  console.log("List business", businesses);
-  console.log("List user", users);
-  console.log("List service", services);
-
   return (
     <tr className="hover:bg-gray-50 dark:hover:bg-gray-700 border-b">
       <td className="px-4 py-4 font-medium text-gray-900 dark:text-white">
@@ -67,19 +60,6 @@ const AppointmentRow = ({
         ) : (
           <span className="text-gray-400 italic">No Date</span>
         )}
-      </td>
-      <td className="px-2 py-4">
-        <span
-          className={`px-2 py-1 rounded-full text-xs font-semibold ${
-            statusColor[status] || "bg-gray-200 text-gray-700"
-          }`}
-        >
-          {status}
-        </span>
-      </td>
-
-      <td className=" ">
-        <AppointmentAction appointment={appointment} />
       </td>
     </tr>
   );

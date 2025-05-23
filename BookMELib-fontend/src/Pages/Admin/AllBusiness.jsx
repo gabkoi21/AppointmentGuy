@@ -4,7 +4,7 @@ import DataTable from "../../components/common/DataTable";
 import { columns } from "../../components/Admin/Dashboard/BusinessColumns";
 import BusinessRow from "../../components/Admin/Dashboard/BusinessRow";
 import TableBottomNavigation from "@/components/common/TableBottomNivigation";
-import AddBusiness from "@/components/BusinessAdmin/BusinessDashboard/AddBusiness";
+import BusinessPaginationFooter from "@/components/Admin/Dashboard/BusinessPaginationFooter";
 
 //  This component is for the business admin layout
 import useAppointment from "@/stores/appointmentStore";
@@ -22,40 +22,34 @@ const AllBusinessContainer = () => (
       <ManageBusiness />
       <BusinessTable />
       <TableBottomNavigation />
+      <BusinessPaginationFooter />
     </main>
   </div>
 );
 
 const ManageBusiness = () => {
-  const [isAddBusinessOpen, setIsAddBusinessOpen] = useState(false);
+  const [setIsAddBusinessOpen] = useState(false);
 
   return (
-    <>
-      {/* Add Business Modal */}
-      {isAddBusinessOpen && (
-        <AddBusiness onClose={() => setIsAddBusinessOpen(false)} />
-      )}
-
-      <div className="flex items-center justify-between">
-        <div className="w-1/2">
-          <GlobalSearchBar>
-            <input
-              placeholder="Search Business"
-              className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md block w-full pl-10 py-2.5 dark:bg-white dark:border-gray-600 dark:text-white focus:outline-none focus:ring-0"
-            />
-          </GlobalSearchBar>
-        </div>
-        <div className="mt-4">
-          <button
-            onClick={() => setIsAddBusinessOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 whitespace-nowrap bg-black text-white border rounded-md"
-          >
-            <Icon path={mdiPlus} size={1} />
-            Add Business
-          </button>
-        </div>
+    <div className="flex items-center justify-between mb-6">
+      <div className="w-full md:w-1/2">
+        <GlobalSearchBar>
+          <input
+            placeholder="Search Business"
+            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md block w-full pl-10 py-2.5 dark:bg-white dark:border-gray-600 dark:text-white focus:outline-none focus:ring-0"
+          />
+        </GlobalSearchBar>
       </div>
-    </>
+      <div>
+        {/* <button
+          onClick={() => navigate("/Admindashboard/addbusiness")}
+          className="flex items-center gap-2 px-4 py-2 bg-black text-white border rounded-md ml-4"
+        >
+          <Icon path={mdiPlus} size={1} />
+          Add Business
+        </button> */}
+      </div>
+    </div>
   );
 };
 

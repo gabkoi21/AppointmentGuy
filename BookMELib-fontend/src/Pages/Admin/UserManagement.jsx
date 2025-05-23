@@ -3,8 +3,10 @@ import UserRow from "@/components/Admin/Dashboard/UsersRow";
 import { Usercolumns } from "@/components/Admin/Dashboard/UserColumns";
 import DataTable from "@/components/common/DataTable";
 import GlobalSearchBar from "@/components/common/globalSearchBar";
-import useUserStore from "@/stores/UserStore";
-import UserPaginationFooter from "@/components/Admin/Dashboard/UserPaginationFooter";
+import PaginationFooter from "@/components/Admin/Dashboard/UserPaginationFooter";
+
+// import { useUserStore } from "../../store/userStore";
+import useUserStore from "@/stores/userStore";
 
 // This is the general container for the user  management page
 const UserManagementContainer = () => (
@@ -16,7 +18,7 @@ const UserManagementContainer = () => (
       </h1>
       <UserManagement />
       <UserTable />
-      <UserPaginationFooter />
+      <PaginationFooter />
     </main>
   </div>
 );
@@ -42,6 +44,7 @@ const UserManagement = () => {
 // This is the table to display the user so in here all the user is pass in the data and the column
 const UserTable = () => {
   const { users, loading, error, fetchUser } = useUserStore();
+  console.log("Users:", users);
 
   useEffect(() => {
     fetchUser();
@@ -55,7 +58,7 @@ const UserTable = () => {
       <DataTable
         columns={Usercolumns}
         data={filteredUsers}
-        renderRow={(user) => <UserRow key={user.id} users={user} />}
+        renderRow={(user) => <UserRow key={user.id} user={user} />}
         loading={loading}
         error={error}
       />

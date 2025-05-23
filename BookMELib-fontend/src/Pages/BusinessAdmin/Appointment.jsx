@@ -11,7 +11,7 @@ import Icon from "@mdi/react";
 
 // This component is for the appointment page
 import useServiceStore from "@/stores/serviceStore";
-import useAppointment from "@/stores/appointmentStore";
+import useAppointmentStore from "@/stores/appointmentStore";
 
 const BusinessAppointmentContainer = () => (
   <div className="flex">
@@ -56,7 +56,7 @@ const Apppintment = () => {
 
 // This component is for the appointment table
 const AppointmentTable = ({ activeTab }) => {
-  const { fetchAppointment, appointments } = useAppointment();
+  const { fetchAppointment, appointments } = useAppointmentStore();
   const { services, fetchServices } = useServiceStore();
 
   useEffect(() => {

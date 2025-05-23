@@ -1,7 +1,12 @@
 import dayjs from "dayjs";
-// import useAppointment from "@/stores/appointmentStore";
+import Icon from "@mdi/react";
+import {
+  mdiSquareEditOutline,
+  mdiAccountOff,
+  mdiTrashCanOutline,
+} from "@mdi/js";
+
 import BusinessAction from "./BusinessAction";
-import { useEffect } from "react";
 
 const statusColor = {
   Active: "bg-green-100 text-green-700",
@@ -37,8 +42,7 @@ const BusinessRow = ({ business, appointments }) => {
         >
           {status || "Unknown"}
         </span>
-      </td>
-
+      </td>{" "}
       <td className=" py-2">
         <BusinessAction business={business} />
       </td>
