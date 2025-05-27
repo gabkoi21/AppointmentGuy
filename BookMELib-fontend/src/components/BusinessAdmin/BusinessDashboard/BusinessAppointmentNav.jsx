@@ -1,13 +1,10 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const BusinessAppointmentActiveStatusNavigation = ({
-  activeTab,
-  setActiveTab,
-}) => {
+const BusinessAppointmentNav = ({ activeTab, setActiveTab }) => {
   return (
     <>
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="bg-gray-100 py-6 px-4 rounded-lg">
+        <TabsList className="bg-gray-100 py-5 px-5 rounded-sm shadow-sm">
           <TabsTrigger value="allappointment">All Appointment</TabsTrigger>
           <TabsTrigger value="calendarview">Calendar View</TabsTrigger>
         </TabsList>
@@ -16,4 +13,4 @@ const BusinessAppointmentActiveStatusNavigation = ({
   );
 };
 
-export default BusinessAppointmentActiveStatusNavigation;
+export default BusinessAppointmentNav;

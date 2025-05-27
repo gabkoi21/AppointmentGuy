@@ -1,14 +1,13 @@
 import Icon from "@mdi/react";
 import useUserStore from "@/stores/userStore";
-
 import {
-  mdiSquareEditOutline,
+  mdiFileEdit,
   mdiAccountOff,
-  mdiTrashCanOutline,
   mdiAccountCheck,
+  mdiTrashCanOutline,
 } from "@mdi/js";
 
-const UserAction = ({ user }) => {
+const BusinessUserAction = ({ user }) => {
   const { deleteUser } = useUserStore();
 
   const handleDelete = async () => {
@@ -27,12 +26,18 @@ const UserAction = ({ user }) => {
   };
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-3">
       {/* Edit Button */}
-      <button className="flex items-center gap-1 text-blue-500 hover:text-blue-700">
-        <Icon path={mdiSquareEditOutline} size={0.8} />
+      <button
+        className="text-gray-600 hover:text-blue-600 "
+        onClick={() => {
+          console.log("Edit clicked for", id);
+        }}
+      >
+        <Icon path={mdiFileEdit} size={0.8} />
       </button>
-      {/* Suspend/Activate Button */}
+
+      {/* Suspend / Activate Button */}
       {status === "Active" ? (
         <button className="text-gray-600 hover:text-yellow-600 p-1">
           <Icon path={mdiAccountOff} size={0.8} />
@@ -47,10 +52,11 @@ const UserAction = ({ user }) => {
           <Icon path={mdiAccountCheck} size={0.8} />
         </button>
       )}
+
       {/* Delete Button */}
       <button
+        className="hover:text-red-600 text-red-500 p-1"
         onClick={handleDelete}
-        className="flex items-center gap-1 text-red-500 hover:text-red-700"
       >
         <Icon path={mdiTrashCanOutline} size={0.8} />
       </button>
@@ -58,4 +64,4 @@ const UserAction = ({ user }) => {
   );
 };
 
-export default UserAction;
+export default BusinessUserAction;

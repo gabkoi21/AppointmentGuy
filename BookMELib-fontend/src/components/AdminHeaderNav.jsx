@@ -1,5 +1,5 @@
 // External Dependencies
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MobileNav from "./MobileNav";
 import Icon from "@mdi/react";
 import { mdiMenu, mdiClose, mdiAccountCircle } from "@mdi/js";
@@ -8,12 +8,21 @@ import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 
 import useAuthStore from "../stores/authStore";
+import useUserStore from "@/stores/userStore";
 
 const AdminHeaderNav = ({ children }) => {
   // State for managing dropdowns and mobile menu
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [closing, setClosing] = useState(false);
   const [dropNav, setDropNav] = useState(false);
+
+  // Get the current user from the store
+  const { users, fetchUser, isLoading, error } = useUserStore();
+  const currentUser = users?.[0];
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
 
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
@@ -48,10 +57,19 @@ const AdminHeaderNav = ({ children }) => {
         <div className="flex w-full flex-wrap items-center justify-between md:px-3">
           <div className="flex justify-between w-full items-center">
             {/* Left Side - Branding */}
-            <div>
-              <a className="text-2xl text-white font-semibold" href="#">
-                Admin Dashboard
-              </a>
+            <div className="flex items-center space-x-2">
+              <h1 className="text-2xl text-white font-semibold">
+                👋 Welcome back,{" "}
+                <span className="capitalize">
+                  {/* Display the current user's name if available */}
+                  {currentUser?.first_name || currentUser?.last_name
+                    ? `${currentUser.first_name || ""} ${
+                        currentUser.last_name || ""
+                      }`.trim()
+                    : "Admin"}
+                </span>
+                !
+              </h1>
             </div>
 
             {/* Right Side - Profile and Mobile Menu Toggle */}

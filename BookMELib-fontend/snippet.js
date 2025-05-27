@@ -17,3 +17,6 @@ const handleDelete = async () => {
       }
     }
   };
+
+
+  // These are code snippets for various components in a React application, including business management, appointment handling, and user management. Below are the completed code snippets for each section:
