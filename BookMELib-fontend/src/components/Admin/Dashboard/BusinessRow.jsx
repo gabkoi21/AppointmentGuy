@@ -1,26 +1,25 @@
 import dayjs from "dayjs";
-import Icon from "@mdi/react";
-import {
-  mdiSquareEditOutline,
-  mdiAccountOff,
-  mdiTrashCanOutline,
-} from "@mdi/js";
-
 import BusinessAction from "./BusinessAction";
+
+import { Link } from "react-router-dom";
 
 const statusColor = {
   Active: "bg-green-100 text-green-700",
-  Pending: "bg-yellow-100 text-yellow-700",
   Inactive: "bg-red-100 text-red-700",
 };
 
 const BusinessRow = ({ business, appointments }) => {
-  const { id, name, status, timestamp, users = [] } = business || {};
-  const admin = users.find((user) => user.user_type === "business_admin");
+  const {
+    id,
+    name = "N/A",
+    status = "Unknown",
+    timestamp,
+    users = [],
+  } = business || {};
 
-  // Filter appointments for the current business
+  const admin = users.find(({ user_type }) => user_type === "business_admin");
   const appointmentCount =
-    appointments?.filter((apt) => apt.business_id === id).length || 0;
+    appointments?.filter(({ business_id }) => business_id === id).length || 0;
 
   return (
     <tr className="border-b hover:bg-gray-50 dark:hover:bg-gray-700">

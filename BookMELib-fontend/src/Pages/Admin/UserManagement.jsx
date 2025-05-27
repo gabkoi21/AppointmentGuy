@@ -3,7 +3,8 @@ import UserRow from "@/components/Admin/Dashboard/UsersRow";
 import { Usercolumns } from "@/components/Admin/Dashboard/UserColumns";
 import DataTable from "@/components/common/DataTable";
 import GlobalSearchBar from "@/components/common/globalSearchBar";
-import PaginationFooter from "@/components/Admin/Dashboard/UserPaginationFooter";
+
+import { Link } from "react-router-dom";
 
 // import { useUserStore } from "../../store/userStore";
 import useUserStore from "@/stores/userStore";
@@ -18,7 +19,7 @@ const UserManagementContainer = () => (
       </h1>
       <UserManagement />
       <UserTable />
-      <PaginationFooter />
+      <UserPagenation />
     </main>
   </div>
 );
@@ -67,3 +68,61 @@ const UserTable = () => {
 };
 
 export default UserManagementContainer;
+
+const UserPagenation = () => {
+  return (
+    <div className="flex items-center justify-between mt-6 mb-10">
+      <div className="text-gray-600 text-md font-bold">
+        <p>Showing 1 - 10 out of 50</p>
+      </div>
+
+      {/* Pagination */}
+      <div>
+        <ul className="flex border rounded-sm py-1.5 bg-white shadow-sm">
+          <li>
+            <Link
+              className="px-3 rounded-r-none rounded-tr-none rounded-bt  py-2 text-gray-700 hover:bg-blue-600 hover:text-white transition"
+              to="#"
+              aria-label="Previous"
+            >
+              Prev
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="px-4 r py-2 bg-blue-600 text-white font-medium"
+              to="#"
+            >
+              1
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="px-4 py-2  text-gray-700 hover:bg-blue-600 hover:text-white transition"
+              to="#"
+            >
+              2
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-blue-600 hover:text-white transition"
+              to="#"
+            >
+              3
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="px-3 py-2 rounded-none text-gray-700 hover:bg-blue-600 hover:text-white transition"
+              to="#"
+              aria-label="Next"
+            >
+              Next
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};

@@ -3,11 +3,11 @@ import { Calendar } from "@/components/ui/calendar";
 import React, { useEffect, useState } from "react";
 import { Appointmentcolumns } from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentColumns";
 import DataTable from "@/components/common/DataTable";
-import AppointmentStatusNavigation from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentActiveStatusNavigation";
+import AppointmentStatusNavigation from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentNav";
 import AppointmentRow from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentRow";
 import GlobalSearchBar from "@/components/common/globalSearchBar";
 
-import Icon from "@mdi/react";
+import { Link } from "react-router-dom";
 
 // This component is for the appointment page
 import useServiceStore from "@/stores/serviceStore";
@@ -17,38 +17,42 @@ const BusinessAppointmentContainer = () => (
   <div className="flex">
     <aside className="md:w-[20%] lg:w-[23%] h-screen bg-gray-100" />
     <main className="md:w-[98%] w-full mx-3 px-4 mt-20">
-      <h1 className="text-2xl capitalize font-semibold text-gray-800 dark:text-white mb-3">
-        Manage your User Appointments
+      <h1 className="text-2xl capitalize font-semibold text-gray-800 dark:text-white ">
+        User Appointments List
       </h1>
-      <Apppintment />
+      <Appointment />
+      <UserPagenation />
     </main>
   </div>
 );
 
 // This component is for the appointment page
-const Apppintment = () => {
+const Appointment = () => {
   const [activeTab, setActiveTab] = useState("allappointment");
 
   return (
     <>
-      <div className="flex mt-10">
-        <AppointmentStatusNavigation
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-      </div>
-      <div className="flex gap-4 mb-4">
-        <div className="w-full">
+      <div className="flex flex-row  justify-between gap-10 items-center  ">
+        {/* Search Bar Section */}
+        <div className=" w-full md:w-96">
           <GlobalSearchBar>
-            <div>
-              <input
-                placeholder="Search  Business"
-                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md block w-1/2 pl-10 py-2.5 dark:bg-white dark:border-gray-600 dark:text-white focus:outline-none focus:ring-0"
-              />
-            </div>
+            <input
+              placeholder="Search Business"
+              className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md block w-full pl-10 py-2.5 focus:outline-none focus:ring-0"
+            />
           </GlobalSearchBar>
         </div>
+
+        {/* Status Navigation Section */}
+        <div className="mt-4">
+          <AppointmentStatusNavigation
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+        </div>
       </div>
+
+      {/* Appointment Table */}
       <AppointmentTable activeTab={activeTab} />
     </>
   );
@@ -63,9 +67,6 @@ const AppointmentTable = ({ activeTab }) => {
     fetchServices();
     fetchAppointment();
   }, []);
-
-  // console.log("Fetched Appointments:", appointments);
-  console.log("Fetched Services:", services);
 
   return (
     <div className="mt-5">
@@ -85,7 +86,6 @@ const AppointmentTable = ({ activeTab }) => {
         </>
       )}
       {activeTab === "calendarview" && <CalendarData />}
-      <AppointmentTableFooter />
     </div>
   );
 };
@@ -106,32 +106,63 @@ const CalendarData = () => {
   );
 };
 
-// This component is for the footer of the appointment table
-const AppointmentTableFooter = () => {
+export default BusinessAppointmentContainer;
+
+// This component is for the pagination of the user table
+const UserPagenation = () => {
   return (
-    <>
-      <div className="flex justify-between items-center mt-8 ml-1 mb-10">
-        <div>
-          <p className="text-md text-gray-500">
-            Showing <span className="font-bold text-gray-600">1-5</span> of{" "}
-            <span className="font-bold text-gray-600">2,853</span> appointments
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button className="flex items-center gap-1 border border-gray-300 px-3 py-1 rounded-md text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
-            <Icon path={mdiChevronLeft} size={0.9} />
-            Previous
-          </button>
-
-          <button className="flex items-center gap-1 border border-gray-300 px-3 py-1 rounded-md text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
-            Next
-            <Icon path={mdiChevronRight} size={0.9} />
-          </button>
-        </div>
+    <div className="flex items-center justify-between mt-5 ">
+      <div className="text-gray-600 text-md font-bold">
+        <p>Showing 1 - 10 out of 50</p>
       </div>
-    </>
+
+      {/* Pagination */}
+      <div>
+        <ul className="flex border rounded-sm py-1.5 bg-white shadow-sm">
+          <li>
+            <Link
+              className="px-3 rounded-r-none rounded-tr-none rounded-bt  py-2 text-gray-700 hover:bg-blue-600 hover:text-white transition"
+              to="#"
+              aria-label="Previous"
+            >
+              Prev
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="px-4 r py-2 bg-blue-600 text-white font-medium"
+              to="#"
+            >
+              1
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="px-4 py-2  text-gray-700 hover:bg-blue-600 hover:text-white transition"
+              to="#"
+            >
+              2
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-blue-600 hover:text-white transition"
+              to="#"
+            >
+              3
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="px-3 py-2 rounded-none text-gray-700 hover:bg-blue-600 hover:text-white transition"
+              to="#"
+              aria-label="Next"
+            >
+              Next
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 };
-
-export default BusinessAppointmentContainer;

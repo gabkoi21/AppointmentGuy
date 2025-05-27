@@ -4,7 +4,7 @@ import { Calendar } from "@/components/ui/calendar";
 import React, { useEffect, useState } from "react";
 import { Appointmentcolumns } from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentColumns";
 import DataTable from "@/components/common/DataTable";
-import AppointmentStatusNavigation from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentActiveStatusNavigation";
+import AppointmentStatusNavigation from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentNav";
 import AppointmentRow from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentRow";
 import GlobalSearchBar from "@/components/common/globalSearchBar";
 import useAppointment from "@/stores/appointmentStore";
