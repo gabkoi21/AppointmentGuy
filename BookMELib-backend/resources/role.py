@@ -33,17 +33,6 @@ class RoleList(MethodView):
         return {"message": "Role created successfully."}, 201
             
 
-    # @blp.arguments(RoleSchema)
-    # @jwt_required()
-    # @role_required("super_admin")
-    # def post(self, role_data):
-    #     """Create a new role this is """
-    #     role = RoleModel(**role_data)
-    #     db.session.add(role)
-    #     db.session.commit()
-    #     return {"message": "Role created successfully."}, 201
-
-
 @blp.route("/<int:role_id>")
 class Role(MethodView):
     @blp.response(200, RoleSchema)

@@ -1,4 +1,4 @@
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/Global/ui/tabs";
 
 const AppointmentActiveStatusNavigation = ({ activeTab, setActiveTab }) => {
   return (

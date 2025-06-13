@@ -26,10 +26,10 @@ const Register = () => {
     password: "",
     confirmPassword: "",
     address: "",
-    business_id: "",
     phone_number: "",
     user_type: "customer",
     status: "Active",
+    business_id: null, // Changed from empty string to null
   });
 
   useEffect(() => {
@@ -59,10 +59,10 @@ const Register = () => {
         password: "",
         confirmPassword: "",
         address: "",
-        business_id: "",
         phone_number: "",
         user_type: "customer",
         status: "Active",
+        business_id: null, // Changed from empty string to null
       });
 
       // Then show message and navigate
@@ -91,10 +91,10 @@ const Register = () => {
               password: "",
               confirmPassword: "",
               address: "",
-              business_id: "",
               phone_number: "",
               user_type: "customer",
               status: "Active",
+              business_id: null, // Changed from empty string to null
             });
           }}
           className="space-y-5 mb-5"
@@ -113,7 +113,7 @@ const Register = () => {
               name="first_name"
               value={formData.first_name}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-teal-200 focus:outline-none focus:ring-0 focus:border-gray-300"
               placeholder="Enter your first name"
               required
             />
@@ -133,7 +133,7 @@ const Register = () => {
               name="last_name"
               value={formData.last_name}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-teal-200 focus:outline-none focus:ring-0 focus:border-gray-300"
               placeholder="Enter your last name"
               required
             />
@@ -153,7 +153,7 @@ const Register = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-teal-200 focus:outline-none focus:ring-0 focus:border-gray-300"
               placeholder="Enter your email"
               required
             />
@@ -176,7 +176,7 @@ const Register = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-teal-200 focus:outline-none focus:ring-0 focus:border-gray-300"
                 placeholder="Enter your password"
                 required
                 minLength="6"
@@ -207,7 +207,7 @@ const Register = () => {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-teal-200 focus:outline-none focus:ring-0 focus:border-gray-300"
                 placeholder="Confirm your password"
                 required
               />
@@ -238,7 +238,7 @@ const Register = () => {
               name="phone_number"
               value={formData.phone_number}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-teal-200 focus:outline-none focus:ring-0 focus:border-gray-300"
               placeholder="Enter your phone number"
               required
             />
@@ -258,49 +258,9 @@ const Register = () => {
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-teal-200 focus:outline-none focus:ring-0 focus:border-gray-300"
               placeholder="Enter your address"
             />
-          </div>
-
-          {/* Business Dropdown */}
-
-          <div>
-            <label
-              htmlFor="business_id"
-              className="block text-sm font-semibold text-gray-700 mb-1"
-            >
-              Select Business
-            </label>
-            <select
-              id="business_id"
-              name="business_id"
-              value={formData.business_id}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
-              required
-              disabled={businessLoading}
-            >
-              <option value="">-- Select a Business --</option>
-              {businesses.length > 0 ? (
-                businesses.map((business) => (
-                  <option key={business.id} value={business.id}>
-                    {business.name}
-                  </option>
-                ))
-              ) : (
-                <option disabled>No businesses available</option>
-              )}
-            </select>
-
-            {businessLoading && (
-              <p className="text-sm text-gray-500 mt-1">
-                Loading businesses...
-              </p>
-            )}
-            {businessError && (
-              <p className="text-red-500 text-sm mt-1">{businessError}</p>
-            )}
           </div>
 
           {/* Hidden user_type */}
@@ -311,7 +271,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full bg-teal-500 hover:bg-teal-600 uppercase text-white font-semibold text-sm py-2.5 rounded-md transition ${
+            className={`w-full bg-[#994d51] hover:bg-[#994d51]  uppercase text-white font-semibold text-sm py-2.5 rounded-md transition ${
               loading ? "opacity-70 cursor-not-allowed" : ""
             }`}
           >

@@ -46,10 +46,10 @@ function Login() {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-sm bg-white shadow-lg rounded-xl p-8">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Welcome Back 👋</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Welcome Back</h2>
           <p className="text-sm text-gray-600 mt-1">
             Sign in to continue using{" "}
-            <span className="font-medium text-teal-600">AppointmentGuy</span>
+            <span className="font-medium text-gray-900">AppointmentGuy</span>
           </p>
         </div>
 
@@ -63,7 +63,7 @@ function Login() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm  focus:ring-teal-200  text-sm pr-10  focus:outline-none focus:ring-0 focus:border-gray-300"
               placeholder="Enter your email"
               required
             />
@@ -79,7 +79,7 @@ function Login() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-200 focus:outline-none text-sm pr-10"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm  focus:ring-teal-200 text-sm pr-10  focus:outline-none focus:ring-0 focus:border-gray-300"
                 placeholder="Enter your password"
                 required
               />
@@ -101,7 +101,7 @@ function Login() {
             <p className="text-sm text-gray-600">Don’t have an account?</p>
             <Link
               to="/register"
-              className="text-teal-600 font-medium hover:underline"
+              className="text-[#994d51] font-medium hover:underline"
               aria-label="Register a new account"
             >
               Register
@@ -113,7 +113,7 @@ function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-teal-500 hover:bg-teal-600 uppercase text-white font-semibold text-sm py-2.5 rounded-md transition"
+            className="w-full bg-[#994d51] hover:bg-[#994d51] uppercase text-white font-semibold text-sm py-2.5 rounded-md transition   focus:outline-none focus:ring-0 focus:border-gray-300"
           >
             {loading ? "Signing In..." : "Sign In"}
           </button>

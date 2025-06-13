@@ -40,8 +40,17 @@ const useBusinessStore = create((set, get) => ({
   getBusinessById: async (id) => {
     set({ loading: true, error: null, currentBusiness: null });
     try {
+      if (!id) {
+        throw new Error("Business ID is required");
+      }
       const response = await api.get(`/business/${id}`);
-      set({ currentBusiness: response.data, loading: false });
+      set((state) => ({
+        currentBusiness: response.data,
+        businesses: state.businesses.some((b) => b.id === response.data.id)
+          ? state.businesses
+          : [...state.businesses, response.data],
+        loading: false,
+      }));
       return response.data;
     } catch (error) {
       const errorMessage =
@@ -77,7 +86,7 @@ const useBusinessStore = create((set, get) => ({
 
     try {
       const token = localStorage.getItem("token"); // Retrieve token from localStorage
-      const response = await api.get(`/business/my`, {
+      const response = await api.get(`/business/my-business`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

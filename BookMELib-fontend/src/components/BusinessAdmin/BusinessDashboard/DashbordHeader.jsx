@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Pie, PieChart, Label } from "recharts";
 
-// import { Card, CardContent } from "@components/ui/card";npm 
-import { Card, CardContent } from "../../ui/card";
+// import { Card, CardContent } from "@components/ui/card";npm
+import { Card, CardContent } from "../../Global/ui/card";
 
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/Global/ui/chart";
 
 // Chart data
 const chartData = [

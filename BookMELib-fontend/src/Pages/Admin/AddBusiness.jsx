@@ -23,8 +23,9 @@ const createInitialFormData = () => ({
 
 const AddBusinessContainer = () => (
   <div className="flex">
-    <aside className="md:w-[20%] lg:w-[23%] h-screen bg-gray-100 dark:bg-gray-800" />
-    <main className="md:w-[98%] w-full mx-3 px-3 mt-20">
+    <aside className="md:w-[20%] lg:w-[23%] h-screen " />
+    <main className="md:w-[98%] w-full mx-3 px-3 mt-14">
+      {/* <AdminDashboard /> */}
       <AddBusiness />
     </main>
   </div>
@@ -80,7 +81,7 @@ const BusinessRegistrationForm = () => {
   };
 
   return (
-    <div className="bg-white mt-3 dark:bg-gray-800 p-6 rounded-xl shadow-xl mb-10 mx-auto">
+    <div className="bg-white mt-3  p-6 rounded-xl shadow-xl mb-10 mx-auto">
       <form onSubmit={handleCreateBusiness} className="space-y-6">
         {/* Business Info */}
         <div>

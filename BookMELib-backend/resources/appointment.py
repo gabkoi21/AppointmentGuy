@@ -2,14 +2,21 @@ from flask import request
 from flask import Flask, request, jsonify
 from flask_smorest import abort, Blueprint
 from flask_jwt_extended import get_jwt, get_jwt_identity , jwt_required
-from models import AppointmentModel , ServiceModel
+from models import AppointmentModel , ServiceModel, BusinessModel
 from schemas import AppointmentSchema, AppointmentUpdateSchema
 from db import db
 from flask.views import MethodView
 from utils.decorators import role_required
+from datetime import datetime, timedelta
 
 blp = Blueprint("Appointment", __name__, url_prefix="/appointment", description="Operations on Appointments")
 
+VALID_STATUS_TRANSITIONS = {
+    'pending': ['confirmed', 'cancelled'],
+    'confirmed': ['completed', 'cancelled'],
+    'completed': [],  # terminal state
+    'cancelled': []   # terminal state
+}
 
 @blp.route("/")
 class AppointmentList(MethodView):
@@ -45,12 +52,21 @@ class AppointmentList(MethodView):
     @blp.response(201, AppointmentSchema)
     @role_required("customer") 
     def post(self, appointment_data):
+        service = ServiceModel.query.get_or_404(appointment_data['service_id'])
+        scheduled_time = appointment_data['scheduled_time']  # Changed from date_time to scheduled_time
         
-        if not ServiceModel.query.get(request.get_json().get('service_id')):
-            abort(404, message="Service not found. Please create the service first before scheduling an appointment.")
+        # Check for existing appointments at the same time
+        existing_appointment = AppointmentModel.query.filter_by(
+            business_id=appointment_data['business_id'],
+            scheduled_time=scheduled_time
+        ).first()
+        
+        if existing_appointment:
+            abort(400, message="This time slot is already booked. Please choose another time.")
         
         user_id = get_jwt_identity()
         appointment_data["user_id"] = user_id
+        appointment_data["status"] = "pending"  # Set initial status
 
         appointment = AppointmentModel(**appointment_data)
         db.session.add(appointment)
@@ -72,14 +88,18 @@ class Appointment(MethodView):
     @jwt_required()
     @role_required("business_admin", "customer", check_owner=True)
     def put(self, appointment_data, appointment_id):
-
-        if not ServiceModel.query.get(request.get_json().get('service_id')):
-            abort(404, message="Service not found. Please create the service first before scheduling an appointment.")
-
         appointment = AppointmentModel.query.get_or_404(appointment_id)
 
+        # Validate status transition
+        if 'status' in appointment_data:
+            new_status = appointment_data['status']
+            current_status = appointment.status
+            
+            if new_status not in VALID_STATUS_TRANSITIONS.get(current_status, []):
+                abort(400, message=f"Invalid status transition from {current_status} to {new_status}")
+
         for key, value in appointment_data.items():
-            if key != "user_id":
+            if key != "user_id":  # Protect user_id from changes
                 setattr(appointment, key, value)
 
         db.session.commit()

@@ -1,6 +1,6 @@
 const SettingContainer = () => (
   <div className="flex">
-    <aside className="md:w-[16%] h-screen">{/* <AdminNav /> */}</aside>
+    <aside className="md:w-[16%] h-screen"></aside>
     <main className="md:w-[84%] w-full mx-3 px-3 mt-20">
       <Settings />
     </main>

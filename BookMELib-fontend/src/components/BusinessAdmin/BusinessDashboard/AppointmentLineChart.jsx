@@ -1,11 +1,16 @@
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import * as React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/Global/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/Global/ui/chart";
 
 const chartData = [
   { month: "Sunday", desktop: 186, mobile: 80 },

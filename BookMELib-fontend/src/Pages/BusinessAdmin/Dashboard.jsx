@@ -3,7 +3,6 @@ import { mdiCalendarCheck, mdiAccountPlus, mdiCheckCircle } from "@mdi/js";
 
 import ComponentAriaChart from "@/components/BusinessAdmin/BusinessDashboard/AppointmentLineChart";
 import ComponentServices from "@/components/BusinessAdmin/BusinessDashboard/ServiceDonutChart";
-import RecntAppointments from "@/components/BusinessAdmin/BusinessDashboard/RecntAppointment";
 
 const BusinessAdminContainer = () => {
   return (
@@ -11,7 +10,6 @@ const BusinessAdminContainer = () => {
       <aside className="md:w-[20%] lg:w-[23%] h-screen " />
       <main className="md:w-[98%] w-full mx-3 px-4 mt-20">
         <Dashboard />
-        <RecntAppointments />
         <Copyright />
       </main>
     </div>
@@ -47,8 +45,8 @@ const stats = [
 
 const Dashboard = () => {
   return (
-    <div className="p-2 space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
+    <div className="p-2 space-y-6 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6  ">
         {stats.map((stat, i) => (
           <div
             key={i}
@@ -85,7 +83,7 @@ const Dashboard = () => {
 };
 
 const Copyright = () => (
-  <div className="ml-5">
+  <div className="ml-5 mb-5">
     <span style={{ fontSize: "14px", color: "#666", fontWeight: "lighter" }}>
       © 2025 Appointmentguy
     </span>

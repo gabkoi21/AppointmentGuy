@@ -9,7 +9,7 @@ const useUserStore = create((set) => ({
   fetchUser: async () => {
     set({ loading: true, error: null });
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("accessToken");
       const response = await api.get("/auth/users", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -19,21 +19,49 @@ const useUserStore = create((set) => ({
     } catch (error) {
       const errorMessage =
         error?.response?.data?.message || "Failed to load users";
+      console.error("Error fetching users:", error);
       set({ error: errorMessage, loading: false });
+    }
+  },
+
+  updateUser: async (userId, userData) => {
+    set({ loading: true, error: null });
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await api.put(`/auth/users/${userId}`, userData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Update the user in the local state
+      set((state) => ({
+        users: state.users.map((user) =>
+          user.id === userId ? { ...user, ...userData } : user
+        ),
+        loading: false,
+      }));
+
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "Failed to update user";
+      console.error("Error updating user:", error);
+      set({ error: errorMessage, loading: false });
+      throw error; // Rethrow to handle in component
     }
   },
 
   deleteUser: async (id) => {
     set({ loading: true, error: null });
     try {
-      const token = localStorage.getItem("token");
-      await api.delete(`/auth/${id}`, {
+      const token = localStorage.getItem("accessToken");
+      await api.delete(`/auth/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      // Update users in state
       set((state) => ({
         users: state.users.filter((user) => user.id !== id),
         loading: false,
@@ -41,7 +69,9 @@ const useUserStore = create((set) => ({
     } catch (error) {
       const errorMessage =
         error?.response?.data?.message || "Failed to delete user";
+      console.error("Error deleting user:", error);
       set({ error: errorMessage, loading: false });
+      throw error;
     }
   },
 }));

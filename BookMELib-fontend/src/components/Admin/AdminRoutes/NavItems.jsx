@@ -40,12 +40,7 @@ export const NAV_ITEMS = [
     icon: mdiAccountGroup,
     ariaLabel: "User Management",
   },
-  {
-    to: "appointments",
-    label: "Appointments",
-    icon: mdiCalendarCheck,
-    ariaLabel: "Appointments",
-  },
+
   {
     to: "settings",
     label: "Settings",

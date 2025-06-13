@@ -1,4 +1,3 @@
-// components/AdminComponent/SidebarNavDropdown.jsx
 import React, { useState } from "react";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import Icon from "@mdi/react";

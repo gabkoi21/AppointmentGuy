@@ -17,7 +17,7 @@ class Category(MethodView):
 
     @blp.arguments(CategorySchema)
     @blp.response(201, CategorySchema)
-    @role_required('super_admin')
+    # @role_required('super_admin')
     def post(self, category_data):
         """Create a new category."""
         category = CategoryModel(**category_data) 

@@ -27,7 +27,6 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
     cursor.close()
 
 
-
 def create_app(db_url=None):
     load_dotenv(".env.dev")
     app = Flask(__name__)
@@ -92,20 +91,23 @@ def create_app(db_url=None):
             {"description": "Signature verification failed.", "error": "invalid_token"}
         ), 401
 
-    # Ensure Super Admin role exists
+    # Ensure all required roles exist
     with app.app_context():
         db.create_all()
         from models.role import RoleModel
-        if not RoleModel.query.filter_by(role="super_admin").first():
-            super_admin_role = RoleModel(role="super_admin")
-            db.session.add(super_admin_role)
-            db.session.commit()
-            print("Super Admin role created.")
-        else:
-            print("Super Admin role already exists.")
 
-    # Register all API blueprints
-    api.register_blueprint(RoleBlueprint)
+        required_roles = ["super_admin", "business_admin", "customer"]
+        for role_name in required_roles:
+            if not RoleModel.query.filter_by(role=role_name).first():
+                role = RoleModel(role=role_name)
+                db.session.add(role)
+                db.session.commit()
+                print(f"{role_name.replace('_', ' ').title()} role created.")
+            else:
+                print(f"{role_name.replace('_', ' ').title()} role already exists.")
+
+   
+    # Register all API blueprints    api.register_blueprint(RoleBlueprint)
     api.register_blueprint(AuthBlueprint)
     api.register_blueprint(UserBlueprint)
     api.register_blueprint(BusinessBlueprint)

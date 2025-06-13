@@ -3,71 +3,83 @@ import UserRow from "@/components/Admin/Dashboard/UsersRow";
 import { Usercolumns } from "@/components/Admin/Dashboard/UserColumns";
 import DataTable from "@/components/common/DataTable";
 import GlobalSearchBar from "@/components/common/globalSearchBar";
-
 import { Link } from "react-router-dom";
-
-// import { useUserStore } from "../../store/userStore";
 import useUserStore from "@/stores/userStore";
 
-// This is the general container for the user  management page
 const UserManagementContainer = () => (
-  <div className="flex">
-    <aside className="hidden md:block md:w-[20%] lg:w-[23%] h-screen bg-gray-100 dark:bg-gray-800" />
-    <main className="md:w-[98%] w-full mx-3 px-3 mt-20">
-      <h1 className="text-2xl font-semibold text-gray-800 dark:text-white mb-3">
-        Manage Users & View Data
-      </h1>
-      <UserManagement />
-      <UserTable />
-      <UserPagenation />
-    </main>
-  </div>
+  <>
+    <div className=" flex">
+      <aside className="md:w-[20%] lg:w-[23%] h-screen " />
+      <main className="md:w-[98%] w-full mx-3 px-3 mt-14">
+        <h1 className="text-2xl font-semibold text-gray-800 dark:text-white mb-3">
+          Manage Users
+        </h1>
+        <ManageUsers />
+      </main>
+    </div>
+  </>
 );
 
-// Ths is to manage user si in this the user is fecth and the other state are also call
-const UserManagement = () => {
+const ManageUsers = () => {
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap gap-4 justify-between items-center">
-        <div className="w-full md:w-96">
+    <>
+      <div className="flex items-center justify-between mb-6 w-full">
+        <div className="w-1/2">
           <GlobalSearchBar>
             <input
-              placeholder="Search user"
-              className="w-[130%] py-2 pl-10 text-sm rounded-md border border-gray-300 dark:bg-white dark:text-white"
+              placeholder="Search Business"
+              className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md block w-full pl-10 py-2.5 dark:bg-white dark:border-gray-600 dark:text-white focus:outline-none focus:ring-0"
             />
           </GlobalSearchBar>
         </div>
       </div>
-    </div>
+      <UserTable />
+      <UserPagenation />
+    </>
   );
 };
 
-// This is the table to display the user so in here all the user is pass in the data and the column
 const UserTable = () => {
   const { users, loading, error, fetchUser } = useUserStore();
-  console.log("Users:", users);
+  const [activeActionId, setActiveActionId] = useState(null);
 
   useEffect(() => {
     fetchUser();
-  }, [fetchUser]);
+  }, []);
+
+  if (loading) {
+    return <div>Loading users...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading users: {error}</div>;
+  }
+
+  if (!users || users.length === 0) {
+    return <div>No users found</div>;
+  }
 
   // Filter users based on the status filter and user type
-  const filteredUsers = users?.filter((u) => u.user_type !== "super_admin");
+  const filteredUsers = Array.isArray(users) ? users : [];
 
   return (
-    <div className="mt-5">
+    <div className="mb-4">
+      {" "}
       <DataTable
-        columns={Usercolumns}
         data={filteredUsers}
-        renderRow={(user) => <UserRow key={user.id} user={user} />}
-        loading={loading}
-        error={error}
+        columns={Usercolumns}
+        renderRow={(user) => (
+          <UserRow
+            key={user.id}
+            user={user}
+            activeActionId={activeActionId}
+            setActiveActionId={setActiveActionId}
+          />
+        )}
       />
     </div>
   );
 };
-
-export default UserManagementContainer;
 
 const UserPagenation = () => {
   return (
@@ -121,8 +133,10 @@ const UserPagenation = () => {
               Next
             </Link>
           </li>
-        </ul>
+        </ul>{" "}
       </div>
     </div>
   );
 };
+
+export default UserManagementContainer;

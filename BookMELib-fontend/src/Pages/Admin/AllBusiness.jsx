@@ -3,27 +3,24 @@ import GlobalSearchBar from "../../components/common/globalSearchBar";
 import DataTable from "../../components/common/DataTable";
 import { columns } from "../../components/Admin/Dashboard/BusinessColumns";
 import BusinessRow from "../../components/Admin/Dashboard/BusinessRow";
-import TableBottomNavigation from "@/components/common/TableBottomNivigation";
-import BusinessPaginationFooter from "@/components/Admin/Dashboard/BusinessPaginationFooter";
+// import TableBottomNavigation from "@/components/common/TableBottomNivigation";
 
 //  This component is for the business admin layout
 import useAppointment from "@/stores/appointmentStore";
 import useBusinessStore from "@/stores/businessStore";
-import Icon from "@mdi/react";
-import { mdiPlus } from "@mdi/js";
 
 import { Link } from "react-router-dom";
 
 const AllBusinessContainer = () => (
   <div className="flex">
-    <aside className="md:w-[20%] lg:w-[23%] h-screen bg-gray-100 dark:bg-gray-800" />
-    <main className="md:w-[98%] w-full mx-3 px-3 mt-20">
+    <aside className="md:w-[20%] lg:w-[23%] h-screen " />
+    <main className="md:w-[98%] w-full mx-3 px-3 mt-14">
       <h1 className="text-2xl font-semibold text-gray-800 capitalize dark:text-white mb-3">
-        List of Registered Businesses
+        List Businesses
       </h1>
       <ManageBusiness />
       <BusinessTable />
-      <TableBottomNavigation />
+
       <BusibessPagenation />
     </main>
   </div>
@@ -33,8 +30,8 @@ const ManageBusiness = () => {
   const [setIsAddBusinessOpen] = useState(false);
 
   return (
-    <div className="flex items-center justify-between mb-6">
-      <div className="w-full md:w-1/2">
+    <div className="flex items-center justify-between mb-6 w-full">
+      <div className="w-1/2">
         <GlobalSearchBar>
           <input
             placeholder="Search Business"
@@ -50,6 +47,7 @@ const BusinessTable = () => {
   // Fetch businesses and appointments from the store
   const { businesses, fetchBusinesses } = useBusinessStore();
   const { fetchAppointment, appointments } = useAppointment();
+  const [activeActionId, setActiveActionId] = useState(null);
 
   // Fetch businesses and appointments when the component mounts
   useEffect(() => {
@@ -67,6 +65,8 @@ const BusinessTable = () => {
             key={item.id}
             business={item}
             appointments={appointments}
+            activeActionId={activeActionId}
+            setActiveActionId={setActiveActionId}
           />
         )}
       />
