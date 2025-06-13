@@ -20,7 +20,7 @@ const AllBusinessContainer = () => (
       </h1>
       <ManageBusiness />
       <BusinessTable />
-      {/* <TableBottomNavigation /> */}
+
       <BusibessPagenation />
     </main>
   </div>
