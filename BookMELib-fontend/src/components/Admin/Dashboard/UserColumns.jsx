@@ -4,9 +4,8 @@
 export const Usercolumns = [
   { key: "name", label: "Name" },
   { key: "email", label: "Email" },
-  { key: "business", label: "business" },
   { key: "role", label: "Role" },
-  { key: "joined", label: "Joined" },
+  { key: "associated salon", label: "Associated Salon" },
   { key: "status", label: "Status" },
   { key: "actions", label: "Actions" },
 ];

@@ -1,6 +1,6 @@
 import Icon from "@mdi/react";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar } from "@/components/Global/ui/calendar";
 import React, { useEffect, useState } from "react";
 import { Appointmentcolumns } from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentColumns";
 import DataTable from "@/components/common/DataTable";

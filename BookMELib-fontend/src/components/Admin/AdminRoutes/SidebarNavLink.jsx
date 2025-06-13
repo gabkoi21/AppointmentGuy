@@ -10,8 +10,8 @@ const SidebarNavLink = ({ to, icon, label, ariaLabel }) => {
       className={({ isActive }) =>
         `flex items-center p-0 lg:px-2 ${
           isActive
-            ? "text-green-950 bg-gray-200 border-l-4 border-green-500"
-            : "text-black"
+            ? "text-gray-950 font-bold text-xl border-l-4"
+            : "text-gray-400 text-md"
         }`
       }
       aria-label={ariaLabel}

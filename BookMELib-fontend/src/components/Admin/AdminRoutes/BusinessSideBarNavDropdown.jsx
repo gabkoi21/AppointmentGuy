@@ -12,7 +12,7 @@ const BusinessSidebarDropdown = ({ parentTo, subItems }) => {
             className={({ isActive }) =>
               `block p-1 pl-3 ${
                 isActive
-                  ? "text-green-950 bg-gray-200 border-l-4 border-green-500"
+                  ? "text-green-950 bg-gray-200 border-l-4"
                   : "text-black"
               }`
             }

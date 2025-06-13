@@ -18,5 +18,45 @@ const handleDelete = async () => {
     }
   };
 
+ 
 
-  // These are code snippets for various components in a React application, including business management, appointment handling, and user management. Below are the completed code snippets for each section:
+// // Filter salons based on search query
+  const filteredSalons =
+  businesses?.filter(
+    (business) =>
+      business.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      business.description.toLowerCase().includes(searchQuery.toLowerCase())
+  ) || [];
+
+
+
+  // This is for dynamic routes 
+  <Route path="services/:businessId" element={<ServicePages />} />
+
+
+  // logout 
+  const handleLogout = () => {
+    useAuthStore.getState().logout();
+  };
+  
+
+// close drop down down
+
+  useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (actionRef.current && !actionRef.current.contains(event.target)) {
+          if (activeActionId === id) {
+            setActiveActionId(null);
+          }
+        }
+      };
+  
+      if (isActionOpen) {
+        document.addEventListener("mousedown", handleClickOutside);
+      }
+  
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [isActionOpen, activeActionId, id, setActiveActionId]);
+  

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
-import Icon from "@mdi/react";
+
 import AppointmentRow from "@/components/Admin/Dashboard/AppointmentRow";
 import DataTable from "@/components/common/DataTable";
 import GlobalSearchBar from "@/components/common/globalSearchBar";
@@ -8,6 +7,8 @@ import { Appointmentcolumns } from "@/components/Admin/Dashboard/AppointmentColu
 import AppointmentsPagination from "@/components/Admin/Dashboard/AppointmentPaginationFooter";
 
 import useUserStore from "@/stores/userStore";
+
+import { Link } from "react-router-dom";
 
 // This component is used to display the appointment container
 import useAppointmentStore from "@/stores/appointmentStore";
@@ -18,9 +19,9 @@ import useServiceStore from "@/stores/serviceStore";
 const ApppintmentContainer = () => (
   <div className="flex">
     <aside className="md:w-[20%] lg:w-[23%] h-screen" />
-    <main className="md:w-[98%] w-full mx-3 px-3 mt-20">
+    <main className="md:w-[98%] w-full mx-3 px-3 mt-14">
       <Appointments />
-      <AppointmentsPagination />
+      <AppointmentPagenation />
     </main>
   </div>
 );
@@ -41,7 +42,6 @@ const Appointments = () => {
             />
           </GlobalSearchBar>
         </div>
-        <BusinessCategory />
       </div>
       <AppointmentTable />
     </div>
@@ -55,49 +55,89 @@ const AppointmentTable = () => {
   const { fetchServices, services } = useServiceStore();
 
   // Fetching the data when the component mounts
-  // Fetching the data when the dependencies change
   useEffect(() => {
     fetchAppointment();
     fetchUser();
     fetchBusinesses();
     fetchServices();
   }, [fetchAppointment, fetchUser, fetchBusinesses, fetchServices]);
+
   return (
-    <>
-      <div className="mt-5">
-        <DataTable
-          columns={Appointmentcolumns}
-          data={appointments}
-          renderRow={(appointment) => (
-            <AppointmentRow
-              key={appointment.id}
-              appointment={appointment}
-              users={users}
-              businesses={businesses}
-              services={services}
-            />
-          )}
-        />
-      </div>
-    </>
+    <div className="mt-5 w-full overflow-x-auto">
+      <div className="min-w-[700px]"></div>
+      <DataTable
+        columns={Appointmentcolumns}
+        data={appointments}
+        renderRow={(appointment) => (
+          <AppointmentRow
+            key={appointment.id}
+            appointment={appointment}
+            users={users}
+            businesses={businesses}
+            services={services}
+          />
+        )}
+      />
+    </div>
   );
 };
 
-const BusinessCategory = ({ value, onChange }) => (
-  <div className="flex flex-col gap-2 mt-5 w-full md:w-[30%] lg:w-[20%]">
-    <select
-      id="category"
-      value={value}
-      onChange={onChange}
-      className="border border-gray-300 rounded-lg py-2.5 text-sm focus:outline-none focus:ring-0 focus:border-gray-300 active:outline-none active:ring-0 active:border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-    >
-      <option value="">All Category</option>
-      <option value="beauty">Beauty & Wellness</option>
-      <option value="health">Health & Medical</option>
-      <option value="fitness">Fitness</option>
-      <option value="services">Professional Services</option>
-    </select>
-  </div>
-);
-
 export default ApppintmentContainer;
+
+const AppointmentPagenation = () => {
+  return (
+    <div className="flex items-center justify-between mt-6 mb-10">
+      <div className="text-gray-600 text-md font-bold">
+        <p>Showing 1 - 10 out of 50</p>
+      </div>
+
+      {/* Pagination */}
+      <div>
+        <ul className="flex border rounded-sm py-1.5 bg-white shadow-sm">
+          <li>
+            <Link
+              className="px-3 rounded-r-none rounded-tr-none rounded-bt  py-2 text-gray-700 hover:bg-blue-600 hover:text-white transition"
+              to="#"
+              aria-label="Previous"
+            >
+              Prev
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="px-4 r py-2 bg-blue-600 text-white font-medium"
+              to="#"
+            >
+              1
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="px-4 py-2  text-gray-700 hover:bg-blue-600 hover:text-white transition"
+              to="#"
+            >
+              2
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-blue-600 hover:text-white transition"
+              to="#"
+            >
+              3
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="px-3 py-2 rounded-none text-gray-700 hover:bg-blue-600 hover:text-white transition"
+              to="#"
+              aria-label="Next"
+            >
+              Next
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};

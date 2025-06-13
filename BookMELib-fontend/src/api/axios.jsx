@@ -2,7 +2,7 @@ import axios from "axios";
 import useAuthStore from "@/stores/authStore";
 
 const api = axios.create({
-  baseURL: " http://192.168.152.150:5000",
+  baseURL: " http://192.168.104.150:5000",
 });
 
 api.interceptors.request.use((config) => {
@@ -41,7 +41,7 @@ api.interceptors.response.use(
           useAuthStore.getState().setToken(newAccessToken);
           // Retry the original request with the new token
           error.config.headers.Authorization = `Bearer ${newAccessToken}`;
-          return axios(error.config); // retry the failed request
+          return axios(error.config);
         } catch (refreshError) {
           console.error("Refresh token failed, please login again.");
           useAuthStore.getState().logout();

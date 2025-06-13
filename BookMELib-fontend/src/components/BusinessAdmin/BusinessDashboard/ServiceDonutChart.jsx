@@ -2,7 +2,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/Global/ui/chart";
 import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 import {
@@ -12,7 +12,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/Global/ui/card";
 import * as React from "react";
 
 const chartData = [

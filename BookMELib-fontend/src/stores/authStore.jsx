@@ -11,18 +11,22 @@ const useAuthStore = create(
       loading: false,
       error: null,
 
+      // This is the login logic
       login: async (credentials) => {
         set({ loading: true, error: null });
 
         try {
           const { data } = await api.post("/auth/login", credentials);
-          const { access_token, refresh_token, user_type } = data;
+          const { access_token, refresh_token, user_type, user } = data; // Get user data from response
 
           localStorage.setItem("accessToken", access_token);
           localStorage.setItem("refreshToken", refresh_token);
 
+          // Store the full user object, not just user_type
+          const userData = user || { user_type }; // Use full user object if available
+
           set({
-            user: { user_type },
+            user: userData,
             token: access_token,
             refreshToken: refresh_token,
             loading: false,
@@ -36,6 +40,8 @@ const useAuthStore = create(
           return null;
         }
       },
+
+      // This is the registration logic
       register: async (userData) => {
         set({ loading: true, error: null });
 
@@ -52,6 +58,7 @@ const useAuthStore = create(
         }
       },
 
+      // This is the logout logic
       logout: () => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");

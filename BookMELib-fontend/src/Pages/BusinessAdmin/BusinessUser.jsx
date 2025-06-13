@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import BusinessUserRow from "@/components/BusinessAdmin/BusinessDashboard/BusinessUserRow";
 import { BusinessUserColumn } from "@/components/BusinessAdmin/BusinessDashboard/BusinessUserColumn";
 import GlobalSearchBar from "@/components/common/globalSearchBar";
@@ -9,7 +9,7 @@ import useUserStore from "@/stores/userStore";
 
 const BusinessUserContainer = () => (
   <div className="flex">
-    <aside className="md:w-[20%] lg:w-[23%] h-screen bg-gray-100" />
+    <aside className="md:w-[20%] lg:w-[23%] h-screen " />
     <main className="md:w-[98%] w-full mx-3 px-4 mt-20">
       <h1 className="text-2xl capitalize font-semibold text-gray-800 dark:text-white ">
         Customers List
@@ -23,7 +23,7 @@ const BusinessUserContainer = () => (
 
 const BusinessUser = () => {
   return (
-    <div className="space-y-4 mb-4">
+    <div className="space-y-4  mb-4">
       <div className="flex flex-wrap gap-4 justify-between items-center">
         <div className="w-full md:w-96">
           <GlobalSearchBar>
@@ -40,20 +40,27 @@ const BusinessUser = () => {
 
 const BusinessUserTable = () => {
   const { users, loading, error, fetchUser } = useUserStore();
+  const [activeActionId, setActiveActionId] = useState(null);
 
   // Fetch users when the component mounts
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
 
-  console.log("This is to display the customer", users);
   const filteredUsers = users?.filter((u) => u.user_type !== "business_admin");
   return (
     <div className="mb-4">
       <DataTable
         columns={BusinessUserColumn}
         data={filteredUsers}
-        renderRow={(user) => <BusinessUserRow key={user.id} user={user} />}
+        renderRow={(user) => (
+          <BusinessUserRow
+            key={user.id}
+            user={user}
+            activeActionId={activeActionId}
+            setActiveActionId={setActiveActionId}
+          />
+        )}
         loading={loading}
         error={error}
       />

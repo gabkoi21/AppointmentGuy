@@ -5,7 +5,7 @@ import {
   mdiCalendarClock,
 } from "@mdi/js";
 import Icon from "@mdi/react";
-import TableBottomNavigation from "@/components/common/TableBottomNivigation";
+
 import ComponentAriaChart from "@/components/BusinessAdmin/BusinessDashboard/AppointmentLineChart";
 import ComponentServices from "@/components/BusinessAdmin/BusinessDashboard/ServiceDonutChart";
 
@@ -13,7 +13,7 @@ import ComponentServices from "@/components/BusinessAdmin/BusinessDashboard/Serv
 // It contains the sidebar and the main content area
 const AdmindasboardhContainer = () => (
   <div className="flex">
-    <aside className="md:w-[20%] lg:w-[23%] h-screen bg-gray-100 dark:bg-gray-800" />
+    <aside className="md:w-[20%] lg:w-[23%] h-screen " />
     <main className="md:w-[98%] w-full mx-3 px-3 mt-14">
       <AdminDashboard />
     </main>
@@ -27,7 +27,6 @@ const AdminDashboard = () => {
     <>
       <DashboardHeader />
       <ExampleDashboard />
-      <TableBottomNavigation />
     </>
   );
 };
