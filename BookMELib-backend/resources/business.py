@@ -1,6 +1,6 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import get_jwt_identity, jwt_required , get_jwt
 from passlib.hash import pbkdf2_sha256
 from flask import request, jsonify
 
@@ -159,7 +159,6 @@ class BusinessView(MethodView):
         """Get details of a specific business by its ID."""
         business = BusinessModel.query.get_or_404(business_id)
         return business
-    
 
     
 
@@ -202,4 +201,23 @@ class BusinessDetails(MethodView):
         db.session.delete(business)
         db.session.commit()
         return {"message": "Business and all associated users deleted successfully."}
+    
 
+@blp.route("/<int:business_id>/toggle-status")
+class BusinessToggle(MethodView):
+    @role_required('super_admin')
+    @jwt_required()
+    def patch(self, business_id):
+        claims = get_jwt()
+        if claims.get("user_type") != "super_admin":
+            abort(403, message="You are not authorized to perform this action")
+
+        business = BusinessModel.query.get_or_404(business_id)
+
+        if business.status == "active":
+            business.status = "inactive"
+        else:
+            business.status = "active"
+
+        db.session.commit()
+        return {"message": f"Business status changed to {business.status}"}

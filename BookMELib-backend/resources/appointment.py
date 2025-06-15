@@ -2,7 +2,7 @@ from flask import request
 from flask import Flask, request, jsonify
 from flask_smorest import abort, Blueprint
 from flask_jwt_extended import get_jwt, get_jwt_identity , jwt_required
-from models import AppointmentModel , ServiceModel, BusinessModel
+from models import AppointmentModel , ServiceModel, UserModel , BusinessModel
 from schemas import AppointmentSchema, AppointmentUpdateSchema
 from db import db
 from flask.views import MethodView
@@ -11,12 +11,6 @@ from datetime import datetime, timedelta
 
 blp = Blueprint("Appointment", __name__, url_prefix="/appointment", description="Operations on Appointments")
 
-VALID_STATUS_TRANSITIONS = {
-    'pending': ['confirmed', 'cancelled'],
-    'confirmed': ['completed', 'cancelled'],
-    'completed': [],  # terminal state
-    'cancelled': []   # terminal state
-}
 
 @blp.route("/")
 class AppointmentList(MethodView):
@@ -32,6 +26,7 @@ class AppointmentList(MethodView):
         if user_type == "super_admin":
             # Super Admin sees all appointments
             appointments = AppointmentModel.query.all()
+
 
         elif user_type == "business_admin" and business_id:
             # Business Admin sees appointments of their business
@@ -53,7 +48,24 @@ class AppointmentList(MethodView):
     @role_required("customer") 
     def post(self, appointment_data):
         service = ServiceModel.query.get_or_404(appointment_data['service_id'])
-        scheduled_time = appointment_data['scheduled_time']  # Changed from date_time to scheduled_time
+        
+        scheduled_time = appointment_data['scheduled_time']
+
+        user_id = get_jwt_identity()
+        user = UserModel.query.get_or_404(user_id)
+
+        buiness = BusinessModel.query.get_or_404(appointment_data["business_id"])
+
+
+
+        if user.status != "active":
+              abort(403, message="Inactive users cannot book appointments.")
+
+
+        if buiness.status != "active":
+             abort(403, message="This business is currently not accepting appointments.")
+
+            
         
         # Check for existing appointments at the same time
         existing_appointment = AppointmentModel.query.filter_by(
@@ -63,6 +75,8 @@ class AppointmentList(MethodView):
         
         if existing_appointment:
             abort(400, message="This time slot is already booked. Please choose another time.")
+
+        
         
         user_id = get_jwt_identity()
         appointment_data["user_id"] = user_id
@@ -90,16 +104,10 @@ class Appointment(MethodView):
     def put(self, appointment_data, appointment_id):
         appointment = AppointmentModel.query.get_or_404(appointment_id)
 
-        # Validate status transition
-        if 'status' in appointment_data:
-            new_status = appointment_data['status']
-            current_status = appointment.status
-            
-            if new_status not in VALID_STATUS_TRANSITIONS.get(current_status, []):
-                abort(400, message=f"Invalid status transition from {current_status} to {new_status}")
+    
 
         for key, value in appointment_data.items():
-            if key != "user_id":  # Protect user_id from changes
+            if key != "user_id": 
                 setattr(appointment, key, value)
 
         db.session.commit()
