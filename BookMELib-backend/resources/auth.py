@@ -271,3 +271,5 @@ class ToggleUsersStatus(MethodView):
 
         db.session.commit()
         return{"message":f"user status change to {user.status}"}
+    
+

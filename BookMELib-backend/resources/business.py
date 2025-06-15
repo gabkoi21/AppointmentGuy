@@ -6,7 +6,7 @@ from flask import request, jsonify
 
 from db import db
 from models import UserModel, RoleModel, BusinessModel, AppointmentModel
-from schemas import BusinessSchema, UserSchema, BusinessUpdateSchema
+from schemas import BusinessSchema, UserSchema, BusinessUpdateSchema, AppointmentStatusSchema
 from utils.decorators import role_required
 from sqlalchemy.exc import IntegrityError
 
@@ -221,3 +221,33 @@ class BusinessToggle(MethodView):
 
         db.session.commit()
         return {"message": f"Business status changed to {business.status}"}
+
+
+@blp.route("/appointments/<int:appointment_id>/update-status")
+class AppointmentStatusToggle(MethodView):
+    @role_required("business_admin")
+    @jwt_required()
+    @blp.arguments(AppointmentStatusSchema)
+    def patch(self, appointment_data, appointment_id):
+        appointment = AppointmentModel.query.get_or_404(appointment_id)
+
+
+        new_status = appointment_data.get("status")
+
+        if new_status not in ['confirmed','completed', 'cancelled']:
+             abort(400, message="Invalid status. Must be 'completed' or 'cancelled'.")
+
+
+        # Optional: prevent update for already completed/cancelled
+        if appointment.status in ['completed', 'concelled']:
+            abort(400, message=f"Appointment already marked as {appointment.status}.")
+
+
+        appointment.status = new_status
+        db.session.commit()
+
+        return {
+             "message": f"Appointment marked as {new_status}",
+            "appointment_id": appointment.id,
+            "new_status": appointment.status,
+        }

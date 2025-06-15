@@ -57,10 +57,8 @@ class AppointmentList(MethodView):
         buiness = BusinessModel.query.get_or_404(appointment_data["business_id"])
 
 
-
         if user.status != "active":
               abort(403, message="Inactive users cannot book appointments.")
-
 
         if buiness.status != "active":
              abort(403, message="This business is currently not accepting appointments.")
