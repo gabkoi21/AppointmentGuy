@@ -3,7 +3,6 @@ import GlobalSearchBar from "../../components/common/globalSearchBar";
 import DataTable from "../../components/common/DataTable";
 import { columns } from "../../components/Admin/Dashboard/BusinessColumns";
 import BusinessRow from "../../components/Admin/Dashboard/BusinessRow";
-// import TableBottomNavigation from "@/components/common/TableBottomNivigation";
 
 //  This component is for the business admin layout
 import useAppointment from "@/stores/appointmentStore";
@@ -20,7 +19,6 @@ const AllBusinessContainer = () => (
       </h1>
       <ManageBusiness />
       <BusinessTable />
-
       <BusibessPagenation />
     </main>
   </div>

@@ -1,8 +1,6 @@
 from db import db
 from datetime import datetime
-from models.associations import user_roles  
-
-
+from models.associations import user_roles
 
 class UserModel(db.Model):
     __tablename__ = 'users'
@@ -15,7 +13,7 @@ class UserModel(db.Model):
     phone_number = db.Column(db.String(20))
     address = db.Column(db.String(255))
     business_id = db.Column(db.Integer, db.ForeignKey('businesses.id', ondelete="CASCADE"), nullable=True)
-    user_type = db.Column(db.String(20), nullable=False) 
+    user_type = db.Column(db.String(20), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now)
     status = db.Column(db.String(20), default="active")
 

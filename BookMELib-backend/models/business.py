@@ -14,7 +14,7 @@ class BusinessModel(db.Model):
     phone_number = db.Column(db.String(20))
     status = db.Column(db.String(20), default="active")
     about = db.Column(db.String(255), nullable=False, default="No information available")
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="SET NULL"), nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now)
 
     # Relationships

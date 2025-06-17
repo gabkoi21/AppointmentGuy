@@ -234,6 +234,8 @@ class AppointmentStatusToggle(MethodView):
 
         new_status = appointment_data.get("status")
 
+
+        # This logic is to add new appointments
         if new_status not in ['confirmed','completed', 'cancelled']:
              abort(400, message="Invalid status. Must be 'completed' or 'cancelled'.")
 
