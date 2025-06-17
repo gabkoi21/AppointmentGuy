@@ -1,0 +1,34 @@
+[project]
+name = "bookmelib-backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "blinker==1.9.0",
+    "click==8.1.8",
+    "colorama==0.4.6",
+    "flask==3.1.0",
+    "flask-cors==5.0.1",
+    "flask-jwt-extended==4.7.1",
+    "flask-migrate==4.1.0",
+    "flask-smorest==0.45.0",
+    "flask-sqlalchemy==3.1.1",
+    "flask-swagger-ui==4.11.1",
+    "greenlet==3.1.1",
+    "itsdangerous==2.2.0",
+    "jinja2==3.1.6",
+    "mako==1.3.9",
+    "markupsafe==3.0.2",
+    "marshmallow==3.26.1",
+    "packaging==24.2",
+    "passlib==1.7.4",
+    "psycopg2-binary==2.9.10",
+    "pyjwt==2.10.1",
+    "python-dotenv==1.0.1",
+    "setuptools==78.1.0",
+    "sqlalchemy==2.0.39",
+    "typing-extensions==4.12.2",
+    "webargs==8.6.0",
+    "werkzeug==3.1.3",
+]

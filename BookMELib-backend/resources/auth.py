@@ -11,6 +11,8 @@ from flask_jwt_extended import (
 from db import db
 from models import UserModel, RoleModel, BusinessModel
 from schemas import UserSchema, UserLoginSchema
+from utils.decorators import role_required
+from flask.views import MethodView 
 
 blp = Blueprint("Auth", __name__, url_prefix="/auth", description="Operations on auth models")
 
@@ -203,12 +205,16 @@ class AuthLogin(MethodView):
     def post(self, login_data):
         user = UserModel.query.filter_by(email=login_data["email"]).first()
         if not user or not pbkdf2_sha256.verify(login_data["password"], user.password):
-            abort(401, message="Invalid credentials")        # Build claims dictionary
+            abort(401, message="Invalid credentials") 
         claims = {
             "roles": [r.role for r in user.roles],
             "user_type": user.user_type,
             "business_id": user.business_id,
         }
+
+        if user.status != "active" and  user.user_type != "super_admin":
+             abort(403, message="Your account has been deactivated. Contact support.")
+        
         
         # Add business name for business admins
         if user.user_type == "business_admin" and user.business:
@@ -221,7 +227,7 @@ class AuthLogin(MethodView):
             ),
             "refresh_token": create_refresh_token(identity=str(user.id)),
             "user_type": user.user_type,
-            "business_id": user.business_id,  # Include business_id in response
+            "business_id": user.business_id, 
         }
         return tokens, 200
 
@@ -244,3 +250,26 @@ class TokenRefresh(MethodView):
             )
         }
         return new_token, 200
+
+
+@blp.route("/users/<int:user_id>/toggle-status")
+class ToggleUsersStatus(MethodView):
+    @role_required('super_admin')
+    @jwt_required()
+    def patch(self, user_id):
+        claims = get_jwt()
+        if claims.get("user_type") != "super_admin":
+            abort(403, message="You are not authorized to perform this action.")
+        
+        user = UserModel.query.get_or_404(user_id)
+
+        # Toggle between active and inactive
+        if user.status == "active":
+            user.status = "inactive"
+        else:
+            user.status = "active"
+
+        db.session.commit()
+        return{"message":f"user status change to {user.status}"}
+    
+

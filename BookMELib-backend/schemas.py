@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, validates, ValidationError
+from marshmallow import Schema, fields, validates, ValidationError, validate
 
 # ==============================
 # Role Schema
@@ -188,3 +188,11 @@ class CategorySchema(Schema):
     category_name = fields.Str(required=False)
     timestamp = fields.DateTime(dump_only=True)
     services = fields.List(fields.Nested(ServiceSchema), dump_only=True)
+
+
+
+class AppointmentStatusSchema(Schema):
+    status = fields.Str(
+        required=True,
+        validate=validate.OneOf(["pending", "confirmed", "completed", "cancelled"])
+    )

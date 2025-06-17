@@ -16,15 +16,17 @@ from resources.service import blp as ServiceBlueprint
 from resources.category import blp as CategoryBlueprint
 from resources.appointment import blp as AppointmentBlueprint
 
+
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
+import sqlite3
 
-# Enable foreign key constraint for SQLite
 @event.listens_for(Engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
-    cursor = dbapi_connection.cursor()
-    cursor.execute("PRAGMA foreign_keys=ON")
-    cursor.close()
+    if isinstance(dbapi_connection, sqlite3.Connection):  # play nice with other DBs
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
 
 
 def create_app(db_url=None):

@@ -1,28 +1,6 @@
 from db import db
 from datetime import datetime
-from models.associations import user_roles  
-
-# class UserModel(db.Model):
-#     __tablename__ = 'users'
-#     id = db.Column(db.Integer, primary_key=True)
-#     first_name = db.Column(db.String(50), nullable=False)
-#     last_name = db.Column(db.String(50), nullable=False)
-#     email = db.Column(db.String(120), unique=True, nullable=False)
-#     password = db.Column(db.String(128), nullable=False)
-#     phone_number = db.Column(db.String(20))
-#     address = db.Column(db.String(255))
-#     business_id = db.Column(db.Integer, db.ForeignKey('businesses.id'), nullable=True)  # Added this line
-#     user_type = db.Column(db.String(20), nullable=False)  # customer, business_admin, super_admin
-#     timestamp = db.Column(db.DateTime, default=datetime.now)
-#     status = db.Column(db.String(20), default="active")
-#       # Relationships
-#     business = db.relationship('BusinessModel', back_populates='users', foreign_keys=[business_id])
-#     owned_businesses = db.relationship('BusinessModel', foreign_keys='BusinessModel.owner_id', back_populates='owner')
-#     appointments = db.relationship('AppointmentModel', back_populates='user')
-#     roles = db.relationship('RoleModel', secondary=user_roles, back_populates='users')
-
-
-
+from models.associations import user_roles
 
 class UserModel(db.Model):
     __tablename__ = 'users'
@@ -35,7 +13,7 @@ class UserModel(db.Model):
     phone_number = db.Column(db.String(20))
     address = db.Column(db.String(255))
     business_id = db.Column(db.Integer, db.ForeignKey('businesses.id', ondelete="CASCADE"), nullable=True)
-    user_type = db.Column(db.String(20), nullable=False)  # customer, business_admin, super_admin
+    user_type = db.Column(db.String(20), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now)
     status = db.Column(db.String(20), default="active")
 

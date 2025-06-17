@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import api from "@/api/axios";
+import { update } from "list";
 
 const useUserStore = create((set) => ({
   users: [],
@@ -72,6 +73,29 @@ const useUserStore = create((set) => ({
       console.error("Error deleting user:", error);
       set({ error: errorMessage, loading: false });
       throw error;
+    }
+  },
+
+  updateUserStatus: async (id) => {
+    if (!id) {
+      console.warn("User ID is undefined. Cannot update status.");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        console.error("No token found in localStorage.");
+        return;
+      }
+
+      const res = await api.patch(`/auth/users/${id}/toggle-status`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error("Failed to toggle status:", error);
     }
   },
 }));
