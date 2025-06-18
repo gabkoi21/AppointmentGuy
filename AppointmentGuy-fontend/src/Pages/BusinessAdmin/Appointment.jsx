@@ -18,7 +18,7 @@ const BusinessAppointmentContainer = () => (
         User Appointments List
       </h1>
       <Appointment />
-      <BusinessUserPagenation />
+      {/* <BusinessUserPagenation /> */}
     </main>
   </div>
 );
@@ -93,7 +93,7 @@ const AppointmentTable = ({ closeCalendar }) => {
   }, []);
 
   return (
-    <div className="mt-5" onClick={closeCalendar}>
+    <div className="mt-5 mb-5" onClick={closeCalendar}>
       <DataTable
         columns={Appointmentcolumns}
         data={appointments}

@@ -72,6 +72,62 @@ const useAppointmentStore = create((set, get) => ({
       return null;
     }
   },
+
+  // Enhanced updateAppointmentStatus function for your store
+  // Fixed updateAppointmentStatus function for your store
+  updateAppointmentStatus: async (id, newStatus) => {
+    console.log(`Store: Updating appointment ${id} to status: ${newStatus}`);
+
+    set({ loading: true, error: null });
+
+    try {
+      // Get current token from localStorage (same as other functions)
+      const token = localStorage.getItem("accessToken");
+
+      const response = await api.patch(
+        `/business/appointments/${id}/update-status`,
+        { status: newStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(`API Response:`, response.data);
+
+      const updatedStatus = response.data.new_status;
+
+      // Update the status in the local store so UI re-renders
+      set((state) => ({
+        appointments: state.appointments.map((appointment) =>
+          appointment.id === id
+            ? { ...appointment, status: updatedStatus }
+            : appointment
+        ),
+        loading: false,
+        error: null,
+      }));
+      return response.data;
+    } catch (error) {
+      console.error(`Error updating appointment ${id}:`, error);
+
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.response?.statusText ||
+        error.message ||
+        "Failed to update appointment status";
+
+      set({
+        error: errorMessage,
+        loading: false,
+      });
+
+      // Re-throw the error so the component can handle it
+      throw error;
+    }
+  },
 }));
 
 export default useAppointmentStore;

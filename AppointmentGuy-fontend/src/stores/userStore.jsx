@@ -77,11 +77,6 @@ const useUserStore = create((set) => ({
   },
 
   updateUserStatus: async (id) => {
-    if (!id) {
-      console.warn("User ID is undefined. Cannot update status.");
-      return;
-    }
-
     try {
       const token = localStorage.getItem("accessToken");
       if (!token) {

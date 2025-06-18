@@ -1,3 +1,5 @@
+# from marshmallow import Schema, fields, validates, ValidationError, validate
+
 from marshmallow import Schema, fields, validates, ValidationError, validate
 
 # ==============================
@@ -32,6 +34,14 @@ class BusinessHoursSchema(Schema):
             raise ValidationError('Day of week must be between 0 (Monday) and 6 (Sunday)')
 
 # ==============================
+# Forward declaration for nested use
+# ==============================
+# Define empty classes to enable forward references
+class BusinessSchema: pass
+class UserSchema: pass
+class ServiceSchema: pass
+
+# ==============================
 # User Schema
 # ==============================
 class UserSchema(Schema):
@@ -50,7 +60,7 @@ class UserSchema(Schema):
     timestamp = fields.DateTime(dump_only=True)
     roles = fields.List(fields.Nested(RoleSchema), dump_only=True)
     status = fields.Str(required=True, default="active")
-    business = fields.Nested("BusinessSchema", only=("name",), dump_only=True)
+    business = fields.Nested(lambda: BusinessSchema, only=("name",), dump_only=True)
 
 # ==============================
 # User Update Schema
@@ -189,8 +199,9 @@ class CategorySchema(Schema):
     timestamp = fields.DateTime(dump_only=True)
     services = fields.List(fields.Nested(ServiceSchema), dump_only=True)
 
-
-
+# ==============================
+# Appointment Status Schema
+# ==============================
 class AppointmentStatusSchema(Schema):
     status = fields.Str(
         required=True,

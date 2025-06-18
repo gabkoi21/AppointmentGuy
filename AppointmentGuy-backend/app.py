@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from db import db
 from dotenv import load_dotenv
+import os
 
 import os
 from blocklist import BLOCKLIST
@@ -13,7 +14,7 @@ from resources.auth import blp as AuthBlueprint
 from resources.role import blp as RoleBlueprint
 from resources.user import blp as UserBlueprint
 from resources.service import blp as ServiceBlueprint
-from resources.category import blp as CategoryBlueprint
+from resources.category import blp as CategoryBlueprint  
 from resources.appointment import blp as AppointmentBlueprint
 
 
@@ -40,9 +41,12 @@ def create_app(db_url=None):
     app.config["OPENAPI_URL_PREFIX"] = "/"
     app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
     app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
-    app.config["SQLALCHEMY_DATABASE_URI"] = db_url or "sqlite:///database.db"
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    #   app.config["SQLALCHEMY_DATABASE_URI"] = db_url or "sqlite:///database.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["JWT_SECRET_KEY"] = "your-secure-random-key-here"
+
+    # postgresql://appointmentguydb_user:RtNnOn9en3TVTGe5whiUinIIJ0pzP2FQ@dpg-d19ihbbipnbc73emdh20-a.oregon-postgres.render.com/appointmentguydb
 
     # Initialize database
     db.init_app(app)
