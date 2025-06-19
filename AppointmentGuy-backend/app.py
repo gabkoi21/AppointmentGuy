@@ -6,8 +6,8 @@ from flask_jwt_extended import JWTManager
 from db import db
 from dotenv import load_dotenv
 import os
+from pathlib import Path
 
-import os
 from blocklist import BLOCKLIST
 from resources.business import blp as BusinessBlueprint
 from resources.auth import blp as AuthBlueprint
@@ -31,7 +31,18 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 
 
 def create_app(db_url=None):
-    load_dotenv(".env.dev")
+    # Get the directory where app.py is located
+    basedir = Path(__file__).parent
+    env_path = basedir / ".env.dev"
+    
+    # Load environment variables
+    load_dotenv(env_path)
+    
+    # Debug - print what's being loaded
+    print(f"Loading .env.dev from: {env_path}")
+    print(f"File exists: {env_path.exists()}")
+    # print(f"DATABASE_URL: {os.environ.get('DATABASE_URL')}")
+    
     app = Flask(__name__)
     
     app.config["PROPAGATE_EXCEPTIONS"] = True
@@ -41,12 +52,15 @@ def create_app(db_url=None):
     app.config["OPENAPI_URL_PREFIX"] = "/"
     app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
     app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-    #   app.config["SQLALCHEMY_DATABASE_URI"] = db_url or "sqlite:///database.db"
+    
+    # Set database URI after loading environment variables
+    database_url = os.environ.get("DATABASE_URL")
+    if not database_url:
+        raise RuntimeError("DATABASE_URL environment variable is not set. Please check your .env.dev file.")
+    
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["JWT_SECRET_KEY"] = "your-secure-random-key-here"
-
-    # postgresql://appointmentguydb_user:RtNnOn9en3TVTGe5whiUinIIJ0pzP2FQ@dpg-d19ihbbipnbc73emdh20-a.oregon-postgres.render.com/appointmentguydb
 
     # Initialize database
     db.init_app(app)
@@ -57,7 +71,7 @@ def create_app(db_url=None):
     # Enable Flask-Smorest
     api = Api(app)
 
-    # ✅ Enable CORS with proper headers for Authorization and frontend access
+    # Enable CORS with proper headers for Authorization and frontend access
     CORS(app)
 
     # Setup JWT
@@ -112,8 +126,8 @@ def create_app(db_url=None):
             else:
                 print(f"{role_name.replace('_', ' ').title()} role already exists.")
 
-   
-    # Register all API blueprints    api.register_blueprint(RoleBlueprint)
+    # Register all API blueprints
+    api.register_blueprint(RoleBlueprint)
     api.register_blueprint(AuthBlueprint)
     api.register_blueprint(UserBlueprint)
     api.register_blueprint(BusinessBlueprint)
