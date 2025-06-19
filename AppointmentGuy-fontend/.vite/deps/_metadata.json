@@ -2,7 +2,90 @@
   "hash": "0c62dfaf",
   "configHash": "2f922700",
   "lockfileHash": "8d3f0571",
-  "browserHash": "7d8f3283",
-  "optimized": {},
-  "chunks": {}
+  "browserHash": "f0050053",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "f4671084",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "d7377d86",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "8c4f1613",
+      "needsInterop": false
+    },
+    "@mdi/js": {
+      "src": "../../node_modules/@mdi/js/mdi.js",
+      "file": "@mdi_js.js",
+      "fileHash": "54818007",
+      "needsInterop": false
+    },
+    "@mdi/react": {
+      "src": "../../node_modules/@mdi/react/Icon.js",
+      "file": "@mdi_react.js",
+      "fileHash": "580a46e7",
+      "needsInterop": true
+    },
+    "react-router": {
+      "src": "../../node_modules/react-router/dist/development/index.mjs",
+      "file": "react-router.js",
+      "fileHash": "7245d83a",
+      "needsInterop": false
+    },
+    "date-fns": {
+      "src": "../../node_modules/date-fns/index.mjs",
+      "file": "date-fns.js",
+      "fileHash": "3fe00dbc",
+      "needsInterop": false
+    },
+    "dayjs": {
+      "src": "../../node_modules/dayjs/dayjs.min.js",
+      "file": "dayjs.js",
+      "fileHash": "3c880c27",
+      "needsInterop": true
+    },
+    "react-datepicker": {
+      "src": "../../node_modules/react-datepicker/dist/es/index.js",
+      "file": "react-datepicker.js",
+      "fileHash": "36e6f4bd",
+      "needsInterop": false
+    },
+    "zustand": {
+      "src": "../../node_modules/zustand/esm/index.mjs",
+      "file": "zustand.js",
+      "fileHash": "7322f1fd",
+      "needsInterop": false
+    },
+    "zustand/middleware": {
+      "src": "../../node_modules/zustand/esm/middleware.mjs",
+      "file": "zustand_middleware.js",
+      "fileHash": "03d860cf",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-KZLISIT6": {
+      "file": "chunk-KZLISIT6.js"
+    },
+    "chunk-IPYILTUR": {
+      "file": "chunk-IPYILTUR.js"
+    },
+    "chunk-7YMLHPFW": {
+      "file": "chunk-7YMLHPFW.js"
+    },
+    "chunk-4SFRHSJ3": {
+      "file": "chunk-4SFRHSJ3.js"
+    },
+    "chunk-EQCVQC35": {
+      "file": "chunk-EQCVQC35.js"
+    }
+  }
 }
