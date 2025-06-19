@@ -135,4 +135,11 @@ def create_app(db_url=None):
     api.register_blueprint(CategoryBlueprint)
     api.register_blueprint(AppointmentBlueprint)
 
+    @app.route("/")
+    def home():
+        return jsonify({
+            "message": "Welcome to the AppointmentGuy API 👋",
+            "status": "running"
+        }), 200
+
     return app
