@@ -1,24 +1,32 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
+
+# Environment variables
 .env
 *.env
+.env.*
 
 # Virtual environment
 venv/
 .venv/
 .env.dev/
 
-# VSCode or JetBrains settings
+# Editor settings
 .vscode/
 .idea/
 
 # Logs
 *.log
 
-# OS files
+# OS generated files
 .DS_Store
 Thumbs.db
-venv/
+
+# Python egg files
+*.egg
+*.egg-info/
+dist/
+build/
