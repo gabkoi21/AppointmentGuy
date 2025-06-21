@@ -2,7 +2,7 @@ import axios from "axios";
 import useAuthStore from "@/stores/authStore";
 
 const api = axios.create({
-  baseURL: " http://10.21.1.70:5000",
+  baseURL: "https://appointmentguy.onrender.com",
 });
 
 api.interceptors.request.use((config) => {
