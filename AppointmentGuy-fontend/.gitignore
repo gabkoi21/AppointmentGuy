@@ -1,3 +1,7 @@
+# Extra Resources
+.*snippet
+.*Trash
+
 # Logs
 logs
 *.log
@@ -7,11 +11,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies and builds
 node_modules
 dist
 dist-ssr
 *.local
-
 
 # Editor directories and files
 .vscode/*
@@ -23,6 +27,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Extra Resources
-.*snippets
