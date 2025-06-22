@@ -1,6 +1,6 @@
 # Extra Resources
-.*snippet
-.*Trash
+*.snippet
+*Trash*
 
 # Logs
 logs
