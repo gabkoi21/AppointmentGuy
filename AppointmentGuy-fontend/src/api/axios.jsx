@@ -5,6 +5,8 @@ const api = axios.create({
   baseURL: "https://appointmentguy.onrender.com",
 });
 
+console.log("API BASE URL:", api.defaults.baseURL);
+
 api.interceptors.request.use((config) => {
   const token = useAuthStore.getState().getAccessToken();
   if (token) {
