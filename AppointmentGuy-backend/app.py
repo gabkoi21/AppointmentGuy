@@ -29,7 +29,6 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
         cursor.execute("PRAGMA foreign_keys=ON")
         cursor.close()
 
-
 def create_app(db_url=None):
     # Get the directory where app.py is located
     basedir = Path(__file__).parent
