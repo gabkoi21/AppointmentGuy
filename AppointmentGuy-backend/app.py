@@ -38,7 +38,8 @@ def create_app(db_url=None):
     app = Flask(__name__)
 
     # ✅ Enable CORS
-    CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
+    # CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
+    CORS(app, supports_credentials=True, origins="[https://appointmentguy-frontend.onrender.com]")
 
     # ✅ API Metadata
     app.config["API_TITLE"] = "BookMeLib REST API"
