@@ -6,13 +6,17 @@ from flask_jwt_extended import (
     create_refresh_token,
     jwt_required,
     get_jwt,
-    get_jwt_identity,
+    get_jwt_identity, 
+    set_refresh_cookies
 )
 from db import db
 from models import UserModel, RoleModel, BusinessModel
 from schemas import UserSchema, UserLoginSchema
 from utils.decorators import role_required
 from flask.views import MethodView 
+from flask_jwt_extended import set_refresh_cookies
+from flask import jsonify, make_response
+
 
 blp = Blueprint("Auth", __name__, url_prefix="/auth", description="Operations on auth models")
 
@@ -199,59 +203,72 @@ class RegisterUser(MethodView):
         abort(400, message="Invalid or unauthorized user type.")
 
 # ----- Login Endpoint -----
+
 @blp.route("/login")
 class AuthLogin(MethodView):
     @blp.arguments(UserLoginSchema)
     def post(self, login_data):
         user = UserModel.query.filter_by(email=login_data["email"]).first()
         if not user or not pbkdf2_sha256.verify(login_data["password"], user.password):
-            abort(401, message="Invalid credentials") 
+            abort(401, message="Invalid credentials")
+
+        if user.status != "active" and user.user_type != "super_admin":
+            abort(403, message="Your account has been deactivated. Contact support.")
+
         claims = {
             "roles": [r.role for r in user.roles],
             "user_type": user.user_type,
             "business_id": user.business_id,
         }
 
-        if user.status != "active" and  user.user_type != "super_admin":
-             abort(403, message="Your account has been deactivated. Contact support.")
-        
-        
-        # Add business name for business admins
         if user.user_type == "business_admin" and user.business:
             claims["business_name"] = user.business.name
 
-        tokens = {
-            "access_token": create_access_token(
-                identity=str(user.id),
-                additional_claims=claims
-            ),
-            "refresh_token": create_refresh_token(identity=str(user.id)),
+        access_token = create_access_token(identity=str(user.id), additional_claims=claims)
+        refresh_token = create_refresh_token(identity=str(user.id))
+
+        return {
+            "access_token": access_token,
+            "refresh_token": refresh_token,
             "user_type": user.user_type,
-            "business_id": user.business_id, 
-        }
-        return tokens, 200
+            "business_id": user.business_id
+        }, 200
+
 
 # ----- Token Refresh Endpoint -----
+# ----- Token Refresh Endpoint (FIXED) -----
 @blp.route("/refresh")
 class TokenRefresh(MethodView):
     @jwt_required(refresh=True)
     def post(self):
         current_user_id = get_jwt_identity()
-        user = UserModel.query.get_or_404(current_user_id)
-
-        new_token = {
-            "access_token": create_access_token(
-                identity=current_user_id,
-                additional_claims={
-                    "roles": [r.role for r in user.roles],
-                    "user_type": user.user_type,
-                    "business_id": user.business_id,
-                },
-            )
+        
+        # Get the user and their current roles/claims
+        user = UserModel.query.get(current_user_id)
+        if not user:
+            abort(404, message="User not found")
+            
+        # Recreate the same claims as in login
+        claims = {
+            "roles": [r.role for r in user.roles],
+            "user_type": user.user_type,
+            "business_id": user.business_id,
         }
-        return new_token, 200
-
-
+        
+        if user.user_type == "business_admin" and user.business:
+            claims["business_name"] = user.business.name
+            
+        # Create new access token with all claims
+        access_token = create_access_token(
+            identity=str(user.id), 
+            additional_claims=claims
+        )
+        
+        return {
+            "access_token": access_token
+        }, 200
+    
+    
 @blp.route("/users/<int:user_id>/toggle-status")
 class ToggleUsersStatus(MethodView):
     @role_required('super_admin')
@@ -272,4 +289,3 @@ class ToggleUsersStatus(MethodView):
         db.session.commit()
         return{"message":f"user status change to {user.status}"}
     
-

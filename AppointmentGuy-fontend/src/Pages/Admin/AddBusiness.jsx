@@ -38,6 +38,15 @@ const AddBusiness = () => {
         <h1 className="text-2xl ml-6 capitalize font-semibold text-gray-800 dark:text-white mb-3">
           Register New Business and Administrator
         </h1>
+        <p className="text-red-700 font-bold">
+          This is just a test and i want to see{" "}
+        </p>
+        <span
+          className="text-red-500
+        "
+        >
+          What are the best thing in live{" "}
+        </span>
       </div>
       <BusinessRegistrationForm />
     </>

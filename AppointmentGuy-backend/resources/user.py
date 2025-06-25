@@ -57,6 +57,8 @@ class ManageUser(MethodView):
         except OperationalError as e:
             db.session.rollback()
             return {"message": "Database error occurred"}, 500
+    
+    
 
     @jwt_required()
     @blp.response(200, UserSchema)
@@ -140,8 +142,13 @@ class UserView(MethodView):
                     .all()
                 )
                 return UserSchema(many=True).dump(users_with_appointments), 200
+            
+            print("User roles:", roles)
+            print("User ID:", user_id)
 
             abort(403, message="Unauthorized access")
 
         except OperationalError:
             abort(500, message="Database error occurred")
+    
+
