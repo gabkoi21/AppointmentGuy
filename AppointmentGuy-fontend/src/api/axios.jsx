@@ -40,7 +40,9 @@ api.interceptors.response.use(
 
         const refreshAxios = axios.create();
         const refreshResponse = await refreshAxios.post(
-          "http://192.168.140.150:5000/auth/refresh",
+          // "http://192.168.140.150:5000/auth/refresh",
+          "https://appointmentguy.onrender.com/auth/refresh",
+
           {},
           {
             headers: {
