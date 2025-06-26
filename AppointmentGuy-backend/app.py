@@ -11,6 +11,9 @@ from datetime import timedelta
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
 import sqlite3
+# Just Authication
+from flask_jwt_extended import JWTManager , create_access_token , create_refresh_token ,  jwt_required , get_jwt_identity
+import datetime
 
 # Blueprints
 from blocklist import BLOCKLIST
@@ -22,7 +25,7 @@ from resources.service import blp as ServiceBlueprint
 from resources.category import blp as CategoryBlueprint
 from resources.appointment import blp as AppointmentBlueprint
 
-# ✅ Enable foreign key support in SQLite
+# Enable foreign key support in SQLite
 @event.listens_for(Engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
     if isinstance(dbapi_connection, sqlite3.Connection):
@@ -37,39 +40,46 @@ def create_app(db_url=None):
 
     app = Flask(__name__)
 
-    # ✅ Enable CORS
+
+    # Enable CORS
     # CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
     CORS(app, supports_credentials=True, origins=["https://appointmentguy-frontend.onrender.com"])
 
 
-    # ✅ API Metadata
-    app.config["API_TITLE"] = "BookMeLib REST API"
+    # API Metadata
+    app.config["API_TITLE"] = "AppointmentGuy REST API"
     app.config["API_VERSION"] = "v1"
     app.config["OPENAPI_VERSION"] = "3.0.3"
     app.config["OPENAPI_URL_PREFIX"] = "/"
     app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
     app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
 
-    # ✅ JWT Settings (HEADER ONLY)
+    # JWT Settings (HEADER ONLY)
     app.config["JWT_SECRET_KEY"] = "your-secure-random-key-here"
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=15)
     app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=7)
-    app.config["JWT_TOKEN_LOCATION"] = ["headers"]  # ✅ Only headers
+    app.config["JWT_TOKEN_LOCATION"] = ["headers"]  
 
-    # ✅ Database
+
+    # Jwt configuration
+    app.config["SECRET_KEY"] = "fc9e41f421303fbced65088f9d365310"
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = datetime.timedelta(minutes=5) 
+    app.config["JWT_REFRESH_TOKEN_EXPIRES"] = datetime.timedelta(hours=1) 
+
+    # Database
     database_url = os.environ.get("DATABASE_URL")
     if not database_url:
         raise RuntimeError("DATABASE_URL environment variable is not set.")
     app.config["SQLALCHEMY_DATABASE_URI"] = database_url
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-    # ✅ Init extensions
+    # Init extensions
     db.init_app(app)
     Migrate(app, db)
     api = Api(app)
     jwt = JWTManager(app)
 
-    # ✅ JWT Error Handlers
+    # JWT Error Handlers
     @jwt.token_in_blocklist_loader
     def check_if_token_in_blocklist(jwt_header, jwt_payload):
         return jwt_payload["jti"] in BLOCKLIST
@@ -94,7 +104,7 @@ def create_app(db_url=None):
     def invalid_token_callback(error):
         return jsonify({"description": "Signature verification failed.", "error": "invalid_token"}), 401
 
-    # ✅ Setup Roles
+    #  Setup Roles
     with app.app_context():
         db.create_all()
         from models.role import RoleModel
@@ -105,7 +115,7 @@ def create_app(db_url=None):
                 db.session.add(role)
                 db.session.commit()
 
-    # ✅ Register Blueprints
+    # Register Blueprints
     api.register_blueprint(AuthBlueprint)
     api.register_blueprint(UserBlueprint)
     api.register_blueprint(RoleBlueprint)
@@ -114,7 +124,7 @@ def create_app(db_url=None):
     api.register_blueprint(CategoryBlueprint)
     api.register_blueprint(AppointmentBlueprint)
 
-    # ✅ Health check route
+    #  Health check route
     @app.route("/")
     def home():
         return jsonify({

@@ -165,7 +165,7 @@ const ActionAppointment = ({ appointment, onClose, setIsUpdating }) => {
   );
 
   return (
-    <div className="absolute right-0 mt-2 bg-white shadow-lg whitespace-nowrap rounded-md py-2 px-3 z-10 w-56 border border-gray-200">
+    <div className="absolute right-0 mt-2 bg-white  whitespace-nowrap rounded-md py-2 px-3 z-10 w-56 border border-gray-200">
       {localError && (
         <div className="mb-2 p-2 bg-red-50 border border-red-200 rounded text-xs text-red-600">
           {localError}
@@ -183,7 +183,6 @@ const ActionAppointment = ({ appointment, onClose, setIsUpdating }) => {
             <span>Cancel Appointment</span>
           </button>
         )}
-
         {canConfirm && (
           <button
             onClick={(e) => handleActionClick("confirmed", e)}
@@ -194,7 +193,6 @@ const ActionAppointment = ({ appointment, onClose, setIsUpdating }) => {
             <span>Confirm</span>
           </button>
         )}
-
         {canComplete && (
           <button
             onClick={(e) => handleActionClick("completed", e)}
@@ -205,11 +203,6 @@ const ActionAppointment = ({ appointment, onClose, setIsUpdating }) => {
             <span>Mark as Completed</span>
           </button>
         )}
-
-        {/* Debug info - remove in production */}
-        <div className="mt-2 pt-2 border-t border-gray-200 text-xs text-gray-500">
-          Current: {appointment.status} | ID: {appointment.id}
-        </div>
       </div>
     </div>
   );

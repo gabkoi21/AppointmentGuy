@@ -203,7 +203,6 @@ class RegisterUser(MethodView):
         abort(400, message="Invalid or unauthorized user type.")
 
 # ----- Login Endpoint -----
-
 @blp.route("/login")
 class AuthLogin(MethodView):
     @blp.arguments(UserLoginSchema)
@@ -224,18 +223,18 @@ class AuthLogin(MethodView):
         if user.user_type == "business_admin" and user.business:
             claims["business_name"] = user.business.name
 
+        # CORRECTED LINE: Pass the claims as additional_claims
         access_token = create_access_token(identity=str(user.id), additional_claims=claims)
         refresh_token = create_refresh_token(identity=str(user.id))
 
         return {
+            "message": "Logged In Sucessful",
             "access_token": access_token,
             "refresh_token": refresh_token,
             "user_type": user.user_type,
-            "business_id": user.business_id
         }, 200
 
 
-# ----- Token Refresh Endpoint -----
 # ----- Token Refresh Endpoint (FIXED) -----
 @blp.route("/refresh")
 class TokenRefresh(MethodView):
@@ -268,7 +267,7 @@ class TokenRefresh(MethodView):
             "access_token": access_token
         }, 200
     
-    
+     
 @blp.route("/users/<int:user_id>/toggle-status")
 class ToggleUsersStatus(MethodView):
     @role_required('super_admin')

@@ -11,16 +11,18 @@ const useAuthStore = create(
       loading: false,
       error: null,
 
-      // LOGIN
       login: async (credentials) => {
         set({ loading: true, error: null });
 
         try {
-          const { data } = await api.post("/auth/login", credentials);
-          const { access_token, refresh_token, user_type, business_id } = data;
+          const response = await api.post("/auth/login", credentials);
+          const { access_token, refresh_token, user_type } = response.data;
+
+          localStorage.setItem("token", access_token);
+          localStorage.setItem("refresh_token", refresh_token);
 
           set({
-            user: { user_type, business_id },
+            user: { user_type },
             token: access_token,
             refreshToken: refresh_token,
             loading: false,
@@ -30,14 +32,17 @@ const useAuthStore = create(
         } catch (error) {
           console.error("Login error:", error);
           set({
-            error: error?.response?.data?.message || "Login failed.",
+            error:
+              error?.response?.data?.message ||
+              error.message ||
+              "Login failed.",
             loading: false,
           });
+
           return null;
         }
       },
 
-      // REGISTER
       register: async (userData) => {
         set({ loading: true, error: null });
 
@@ -54,49 +59,16 @@ const useAuthStore = create(
         }
       },
 
-      // LOGOUT
       logout: () => {
         set({ user: null, token: null, refreshToken: null, error: null });
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("refresh_token");
       },
-
-      // GETTERS
-      getAccessToken: () => get().token,
-      getRefreshToken: () => get().refreshToken,
-      getUserData: () => get().user,
-      isAuthenticated: () => !!get().token,
-
-      // SETTERS
-      setToken: (accessToken) => {
-        set({ token: accessToken, error: null });
-      },
-      updateUserData: (userData) =>
-        set({ user: { ...get().user, ...userData } }),
-
-      // TOKEN EXPIRY CHECK
-      isTokenExpiringSoon: () => {
-        const token = get().token;
-        if (!token) return true;
-
-        try {
-          const payload = JSON.parse(atob(token.split(".")[1]));
-          const exp = payload.exp * 1000;
-          const now = Date.now();
-          return exp - now < 5 * 60 * 1000;
-        } catch {
-          return true;
-        }
-      },
-
-      // CLEAR ERROR
-      clearError: () => set({ error: null }),
     }),
     {
-      name: "auth-storage",
-      partialize: (state) => ({
-        user: state.user,
-        token: state.token,
-        refreshToken: state.refreshToken,
-      }),
+      name: "auth-storage", // localStorage key
+      getStorage: () => localStorage,
     }
   )
 );

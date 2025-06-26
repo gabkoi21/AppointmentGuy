@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 blp = Blueprint("Appointment", __name__, url_prefix="/appointment", description="Operations on Appointments")
 
 
-@blp.route("/")
+@blp.route("/getall")
 class AppointmentList(MethodView):
     @blp.response(200, AppointmentSchema(many=True))
     @jwt_required()

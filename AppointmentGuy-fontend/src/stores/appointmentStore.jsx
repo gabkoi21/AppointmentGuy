@@ -9,32 +9,19 @@ const useAppointmentStore = create((set, get) => ({
   CreateAppointment: async (appointmentData) => {
     set({ loading: true, error: null });
     try {
-      // Get token from localStorage (use accessToken, not token)
-      const token = localStorage.getItem("accessToken");
-
-      if (!token) {
-        throw new Error("No authentication token found");
-      }
-
       console.log("Creating appointment with data:", appointmentData);
-      console.log("Using token:", token);
 
-      const response = await api.post("/appointment/", appointmentData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.post("/appointment/", appointmentData);
 
       console.log("Appointment created successfully:", response.data);
 
-      // Add the new appointment to the existing appointments array
       set((state) => ({
         appointments: [...state.appointments, response.data],
         loading: false,
         error: null,
       }));
 
-      return response.data; // Return the created appointment
+      return response.data;
     } catch (error) {
       console.error("Error creating appointment:", error);
       const errorMessage =
@@ -49,18 +36,15 @@ const useAppointmentStore = create((set, get) => ({
   fetchAppointment: async () => {
     set({ loading: true, error: null });
     try {
-      // Use accessToken instead of token
-      const token = localStorage.getItem("accessToken");
+      const token = localStorage.getItem("token");
 
       if (!token) {
-        throw new Error("No authentication token found");
+        console.warn("No token found. Aborting fetchUser.");
+        set({ loading: false, error: "Authentication token missing." });
+        return;
       }
 
-      const response = await api.get("/appointment/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.get("/appointment/getall");
       set({ appointments: response.data, loading: false });
       return response.data;
     } catch (error) {
@@ -73,29 +57,16 @@ const useAppointmentStore = create((set, get) => ({
     }
   },
 
-  // Enhanced updateAppointmentStatus function for your store
-  // Fixed updateAppointmentStatus function for your store
   updateAppointmentStatus: async (id, newStatus) => {
     console.log(`Store: Updating appointment ${id} to status: ${newStatus}`);
 
     set({ loading: true, error: null });
 
     try {
-      // Get current token from localStorage (same as other functions)
-      const token = localStorage.getItem("accessToken");
-
       const response = await api.patch(
         `/business/appointments/${id}/update-status`,
-        { status: newStatus },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
+        { status: newStatus }
       );
-
-      console.log(`API Response:`, response.data);
 
       const updatedStatus = response.data.new_status;
 
@@ -123,8 +94,6 @@ const useAppointmentStore = create((set, get) => ({
         error: errorMessage,
         loading: false,
       });
-
-      // Re-throw the error so the component can handle it
       throw error;
     }
   },

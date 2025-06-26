@@ -1,23 +1,25 @@
 import { create } from "zustand";
 import api from "@/api/axios";
-import useAuthStore from "@/stores/authStore";
 
 const useUserStore = create((set, get) => ({
   users: [],
   loading: false,
   error: null,
-  token: null,
 
-  // Fetches all users from the server and updates local state
+  // Fetches all users and logs the token
   fetchUser: async () => {
     set({ loading: true, error: null });
     try {
-      const token = useAuthStore.getState().token;
-      const response = await api.get("/auth/users", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const token = localStorage.getItem("token");
+      console.log("Token in fetchUser:", token);
+
+      if (!token) {
+        console.warn("No token found. Aborting fetchUser.");
+        set({ loading: false, error: "Authentication token missing." });
+        return;
+      }
+
+      const response = await api.get("/auth/users");
       set({ users: response.data, loading: false });
     } catch (error) {
       const errorMessage =
@@ -27,25 +29,17 @@ const useUserStore = create((set, get) => ({
     }
   },
 
-  // Updates a specific user's information on the server and in local state
+  // Update a user by ID
   updateUser: async (userId, userData) => {
     set({ loading: true, error: null });
     try {
-      const token = useAuthStore.getState().token;
-      const response = await api.put(`/auth/users/${userId}`, userData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      // Update the user in the local state
+      const response = await api.put(`/auth/users/${userId}`, userData);
       set((state) => ({
         users: state.users.map((user) =>
-          user.id === userId ? { ...user, ...userData } : user
+          user.id === userId ? { ...user, ...response.data } : user
         ),
         loading: false,
       }));
-
       return response.data;
     } catch (error) {
       const errorMessage =
@@ -56,17 +50,11 @@ const useUserStore = create((set, get) => ({
     }
   },
 
-  //  Deletes a user by ID from the server and updates the local user list
+  // ✅ Delete a user by ID
   deleteUser: async (id) => {
     set({ loading: true, error: null });
     try {
-      const token = useAuthStore.getState().token;
-      await api.delete(`/auth/users/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      await api.delete(`/auth/users/${id}`);
       set((state) => ({
         users: state.users.filter((user) => user.id !== id),
         loading: false,
@@ -80,27 +68,14 @@ const useUserStore = create((set, get) => ({
     }
   },
 
-  //  Toggles the status (e.g., active/inactive) of a specific user
+  // ✅ Toggle a user’s active/inactive status
   updateUserStatus: async (id) => {
     try {
-      const token = useAuthStore.getState().token;
-      if (!token) {
-        console.error("No token found in Zustand store.");
-        return;
-      }
-
-      const res = await api.patch(
-        `/auth/users/${id}/toggle-status`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await api.patch(`/auth/users/${id}/toggle-status`);
       console.log("Status toggled:", res.data);
     } catch (error) {
       console.error("Failed to toggle status:", error);
+      set({ error: "Failed to toggle user status." });
     }
   },
 }));

@@ -1,28 +1,14 @@
 import axios from "axios";
-import useAuthStore from "@/stores/authStore";
 
-// Create an Axios instance with base URL and timeout
 const api = axios.create({
   // baseURL: "http://192.168.140.150:5000",
   baseURL: "https://appointmentguy.onrender.com",
-  timeout: 10000,
 });
 
-let isRefreshing = false;
-let failedQueue = [];
-
-// Handles retrying failed requests after token is refreshed
-const processQueue = (error, token = null) => {
-  failedQueue.forEach((prom) => {
-    error ? prom.reject(error) : prom.resolve(token);
-  });
-  failedQueue = [];
-};
-
-// Adds Authorization header with access token to each request
+// Request interceptor to add token
 api.interceptors.request.use(
   (config) => {
-    const token = useAuthStore.getState().getAccessToken();
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -31,55 +17,50 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Intercepts 401 responses and attempts token refresh
+// Response interceptor for handling 401 and refreshing token
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
-        }).then((token) => {
-          originalRequest.headers.Authorization = `Bearer ${token}`;
-          return api(originalRequest);
-        });
-      }
-
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
-      isRefreshing = true;
 
       try {
-        const refreshToken = useAuthStore.getState().getRefreshToken();
-        if (!refreshToken) throw new Error("No refresh token available");
+        const refreshToken = localStorage.getItem("refresh_token");
+        if (!refreshToken) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("refresh_token");
+          return Promise.reject(error);
+        }
 
-        const res = await api.post(
-          "/auth/refresh",
+        const refreshAxios = axios.create();
+        const refreshResponse = await refreshAxios.post(
+          "http://192.168.140.150:5000/auth/refresh",
           {},
           {
             headers: {
               Authorization: `Bearer ${refreshToken}`,
-              "Content-Type": "application/json",
             },
-            timeout: 5000,
           }
         );
 
-        const newToken = res.data.access_token;
-        useAuthStore.getState().setToken(newToken);
-        processQueue(null, newToken);
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        const { access_token } = refreshResponse.data;
+
+        localStorage.setItem("token", access_token);
+
+        originalRequest.headers.Authorization = `Bearer ${access_token}`;
+
         return api(originalRequest);
       } catch (refreshError) {
-        processQueue(refreshError, null);
-        useAuthStore.getState().logout();
-        if (!["/login", "/"].includes(window.location.pathname)) {
-          window.location.href = "/";
-        }
+        console.error("Token refresh failed:", refreshError);
+        localStorage.removeItem("token");
+        localStorage.removeItem("refresh_token");
         return Promise.reject(refreshError);
-      } finally {
-        isRefreshing = false;
       }
     }
 

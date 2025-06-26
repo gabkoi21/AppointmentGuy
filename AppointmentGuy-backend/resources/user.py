@@ -37,7 +37,7 @@ class ManageUser(MethodView):
         return {"message": "User updated successfully"}, 200
 
     @jwt_required()
-    def delete(self, user_id):
+    def delete(self, user_id): 
         """Delete a specific user"""
         try:
             claims = get_jwt()
@@ -110,7 +110,7 @@ class ManageUser(MethodView):
 class UserView(MethodView):
     @jwt_required()
     def get(self):
-        """Get current user or all users depending on route"""
+        """Get current user or all users depending on row"""
         try:
             claims = get_jwt()
             user_id = claims.get("sub")
