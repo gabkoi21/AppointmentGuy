@@ -29,22 +29,19 @@ const useAppointmentStore = create((set, get) => ({
         error.message ||
         "Failed to create appointment";
       set({ error: errorMessage, loading: false });
-      return null; // Return null on error
+      return null;
     }
   },
 
   fetchAppointment: async () => {
     set({ loading: true, error: null });
     try {
-      const token = localStorage.getItem("token");
+      const response = await api.get("/appointment/getall", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      if (!token) {
-        console.warn("No token found. Aborting fetchUser.");
-        set({ loading: false, error: "Authentication token missing." });
-        return;
-      }
-
-      const response = await api.get("/appointment/getall");
       set({ appointments: response.data, loading: false });
       return response.data;
     } catch (error) {

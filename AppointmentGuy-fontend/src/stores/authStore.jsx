@@ -61,13 +61,12 @@ const useAuthStore = create(
 
       logout: () => {
         set({ user: null, token: null, refreshToken: null, error: null });
-
         localStorage.removeItem("token");
         localStorage.removeItem("refresh_token");
       },
     }),
     {
-      name: "auth-storage", // localStorage key
+      name: "auth-storage",
       getStorage: () => localStorage,
     }
   )

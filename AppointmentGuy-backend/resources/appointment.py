@@ -43,40 +43,36 @@ class AppointmentList(MethodView):
         return appointments
 
 
+
+@blp.route("/create")
+class AppointmentCreate(MethodView):
     @blp.arguments(AppointmentSchema)
     @blp.response(201, AppointmentSchema)
-    @role_required("customer") 
+    @role_required("customer")
+    @jwt_required()
     def post(self, appointment_data):
         service = ServiceModel.query.get_or_404(appointment_data['service_id'])
-        
         scheduled_time = appointment_data['scheduled_time']
 
         user_id = get_jwt_identity()
         user = UserModel.query.get_or_404(user_id)
-
-        buiness = BusinessModel.query.get_or_404(appointment_data["business_id"])
-
+        business = BusinessModel.query.get_or_404(appointment_data["business_id"])
 
         if user.status != "active":
-              abort(403, message="Inactive users cannot book appointments.")
+            abort(403, message="Inactive users cannot book appointments.")
 
-        if buiness.status != "active":
-             abort(403, message="This business is currently not accepting appointments.")
+        if business.status != "active":
+            abort(403, message="This business is currently not accepting appointments.")
 
-            
-        
         # Check for existing appointments at the same time
         existing_appointment = AppointmentModel.query.filter_by(
             business_id=appointment_data['business_id'],
             scheduled_time=scheduled_time
         ).first()
-        
+
         if existing_appointment:
             abort(400, message="This time slot is already booked. Please choose another time.")
 
-        
-        
-        user_id = get_jwt_identity()
         appointment_data["user_id"] = user_id
         appointment_data["status"] = "pending"  # Set initial status
 
@@ -84,6 +80,8 @@ class AppointmentList(MethodView):
         db.session.add(appointment)
         db.session.commit()
         return appointment
+
+
 
 
 @blp.route("/<int:appointment_id>")

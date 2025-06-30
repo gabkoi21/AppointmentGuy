@@ -1,35 +1,37 @@
 import { create } from "zustand";
 import api from "@/api/axios";
+import { jwtDecode } from "jwt-decode";
 
 const useUserStore = create((set, get) => ({
   users: [],
   loading: false,
   error: null,
 
-  // Fetches all users and logs the token
+  // Check if token is expired (used only if you want to warn the user or auto-logout early)
+  isTokenExpired: (token) => {
+    if (!token) return true;
+    try {
+      const { exp } = jwtDecode(token);
+      return Date.now() >= exp * 1000;
+    } catch {
+      return true;
+    }
+  },
+
+  //  Cleaned-up fetchUser — no refresh, just call API
   fetchUser: async () => {
     set({ loading: true, error: null });
     try {
-      const token = localStorage.getItem("token");
-      console.log("Token in fetchUser:", token);
-
-      if (!token) {
-        console.warn("No token found. Aborting fetchUser.");
-        set({ loading: false, error: "Authentication token missing." });
-        return;
-      }
-
-      const response = await api.get("/auth/users");
+      const response = await api.get("/auth/users"); // Axios already attaches token
       set({ users: response.data, loading: false });
     } catch (error) {
       const errorMessage =
         error?.response?.data?.message || "Failed to load users";
-      console.error("Error fetching users:", error);
       set({ error: errorMessage, loading: false });
     }
   },
 
-  // Update a user by ID
+  // Update a user
   updateUser: async (userId, userData) => {
     set({ loading: true, error: null });
     try {
@@ -50,7 +52,7 @@ const useUserStore = create((set, get) => ({
     }
   },
 
-  // ✅ Delete a user by ID
+  // Delete a user
   deleteUser: async (id) => {
     set({ loading: true, error: null });
     try {
@@ -68,7 +70,7 @@ const useUserStore = create((set, get) => ({
     }
   },
 
-  // ✅ Toggle a user’s active/inactive status
+  //  Toggle user active/inactive
   updateUserStatus: async (id) => {
     try {
       const res = await api.patch(`/auth/users/${id}/toggle-status`);

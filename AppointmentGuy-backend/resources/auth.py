@@ -7,7 +7,7 @@ from flask_jwt_extended import (
     jwt_required,
     get_jwt,
     get_jwt_identity, 
-    set_refresh_cookies
+    
 )
 from db import db
 from models import UserModel, RoleModel, BusinessModel
@@ -240,33 +240,37 @@ class AuthLogin(MethodView):
 class TokenRefresh(MethodView):
     @jwt_required(refresh=True)
     def post(self):
-        current_user_id = get_jwt_identity()
-        
-        # Get the user and their current roles/claims
+        from flask import request
+
+        try:
+            current_user_id = get_jwt_identity()
+            print("Refresh token valid. User ID:", current_user_id)
+        except Exception as e:
+            return jsonify({
+                "error": "Invalid or expired refresh token.",
+                "details": str(e)
+            }), 401
+
         user = UserModel.query.get(current_user_id)
         if not user:
-            abort(404, message="User not found")
-            
-        # Recreate the same claims as in login
+            return jsonify({"error": "User not found"}), 404
+
         claims = {
             "roles": [r.role for r in user.roles],
             "user_type": user.user_type,
             "business_id": user.business_id,
         }
-        
+
         if user.user_type == "business_admin" and user.business:
             claims["business_name"] = user.business.name
-            
-        # Create new access token with all claims
+
         access_token = create_access_token(
-            identity=str(user.id), 
+            identity=str(user.id),
             additional_claims=claims
         )
-        
-        return {
-            "access_token": access_token
-        }, 200
-    
+
+        return {"access_token": access_token}, 200
+
      
 @blp.route("/users/<int:user_id>/toggle-status")
 class ToggleUsersStatus(MethodView):
