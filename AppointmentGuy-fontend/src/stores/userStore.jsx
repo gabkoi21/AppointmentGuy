@@ -7,7 +7,7 @@ const useUserStore = create((set, get) => ({
   loading: false,
   error: null,
 
-  // Check if token is expired (used only if you want to warn the user or auto-logout early)
+  // Check if token is expired
   isTokenExpired: (token) => {
     if (!token) return true;
     try {
@@ -22,7 +22,7 @@ const useUserStore = create((set, get) => ({
   fetchUser: async () => {
     set({ loading: true, error: null });
     try {
-      const response = await api.get("/auth/users"); // Axios already attaches token
+      const response = await api.get("/auth/users");
       set({ users: response.data, loading: false });
     } catch (error) {
       const errorMessage =

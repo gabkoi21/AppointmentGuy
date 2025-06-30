@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.140.150:5000",
+  baseURL: "http://192.168.216.150:5000",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -15,7 +15,6 @@ const getTokenFromStorage = () => {
 };
 
 const getRefreshTokenFromStorage = () => {
-  ss;
   const authStorage = JSON.parse(localStorage.getItem("auth-storage") || "{}");
   return (
     localStorage.getItem("refresh_token") ||
@@ -113,7 +112,7 @@ api.interceptors.response.use(
       try {
         console.log("🔁 Refreshing token...");
         const res = await axios.post(
-          "http://192.168.140.150:5000/auth/refresh",
+          "http://192.168.216.150:5000/auth/refresh",
           {},
           {
             headers: {
