@@ -6,50 +6,76 @@ const useAppointmentStore = create((set, get) => ({
   loading: false,
   error: null,
 
+  isTokenExpired: (token) => {
+    if (!token) return true;
+    try {
+      const { exp } = jwtDecode(token);
+      return Date.now() >= exp * 1000;
+    } catch {
+      return true;
+    }
+  },
+
+  // Set this properly
   CreateAppointment: async (appointmentData) => {
     set({ loading: true, error: null });
     try {
-      console.log("Creating appointment with data:", appointmentData);
-
-      const response = await api.post("/appointment/", appointmentData);
-
-      console.log("Appointment created successfully:", response.data);
+      const { data } = await api.post("/appointment/", appointmentData);
 
       set((state) => ({
-        appointments: [...state.appointments, response.data],
+        appointments: [...state.appointments, data],
         loading: false,
         error: null,
       }));
-
-      return response.data;
-    } catch (error) {
-      console.error("Error creating appointment:", error);
+      return data;
+    } catch (err) {
       const errorMessage =
-        error?.response?.data?.message ||
-        error.message ||
+        err?.response?.data?.message ||
+        err.message ||
         "Failed to create appointment";
       set({ error: errorMessage, loading: false });
       return null;
     }
   },
 
-  fetchAppointment: async () => {
+  // This is to get all the appoinment
+  fetchAppointments: async () => {
     set({ loading: true, error: null });
-    try {
-      const response = await api.get("/appointment/getall", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
 
-      set({ appointments: response.data, loading: false });
-      return response.data;
-    } catch (error) {
+    try {
+      const { data } = await api.get("/appointment/getall");
+      set({ appointments: data, loading: false });
+      return data;
+    } catch (err) {
       const errorMessage =
-        error?.response?.data?.message ||
-        error.message ||
+        err?.response?.data?.message ||
+        err.message ||
         "Failed to load appointments";
-      set({ error: errorMessage, loading: false });
+      set({ err: errorMessage, loading: false });
+      return null;
+    }
+  },
+
+  // This is to delete asppoimyent
+  deleteAppointment: async (id) => {
+    set({ loading: true, error: null });
+
+    try {
+      const token = localStorage.getItem("token");
+      await api.delete(`/appointment/${id}`);
+      set((state) => ({
+        appointments: state.appointments.filter((appt) => appt.id !== id),
+        loading: false,
+      }));
+      return true;
+    } catch (err) {
+      set({
+        error:
+          err?.response?.data?.message ||
+          err.message ||
+          "Failed to delete appointment",
+        loading: false,
+      });
       return null;
     }
   },
@@ -79,8 +105,7 @@ const useAppointmentStore = create((set, get) => ({
       }));
       return response.data;
     } catch (error) {
-      console.error(`Error updating appointment ${id}:`, error);
-
+      // console.error(`Error updating appointment ${id}:`, error);
       const errorMessage =
         error?.response?.data?.message ||
         error?.response?.statusText ||

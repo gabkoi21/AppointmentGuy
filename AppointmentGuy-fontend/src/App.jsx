@@ -4,7 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 // Authentication Pages
 import Login from "./Pages/auth/Login";
 import Register from "./Pages/auth/Register";
-import ProtectedRoute from "./components/Global/ProtectedRoutes";
+import ProtectedRoute from "./components/Global/Auth/ProtectedRoutes";
 
 // Admin Routes
 import AdminLayout from "./components/Admin/AdminRoutes/AdminLayout";
@@ -15,6 +15,7 @@ import Settings from "./Pages/Admin/setting";
 import UserManagement from "./Pages/Admin/UserManagement";
 import AdminProfile from "./Pages/Admin/AdminProfile";
 import AddBusiness from "./Pages/Admin/AddBusiness";
+import EditeUser from "./Pages/Admin/EditeUser";
 
 // Business Admin Routes
 import BusinessAdminLayout from "./components/BusinessAdmin/BusinessRoutes/BusinessAdminlayout";
@@ -66,6 +67,7 @@ const router = createBrowserRouter([
       { path: "settings", element: <Settings /> },
       { path: "usermanagement", element: <UserManagement /> },
       { path: "adminprofile", element: <AdminProfile /> },
+      { path: "edituser", element: <EditeUser /> },
     ],
   },
 

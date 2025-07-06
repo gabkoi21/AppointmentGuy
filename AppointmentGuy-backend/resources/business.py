@@ -13,11 +13,8 @@ from sqlalchemy.exc import IntegrityError
 # Initialize the Blueprint
 blp = Blueprint("Businesses", __name__, url_prefix="/business", description="Operations on businesses")
 
-# ---------------------- Helper Functions ----------------------
 
 def create_business(business_data, owner_id):
-    """Create a new business and associate it with the owner (admin user)."""
-    # Validate required fields
     if not business_data.get('name'):
         abort(400, message="Business name is required.")
     if not business_data.get('description'):
@@ -65,9 +62,9 @@ def create_admin_user(admin_data, business=None):
         phone_number=admin_data["phone_number"],
         user_type="business_admin",
         address=admin_data.get('address'),
-        status='active',  # Set a default status
-        business_id=business.id if business else None,  # Explicitly set business_id
-        roles=[admin_role]  # Add role directly in constructor
+        status='active',
+        business_id=business.id if business else None,  
+        roles=[admin_role]  
     )
 
     db.session.add(admin_user)
@@ -87,8 +84,6 @@ class CreateBusiness(MethodView):
             abort(400, message="Admin user data must be provided.")
 
         try:
-            # Start a transaction
-            # First create the admin user (without business association)
             admin_user = create_admin_user(admin_data)
             db.session.flush()  # Get the admin_user.id
 
@@ -114,7 +109,6 @@ class AddAdminToBusiness(MethodView):
     @blp.response(201, UserSchema)
     @role_required('super_admin')
     def post(self, user_data, business_id):
-        """Add an admin to an existing business. Only accessible by Super Admin."""
         business = BusinessModel.query.get_or_404(business_id)
         admin_user = create_admin_user(user_data, business)
         db.session.commit()
@@ -231,9 +225,7 @@ class AppointmentStatusToggle(MethodView):
     def patch(self, appointment_data, appointment_id):
         appointment = AppointmentModel.query.get_or_404(appointment_id)
 
-
         new_status = appointment_data.get("status")
-
 
         # This logic is to add new appointments
         if new_status not in ['confirmed','completed', 'cancelled']:

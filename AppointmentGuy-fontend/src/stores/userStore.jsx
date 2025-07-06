@@ -31,17 +31,19 @@ const useUserStore = create((set, get) => ({
     }
   },
 
-  // Update a user
   updateUser: async (userId, userData) => {
     set({ loading: true, error: null });
     try {
       const response = await api.put(`/auth/users/${userId}`, userData);
+
       set((state) => ({
         users: state.users.map((user) =>
           user.id === userId ? { ...user, ...response.data } : user
         ),
         loading: false,
       }));
+
+      // Return the updated user data for potential further use
       return response.data;
     } catch (error) {
       const errorMessage =
@@ -74,6 +76,11 @@ const useUserStore = create((set, get) => ({
   updateUserStatus: async (id) => {
     try {
       const res = await api.patch(`/auth/users/${id}/toggle-status`);
+      set((state) => ({
+        users: state.users.map((user) =>
+          user.id === id ? { ...user, ...res.data } : user
+        ),
+      }));
       console.log("Status toggled:", res.data);
     } catch (error) {
       console.error("Failed to toggle status:", error);

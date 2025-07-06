@@ -213,6 +213,12 @@ class AuthLogin(MethodView):
 
         if user.status != "active" and user.user_type != "super_admin":
             abort(403, message="Your account has been deactivated. Contact support.")
+        
+        # Only allow business_admin login if their business is active
+        if user.user_type == "business_admin":
+            business = BusinessModel.query.get(user.business_id)
+            if not business or business.status != "active":
+                abort(403, message="Your business is inactive. Login denied.")
 
         claims = {
             "roles": [r.role for r in user.roles],
@@ -233,7 +239,6 @@ class AuthLogin(MethodView):
             "refresh_token": refresh_token,
             "user_type": user.user_type,
         }, 200
-
 
 # ----- Token Refresh Endpoint (FIXED) -----
 @blp.route("/refresh")
@@ -280,6 +285,7 @@ class ToggleUsersStatus(MethodView):
         claims = get_jwt()
         if claims.get("user_type") != "super_admin":
             abort(403, message="You are not authorized to perform this action.")
+    
         
         user = UserModel.query.get_or_404(user_id)
 

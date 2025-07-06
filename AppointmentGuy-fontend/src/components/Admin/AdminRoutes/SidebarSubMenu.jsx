@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import Icon from "@mdi/react";
-import BusinessSidebarDropdown from "./BusinessSideBarNavDropdown";
+import BusinessSidebarDropdown from "./SideBarNavDropdown";
 
 const SidebarNavDropdown = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,7 +9,7 @@ const SidebarNavDropdown = ({ item }) => {
   return (
     <>
       <div
-        className="flex items-center p-0 cursor-pointer lg:px-2"
+        className="flex cursor-pointer items-center p-0 lg:px-2"
         onClick={() => setIsOpen(!isOpen)}
         aria-label={item.ariaLabel}
       >

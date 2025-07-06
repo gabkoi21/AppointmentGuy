@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.216.150:5000",
+  baseURL: "http://10.180.80.150:5000",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -24,12 +24,12 @@ const getRefreshTokenFromStorage = () => {
   );
 };
 
+// This is to update the token
 const updateTokensInStorage = (accessToken, refreshToken = null) => {
   localStorage.setItem("token", accessToken);
   if (refreshToken) {
     localStorage.setItem("refresh_token", refreshToken);
   }
-
   const authStorage = JSON.parse(localStorage.getItem("auth-storage") || "{}");
   if (authStorage?.state) {
     authStorage.state.token = accessToken;
@@ -76,7 +76,7 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 // Response interceptor for handling expired token and refresh
@@ -103,22 +103,22 @@ api.interceptors.response.use(
 
       const refreshToken = getRefreshTokenFromStorage();
       if (!refreshToken) {
-        console.warn("⚠️ No refresh token found, logging out...");
+        console.warn(" No refresh token found, logging out...");
         clearAuthData();
         window.location.href = "/";
         return Promise.reject(error);
       }
 
       try {
-        console.log("🔁 Refreshing token...");
+        console.log("Refreshing token...");
         const res = await axios.post(
-          "http://192.168.216.150:5000/auth/refresh",
+          "http://10.180.80.150:5000/auth/refresh",
           {},
           {
             headers: {
               Authorization: `Bearer ${refreshToken}`,
             },
-          }
+          },
         );
 
         const { access_token, refresh_token } = res.data;
@@ -133,7 +133,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         console.error(
           "Token refresh failed:",
-          refreshError?.response?.data || refreshError
+          refreshError?.response?.data || refreshError,
         );
         processQueue(refreshError, null);
         clearAuthData();
@@ -145,7 +145,7 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

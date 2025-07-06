@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Icon from "@mdi/react";
-import { mdiCrown, mdiBellOutline } from "@mdi/js";
-import AdminHeaderNav from "../components/Global/AdminHeaderNav";
+import AdminHeaderNav from "../components/Admin/AdminRoutes/AdminHeaderNav";
 import SidebarNavLink from "../components/Admin/AdminRoutes/SidebarNavLink";
-import SidebarBusinessDropdown from "../components/Admin/AdminRoutes/BusinessSideBarNavDropdown";
+import SidebarBusinessDropdown from "../components/Admin/AdminRoutes/SideBarNavDropdown";
 import SidebarNavDropdown from "../components/Admin/AdminRoutes/SidebarSubMenu.jsx";
 import { NAV_ITEMS } from "../components/BusinessAdmin/BusinessRoutes/BusinessNavItems";
-import { Link } from "react-router";
 import useBusinessStore from "@/stores/businessStore";
 
 const BusinessAdminNav = () => {
@@ -25,9 +22,9 @@ const BusinessAdminNav = () => {
   return (
     <header>
       <AdminHeaderNav />
-      <nav className="fixed top-14 left-0 w-1/5 h-[calc(100vh-3.5rem)] bg-red-950 overflow-y-auto">
+      <nav className="fixed left-0 top-14 h-[calc(100vh-3.5rem)] w-1/5 overflow-y-auto bg-red-950">
         <div className="block w-full px-3">
-          <ul className="flex flex-col mt-5 ps-0 font-roboto whitespace-nowrap">
+          <ul className="mt-5 flex flex-col whitespace-nowrap ps-0 font-roboto">
             {NAV_ITEMS.map((item) => (
               <li key={item.to} className="mb-4 ps-2 lg:mb-8 lg:pe-1 lg:ps-0">
                 {item.subItems ? (

@@ -82,8 +82,6 @@ class AppointmentCreate(MethodView):
         return appointment
 
 
-
-
 @blp.route("/<int:appointment_id>")
 class Appointment(MethodView):
     @blp.response(200, AppointmentSchema)
@@ -110,7 +108,7 @@ class Appointment(MethodView):
         return appointment
 
     @blp.response(204)
-    @role_required("business_admin", "customer", check_owner=True)
+    @role_required("business_admin", "customer",  check_owner=True)
     def delete(self, appointment_id):
         """Delete a specific appointment by ID."""
         appointment = AppointmentModel.query.get_or_404(appointment_id)

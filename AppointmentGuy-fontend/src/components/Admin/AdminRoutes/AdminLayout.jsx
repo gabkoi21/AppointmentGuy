@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { AdminNav } from "../../../routes/AdminRoutes";
+import { AdminNav } from "@/routes/AdminRoutes";
 import React from "react";
 
 function AdminLayout() {

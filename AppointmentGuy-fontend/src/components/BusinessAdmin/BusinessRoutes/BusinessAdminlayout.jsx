@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import BusinessAdminNav from "../../../routes/BusinessAdminRoutes";
+import BusinessAdminNav from "@/routes/BusinessAdminRoutes";
 
 const BusinessAdminLayout = () => {
   return (

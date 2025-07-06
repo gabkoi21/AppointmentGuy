@@ -7,7 +7,8 @@ class ServiceModel(db.Model):
     name = db.Column(db.String(80), nullable=False)
     description = db.Column(db.Text)
     price = db.Column(db.Float, nullable=False)
-    business_id = db.Column(db.Integer, db.ForeignKey('businesses.id'), nullable=False)
+    # business_id = db.Column(db.Integer, db.ForeignKey('businesses.id'), nullable=False)
+    business_id = db.Column(db.Integer, db.ForeignKey('businesses.id', ondelete="CASCADE"), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     # duration = db.Column(db.Integer, nullable=False)  # Duration in minutes
     timestamp = db.Column(db.DateTime, default=datetime.now)

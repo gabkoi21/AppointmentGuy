@@ -14,19 +14,19 @@ const ApppintmentContainer = () => {
 
   return (
     <>
-      <div className="flex mt-10">
+      <div className="mt-10 flex">
         <AppointmentStatusNavigation
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />
       </div>
-      <div className="flex gap-4 mb-4">
+      <div className="mb-4 flex gap-4">
         <div className="w-full">
           <GlobalSearchBar>
             <div>
               <input
                 placeholder="Search  Business"
-                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-md block w-1/2 pl-10 py-2.5 dark:bg-white dark:border-gray-600 dark:text-white focus:outline-none focus:ring-0"
+                className="block w-1/2 rounded-md border border-gray-300 bg-white py-2.5 pl-10 text-sm text-gray-900 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-white dark:text-white"
               />
             </div>
           </GlobalSearchBar>
@@ -69,12 +69,12 @@ const CalendarData = () => {
   const [date, setDate] = React.useState(new Date());
 
   return (
-    <div className=" mb-10">
+    <div className="mb-10">
       <Calendar
         mode="single"
         selected={date}
         onSelect={setDate}
-        className="rounded-md border w-full"
+        className="w-full rounded-md border"
       />
     </div>
   );
@@ -83,7 +83,7 @@ const CalendarData = () => {
 const AppointmentTableFooter = () => {
   return (
     <>
-      <div className="flex justify-between items-center mt-8 ml-1 mb-10">
+      <div className="mb-10 ml-1 mt-8 flex items-center justify-between">
         <div>
           <p className="text-md text-gray-500">
             Showing <span className="font-bold text-gray-600">1-5</span> of{" "}
@@ -92,12 +92,12 @@ const AppointmentTableFooter = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <button className="flex items-center gap-1 border border-gray-300 px-3 py-1 rounded-md text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+          <button className="flex items-center gap-1 rounded-md border border-gray-300 px-3 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
             <Icon path={mdiChevronLeft} size={0.9} />
             Previous
           </button>
 
-          <button className="flex items-center gap-1 border border-gray-300 px-3 py-1 rounded-md text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+          <button className="flex items-center gap-1 rounded-md border border-gray-300 px-3 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
             Next
             <Icon path={mdiChevronRight} size={0.9} />
           </button>

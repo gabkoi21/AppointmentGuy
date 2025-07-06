@@ -13,8 +13,8 @@ import ComponentServices from "@/components/BusinessAdmin/BusinessDashboard/Serv
 // It contains the sidebar and the main content area
 const AdmindasboardhContainer = () => (
   <div className="flex">
-    <aside className="md:w-[20%] lg:w-[23%] h-screen " />
-    <main className="md:w-[98%] w-full mx-3 px-3 mt-14">
+    <aside className="h-screen md:w-[20%] lg:w-[23%]" />
+    <main className="mx-3 mt-14 w-full px-3 md:w-[98%]">
       <AdminDashboard />
     </main>
   </div>
@@ -62,14 +62,14 @@ const stats = [
 
 const DashboardHeader = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+    <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat, i) => (
         <div
           key={i}
-          className="flex items-center gap-4 p-5 bg-white rounded-2xl shadow-md transition hover:shadow-lg"
+          className="flex items-center gap-4 rounded-2xl bg-white p-5 shadow-md transition hover:shadow-lg"
         >
           <div
-            className="p-3 rounded-full"
+            className="rounded-full p-3"
             style={{ backgroundColor: `${stat.color}1A` }}
           >
             <Icon path={stat.icon} size={1.5} color={stat.color} />
@@ -87,15 +87,15 @@ const DashboardHeader = () => {
 
 const ExampleDashboard = () => {
   return (
-    <div className="p-2 space-y-6 mt-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <h3 className="text-lg font-semibold mb-4">Appointments This Week</h3>
+    <div className="mt-8 space-y-6 p-2">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="rounded-2xl bg-white p-6 shadow">
+          <h3 className="mb-4 text-lg font-semibold">Appointments This Week</h3>
           <ComponentAriaChart />
         </div>
 
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <h3 className="text-lg font-semibold mb-4">Visitors Overview</h3>
+        <div className="rounded-2xl bg-white p-6 shadow">
+          <h3 className="mb-4 text-lg font-semibold">Visitors Overview</h3>
           <ComponentServices />
         </div>
       </div>

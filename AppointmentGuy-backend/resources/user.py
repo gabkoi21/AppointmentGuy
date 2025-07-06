@@ -12,11 +12,9 @@ blp = Blueprint("User", __name__, url_prefix="/auth", description="Operations on
 
 @blp.route("/users/<int:user_id>")
 class ManageUser(MethodView):
-
     @jwt_required()
     @blp.arguments(UserUpdateSchema(partial=True))
     def put(self, user_data, user_id):
-        """Update user details (customer, business_admin)"""
         claims = get_jwt()
         current_user_roles = claims.get("roles", [])
         current_user_id = claims.get("sub")
@@ -36,6 +34,21 @@ class ManageUser(MethodView):
         db.session.commit()
         return {"message": "User updated successfully"}, 200
 
+    def is_authorized(self, user, current_user_id, current_user_roles):
+        # Super admin can update any user
+        if "super_admin" in current_user_roles:
+            return True
+        # Business admin and customer can only update themselves
+        if str(user.id) == str(current_user_id) and (
+            "business_admin" in current_user_roles or "customer" in current_user_roles
+        ):
+            return True
+        # All others: no permission
+        return False
+
+
+
+
     @jwt_required()
     def delete(self, user_id): 
         """Delete a specific user"""
@@ -51,9 +64,9 @@ class ManageUser(MethodView):
 
             db.session.delete(user)
             db.session.commit()
-
+            
             return {"message": "User deleted successfully"}, 200
-
+        
         except OperationalError as e:
             db.session.rollback()
             return {"message": "Database error occurred"}, 500

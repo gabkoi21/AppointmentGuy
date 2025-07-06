@@ -7,11 +7,11 @@ import { userProfile } from "../../data/userProfileData";
 const PageNavButtons = ({ activeTab, setActiveTab }) => {
   return (
     <>
-      <div className="flex gap-4 mt-5">
+      <div className="mt-5 flex gap-4">
         {/* This is the profile button */}
         <button
           onClick={() => setActiveTab("profile")}
-          className={`px-3 py-1 rounded-md hover:bg-gray-100 ${
+          className={`rounded-md px-3 py-1 hover:bg-gray-100 ${
             activeTab === "profile" ? "bg-teal-500 text-white" : "bg-gray-100"
           }`}
         >
@@ -20,7 +20,7 @@ const PageNavButtons = ({ activeTab, setActiveTab }) => {
         {/* This is the security button */}
         <button
           onClick={() => setActiveTab("security")}
-          className={`px-3 py-1 rounded-md hover:bg-gray-100 ${
+          className={`rounded-md px-3 py-1 hover:bg-gray-100 ${
             activeTab === "security" ? "bg-green-700 text-white" : "bg-gray-100"
           }`}
         >
@@ -35,7 +35,7 @@ const PageNavButtons = ({ activeTab, setActiveTab }) => {
 const UserInputField = ({ label, value, isEditing, onChange }) => {
   return (
     <div className="mb-4">
-      <label className="text-gray-600 font-light font-roboto block mb-2">
+      <label className="mb-2 block font-roboto font-light text-gray-600">
         {label}
       </label>
       <input
@@ -43,7 +43,7 @@ const UserInputField = ({ label, value, isEditing, onChange }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         readOnly={!isEditing}
-        className={`p-2 w-full border border-gray-300 rounded-md focus:border-green-700 focus:ring-0 outline-none focus:outline-none transition-colors duration-200 ${
+        className={`w-full rounded-md border border-gray-300 p-2 outline-none transition-colors duration-200 focus:border-green-700 focus:outline-none focus:ring-0 ${
           !isEditing ? "bg-gray-50" : "bg-white"
         }`}
       />
@@ -56,7 +56,7 @@ const UserProfile = ({ userObj, isEditing, onUpdateField, handleSave }) => {
   const {} = userObj;
   return (
     <div className="mt-6 w-full">
-      <div className="bg-white rounded-xl">
+      <div className="rounded-xl bg-white">
         <div>
           <div className="space-y-4">
             <UserInputField
@@ -92,7 +92,7 @@ const UserProfile = ({ userObj, isEditing, onUpdateField, handleSave }) => {
           </div>
 
           {isEditing && (
-            <button className="px-6 mt-5 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors duration-200">
+            <button className="mt-5 rounded-md bg-green-700 px-6 py-2 text-white transition-colors duration-200 hover:bg-green-800">
               Save Changes
             </button>
           )}
@@ -128,18 +128,18 @@ const ProfileInformation = () => {
   };
 
   return (
-    <div className="mt-5 bg-white shadow-xl py-10 px-8 rounded-lg border border-gray-200">
-      <div className="flex justify-between items-center">
+    <div className="mt-5 rounded-lg border border-gray-200 bg-white px-8 py-10 shadow-xl">
+      <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-black text-2xl font-bold">Profile Information</h3>
-          <span className="text-gray-500 text-sm block">
+          <h3 className="text-2xl font-bold text-black">Profile Information</h3>
+          <span className="block text-sm text-gray-500">
             Update your account profile information here.
           </span>
         </div>
         {!isEditing ? (
           <button
             onClick={handleEdit}
-            className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-500 transition-colors duration-200"
+            className="rounded-md bg-teal-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-teal-500"
           >
             Edit Profile
           </button>
@@ -147,7 +147,7 @@ const ProfileInformation = () => {
           <div className="flex gap-2">
             <button
               onClick={handleCancel}
-              className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-200"
+              className="rounded-md bg-gray-200 px-6 py-2 text-gray-700 transition-colors duration-200 hover:bg-gray-300"
             >
               Cancel
             </button>
@@ -156,7 +156,7 @@ const ProfileInformation = () => {
       </div>
 
       <div className="mt-5 flex items-center gap-4">
-        <span className="bg-gray-100 w-16 h-16 rounded-full text-gray-600 font-medium flex items-center justify-center text-xl">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 text-xl font-medium text-gray-600">
           {profileData.name.charAt(0)}
         </span>
       </div>
@@ -174,10 +174,10 @@ const ProfileInformation = () => {
 // Update Password Information Component
 const UpdatePasswordInformation = () => {
   return (
-    <div className="mt-5 bg-white shadow-xl py-10 px-8 rounded-lg border border-gray-200">
+    <div className="mt-5 rounded-lg border border-gray-200 bg-white px-8 py-10 shadow-xl">
       <div>
-        <h3 className="text-black text-2xl font-bold">Security Settings</h3>
-        <span className="text-gray-500 text-sm block">
+        <h3 className="text-2xl font-bold text-black">Security Settings</h3>
+        <span className="block text-sm text-gray-500">
           Manage your account security settings here.
         </span>
       </div>
@@ -190,39 +190,39 @@ const UpdatePasswordInformation = () => {
 const UpdatePassword = () => {
   return (
     <div className="mt-6 w-full">
-      <div className="bg-white rounded-xl">
+      <div className="rounded-xl bg-white">
         <div className="space-y-4">
           <div className="mb-4">
-            <label className="text-gray-600 font-light font-roboto block mb-2">
+            <label className="mb-2 block font-roboto font-light text-gray-600">
               Current Password
             </label>
             <input
               type="password"
-              className="p-2 w-full border border-gray-300 rounded-md focus:border-green-700  focus:ring-0 outline-none focus:outline-none transition-colors duration-200"
+              className="w-full rounded-md border border-gray-300 p-2 outline-none transition-colors duration-200 focus:border-green-700 focus:outline-none focus:ring-0"
             />
           </div>
 
           <div className="mb-4">
-            <label className="text-gray-600 font-light font-roboto block mb-2">
+            <label className="mb-2 block font-roboto font-light text-gray-600">
               New Password
             </label>
             <input
               type="password"
-              className="p-2 w-full border border-gray-300 rounded-md focus:border-green-700  focus:ring-0 outline-none focus:outline-none transition-colors duration-200"
+              className="w-full rounded-md border border-gray-300 p-2 outline-none transition-colors duration-200 focus:border-green-700 focus:outline-none focus:ring-0"
             />
           </div>
 
           <div className="mb-4">
-            <label className="text-gray-600 font-light font-roboto block mb-2">
+            <label className="mb-2 block font-roboto font-light text-gray-600">
               Confirm New Password
             </label>
             <input
               type="password"
-              className="p-2 w-full border border-gray-300 rounded-md focus:border-green-700  focus:ring-0 outline-none focus:outline-none transition-colors duration-200"
+              className="w-full rounded-md border border-gray-300 p-2 outline-none transition-colors duration-200 focus:border-green-700 focus:outline-none focus:ring-0"
             />
           </div>
 
-          <button className="px-6 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors duration-200">
+          <button className="rounded-md bg-green-700 px-6 py-2 text-white transition-colors duration-200 hover:bg-green-800">
             Update Password
           </button>
         </div>
@@ -235,9 +235,9 @@ const AdminProfileContainer = () => {
   const [activeTab, setActiveTab] = useState("profile");
   return (
     <div className="flex">
-      <aside className="md:w-[20%] lg:w-[23%] h-screen " />
-      <main className="md:w-[80%] lg:w-[90%] w-full px-3 mt-20">
-        <div className="flex justify-between items-center">
+      <aside className="h-screen md:w-[20%] lg:w-[23%]" />
+      <main className="mt-20 w-full px-3 md:w-[80%] lg:w-[90%]">
+        <div className="flex items-center justify-between">
           <h2 className="text-3xl font-bold">Admin Profile</h2>
         </div>
 
