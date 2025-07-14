@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "../stores/authStore";
 import Icon from "@mdi/react";
 
 import {

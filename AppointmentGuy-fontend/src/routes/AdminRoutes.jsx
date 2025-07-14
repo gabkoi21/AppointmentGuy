@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import AdminHeaderNav from "@/components/Global/AdminHeaderNav";
-import { NAV_ITEMS } from "@/components/Admin/AdminRoutes/NavItems";
-import SidebarNavLink from "@/components/Admin/AdminRoutes/SidebarNavLink";
-import SidebarBusinessDropdown from "@/components/Admin/AdminRoutes/BusinessSideBarNavDropdown";
-import SidebarNavDropdown from "@/components/Admin/AdminRoutes/SidebarSubMenu";
+import AdminHeaderNav from "../components/Global/AdminHeaderNav";
+import { NAV_ITEMS } from "../components/Admin/AdminRoutes/NavItems";
+import SidebarNavLink from "../components/Admin/AdminRoutes/SidebarNavLink";
+import SidebarBusinessDropdown from "../components/Admin/AdminRoutes/BusinessSideBarNavDropdown";
+import SidebarNavDropdown from "../components/Admin/AdminRoutes/SidebarSubMenu";
 
 export const AdminNav = () => {
   const [showBusinessDropdown, setShowBusinessDropdown] = useState(false);

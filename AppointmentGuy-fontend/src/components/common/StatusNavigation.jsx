@@ -1,5 +1,5 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-// import TableBottomNavigation from "@/components/common/TableBottomNivigation";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/tabs";
+// import TableBottomNavigation from "./TableBottomNivigation";
 import { useState } from "react";
 
 const ActiveStatusNavigation = ({ activeTab, setActiveTab }) => {

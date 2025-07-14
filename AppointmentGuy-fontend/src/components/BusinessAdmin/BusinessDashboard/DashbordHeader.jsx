@@ -8,7 +8,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/Global/ui/chart";
+} from "../../Global/ui/chart";
 
 // Chart data
 const chartData = [

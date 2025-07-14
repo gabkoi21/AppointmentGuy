@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "../../stores/authStore";
 import { mdiEye, mdiEyeOff } from "@mdi/js";
 import Icon from "@mdi/react";
 

@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 
 import useAuthStore from "../stores/authStore";
-import useUserStore from "@/stores/userStore";
+import useUserStore from "../stores/userStore";
 
 const AdminHeaderNav = ({ children }) => {
   // State for managing dropdowns and mobile menu

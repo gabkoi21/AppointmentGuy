@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { salonImage } from "@/data/SalonImage";
+import { salonImage } from "../../data/SalonImage";
 import { useNavigate } from "react-router-dom";
-import useBusinessStore from "@/stores/businessStore";
+import useBusinessStore from "../../stores/businessStore";
 
 import Icon from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";

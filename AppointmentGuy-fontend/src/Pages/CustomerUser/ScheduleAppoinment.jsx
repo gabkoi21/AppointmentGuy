@@ -1,9 +1,9 @@
 // Imports
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useServiceStores from "@/stores/serviceStore";
-import useAppointmentStore from "@/stores/appointmentStore";
-import useAuthStore from "@/stores/authStore"; // Add this import
+import useServiceStores from "../../stores/serviceStore";
+import useAppointmentStore from "../../stores/appointmentStore";
+import useAuthStore from "../../stores/authStore"; // Add this import
 import BookingForm from "./BookingForm";
 
 // Constants

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import BusinessUserRow from "@/components/BusinessAdmin/BusinessDashboard/BusinessUserRow";
-import { BusinessUserColumn } from "@/components/BusinessAdmin/BusinessDashboard/BusinessUserColumn";
-import GlobalSearchBar from "@/components/common/globalSearchBar";
-import DataTable from "@/components/common/DataTable";
+import BusinessUserRow from "../../components/BusinessAdmin/BusinessDashboard/BusinessUserRow";
+import { BusinessUserColumn } from "../../components/BusinessAdmin/BusinessDashboard/BusinessUserColumn";
+import GlobalSearchBar from "../../components/common/globalSearchBar";
+import DataTable from "../../components/common/DataTable";
 import { Link } from "react-router";
 
-import useUserStore from "@/stores/userStore";
+import useUserStore from "../../stores/userStore";
 
 const BusinessUserContainer = () => (
   <div className="flex">

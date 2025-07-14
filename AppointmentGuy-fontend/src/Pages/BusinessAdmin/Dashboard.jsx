@@ -1,8 +1,8 @@
 import Icon from "@mdi/react";
 import { mdiCalendarCheck, mdiAccountPlus, mdiCheckCircle } from "@mdi/js";
 
-import ComponentAriaChart from "@/components/BusinessAdmin/BusinessDashboard/AppointmentLineChart";
-import ComponentServices from "@/components/BusinessAdmin/BusinessDashboard/ServiceDonutChart";
+import ComponentAriaChart from "../../components/BusinessAdmin/BusinessDashboard/AppointmentLineChart";
+import ComponentServices from "../../components/BusinessAdmin/BusinessDashboard/ServiceDonutChart";
 
 const BusinessAdminContainer = () => {
   return (

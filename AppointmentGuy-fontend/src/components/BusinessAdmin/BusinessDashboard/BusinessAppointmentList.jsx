@@ -1,13 +1,13 @@
 import Icon from "@mdi/react";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
-import { Calendar } from "@/components/Global/ui/calendar";
+import { Calendar } from "../../Global/ui/calendar";
 import React, { useEffect, useState } from "react";
-import { Appointmentcolumns } from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentColumns";
-import DataTable from "@/components/common/DataTable";
-import AppointmentStatusNavigation from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentNav";
-import AppointmentRow from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentRow";
-import GlobalSearchBar from "@/components/common/globalSearchBar";
-import useAppointment from "@/stores/appointmentStore";
+import { Appointmentcolumns } from "./BusinessAppointmentColumns";
+import DataTable from "../../common/DataTable";
+import AppointmentStatusNavigation from "./BusinessAppointmentNav";
+import AppointmentRow from "./BusinessAppointmentRow";
+import GlobalSearchBar from "../../common/globalSearchBar";
+import useAppointment from "../../../stores/appointmentStore";
 
 const ApppintmentContainer = () => {
   const [activeTab, setActiveTab] = useState("allappointment");
