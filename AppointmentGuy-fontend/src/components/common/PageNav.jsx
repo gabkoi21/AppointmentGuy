@@ -4,7 +4,7 @@ import Icon from "@mdi/react";
 import { mdiMenu, mdiClose, mdiAccountCircle } from "@mdi/js";
 import { Button } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "../../stores/authStore";
 
 const AdminHeaderNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

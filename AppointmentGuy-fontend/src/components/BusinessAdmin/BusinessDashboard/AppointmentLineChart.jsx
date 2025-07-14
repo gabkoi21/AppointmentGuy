@@ -5,12 +5,12 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/Global/ui/card";
+} from "../../Global/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/Global/ui/chart";
+} from "../../Global/ui/chart";
 
 const chartData = [
   { month: "Sunday", desktop: 186, mobile: 80 },

@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import useUserStore from "@/stores/userStore";
+import useUserStore from "../../../stores/userStore";
 
 import {
   mdiSquareEditOutline,

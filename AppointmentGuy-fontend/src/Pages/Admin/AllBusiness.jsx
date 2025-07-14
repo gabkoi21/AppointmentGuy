@@ -5,8 +5,8 @@ import { columns } from "../../components/Admin/Dashboard/BusinessColumns";
 import BusinessRow from "../../components/Admin/Dashboard/BusinessRow";
 
 //  This component is for the business admin layout
-import useAppointment from "@/stores/appointmentStore";
-import useBusinessStore from "@/stores/businessStore";
+import useAppointment from "../../stores/appointmentStore";
+import useBusinessStore from "../../stores/businessStore";
 
 import { Link } from "react-router-dom";
 

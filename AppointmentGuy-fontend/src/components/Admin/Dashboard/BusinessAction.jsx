@@ -5,7 +5,7 @@ import {
   mdiTrashCanOutline,
 } from "@mdi/js";
 
-import useBusinessStore from "@/stores/businessStore";
+import useBusinessStore from "../../../stores/businessStore";
 
 const BusinessAction = ({ business }) => {
   const { deleteBusiness } = useBusinessStore();

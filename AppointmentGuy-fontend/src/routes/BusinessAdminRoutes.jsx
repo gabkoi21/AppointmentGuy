@@ -7,7 +7,7 @@ import SidebarBusinessDropdown from "../components/Admin/AdminRoutes/BusinessSid
 import SidebarNavDropdown from "../components/Admin/AdminRoutes/SidebarSubMenu.jsx";
 import { NAV_ITEMS } from "../components/BusinessAdmin/BusinessRoutes/BusinessNavItems";
 import { Link } from "react-router";
-import useBusinessStore from "@/stores/businessStore";
+import useBusinessStore from "../stores/businessStore";
 
 const BusinessAdminNav = () => {
   const [showBusinessDropdown, setShowBusinessDropdown] = useState(false);

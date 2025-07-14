@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import UserRow from "@/components/Admin/Dashboard/UsersRow";
-import { Usercolumns } from "@/components/Admin/Dashboard/UserColumns";
-import DataTable from "@/components/common/DataTable";
-import GlobalSearchBar from "@/components/common/globalSearchBar";
+import UserRow from "../../components/Admin/Dashboard/UsersRow";
+import { Usercolumns } from "../../components/Admin/Dashboard/UserColumns";
+import DataTable from "../../components/common/DataTable";
+import GlobalSearchBar from "../../components/common/globalSearchBar";
 import { Link } from "react-router-dom";
-import useUserStore from "@/stores/userStore";
+import useUserStore from "../../stores/userStore";
 
 const UserManagementContainer = () => (
   <>

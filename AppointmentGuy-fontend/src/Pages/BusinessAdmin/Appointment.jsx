@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import BusinessUserPagenation from "./BusinessUserPagination";
 
-import { Calendar } from "@/components/ui/calendar";
-import DataTable from "@/components/common/DataTable";
-import GlobalSearchBar from "@/components/common/globalSearchBar";
-import useServiceStore from "@/stores/serviceStore";
-import useAppointmentStore from "@/stores/appointmentStore";
-import { Appointmentcolumns } from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentColumns";
-import AppointmentRow from "@/components/BusinessAdmin/BusinessDashboard/BusinessAppointmentRow";
-import { Tabs, TabsList, TabsTrigger } from "@/components/Global/ui/tabs";
+import { Calendar } from "../../components/ui/calendar";
+import DataTable from "../../components/common/DataTable";
+import GlobalSearchBar from "../../components/common/globalSearchBar";
+import useServiceStore from "../../stores/serviceStore";
+import useAppointmentStore from "../../stores/appointmentStore";
+import { Appointmentcolumns } from "../../components/BusinessAdmin/BusinessDashboard/BusinessAppointmentColumns";
+import AppointmentRow from "../../components/BusinessAdmin/BusinessDashboard/BusinessAppointmentRow";
+import { Tabs, TabsList, TabsTrigger } from "../../components/Global/ui/tabs";
 
 const BusinessAppointmentContainer = () => (
   <div className="flex">

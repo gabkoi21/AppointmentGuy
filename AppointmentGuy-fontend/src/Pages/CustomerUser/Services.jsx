@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useBusinessStore from "@/stores/businessStore";
+import useBusinessStore from "../../stores/businessStore";
 import { useNavigate } from "react-router-dom";
 
 const StarIcon = ({ filled }) => (

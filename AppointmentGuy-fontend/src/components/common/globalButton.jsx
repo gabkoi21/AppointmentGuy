@@ -1,4 +1,4 @@
-import { Button } from "@/components/Global/ui/button";
+import { Button } from "../Global/ui/button";
 
 const GlobalButton = ({ children, onClick }) => {
   return (

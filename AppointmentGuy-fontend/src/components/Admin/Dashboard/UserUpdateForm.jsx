@@ -1,5 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
-import useUserStore from "@/stores/userStore";
+import useUserStore from "../../../stores/userStore";
 import { Dialog, Transition } from "@headlessui/react";
 import Icon from "@mdi/react";
 import { mdiClose } from "@mdi/js";

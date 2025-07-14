@@ -1,5 +1,5 @@
 import React from "react";
-import useBusinessStore from "@/stores/businessStore";
+import useBusinessStore from "../../stores/businessStore";
 
 // Reusable function to avoid repeating structure
 const createInitialFormData = () => ({

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "@/stores/authStore";
-import useBusinessStore from "@/stores/businessStore";
+import useAuthStore from "../../stores/authStore";
+import useBusinessStore from "../../stores/businessStore";
 import { mdiEye, mdiEyeOff } from "@mdi/js";
 import Icon from "@mdi/react";
 import { set } from "date-fns";

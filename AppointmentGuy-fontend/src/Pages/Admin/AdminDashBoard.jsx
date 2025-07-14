@@ -6,8 +6,8 @@ import {
 } from "@mdi/js";
 import Icon from "@mdi/react";
 
-import ComponentAriaChart from "@/components/BusinessAdmin/BusinessDashboard/AppointmentLineChart";
-import ComponentServices from "@/components/BusinessAdmin/BusinessDashboard/ServiceDonutChart";
+import ComponentAriaChart from "../../components/BusinessAdmin/BusinessDashboard/AppointmentLineChart";
+import ComponentServices from "../../components/BusinessAdmin/BusinessDashboard/ServiceDonutChart";
 
 // Root container for the admin dashboard
 // It contains the sidebar and the main content area

@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 
-import AppointmentRow from "@/components/Admin/Dashboard/AppointmentRow";
-import DataTable from "@/components/common/DataTable";
-import GlobalSearchBar from "@/components/common/globalSearchBar";
-import { Appointmentcolumns } from "@/components/Admin/Dashboard/AppointmentColumns";
-import AppointmentsPagination from "@/components/Admin/Dashboard/AppointmentPaginationFooter";
+import AppointmentRow from "../../components/Admin/Dashboard/AppointmentRow";
+import DataTable from "../../components/common/DataTable";
+import GlobalSearchBar from "../../components/common/globalSearchBar";
+import { Appointmentcolumns } from "../../components/Admin/Dashboard/AppointmentColumns";
+import AppointmentsPagination from "../../components/Admin/Dashboard/AppointmentPaginationFooter";
 
-import useUserStore from "@/stores/userStore";
+import useUserStore from "../../stores/userStore";
 
 import { Link } from "react-router-dom";
 
 // This component is used to display the appointment container
-import useAppointmentStore from "@/stores/appointmentStore";
-// import useUserStore from "@/stores/userStore";
-import useBusinessStore from "@/stores/businessStore";
-import useServiceStore from "@/stores/serviceStore";
+import useAppointmentStore from "../../stores/appointmentStore";
+// import useUserStore from "../../stores/userStore";
+import useBusinessStore from "../../stores/businessStore";
+import useServiceStore from "../../stores/serviceStore";
 
 const ApppintmentContainer = () => (
   <div className="flex">

@@ -8,7 +8,7 @@ import {
 } from "@mdi/js";
 
 import Icon from "@mdi/react";
-import useUserStore from "@/stores/userStore";
+import useUserStore from "../../../stores/userStore";
 
 const statusColor = {
   Active: "bg-green-100 text-green-700",

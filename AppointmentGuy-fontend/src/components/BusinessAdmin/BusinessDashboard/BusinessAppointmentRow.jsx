@@ -7,7 +7,7 @@ import {
   mdiLoading,
 } from "@mdi/js";
 import Icon from "@mdi/react";
-import useAppointmentStore from "@/stores/appointmentStore";
+import useAppointmentStore from "../../../stores/appointmentStore";
 
 const statusColor = {
   scheduled: "bg-blue-100 text-blue-700",
