@@ -1,17 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-interface Column {
-  key: string;
-  label: string;
-}
-
-interface DataTableProps<T> {
-  columns: Column[];
-  data: T[];
-  renderRow: (row: T, index: number) => React.ReactNode;
-}
-
-const DataTable = <T,>({ columns, data, renderRow }: DataTableProps<T>) => {
+const DataTable = ({ columns, data, renderRow }) => {
   return (
     <div className="mt-5 overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
       <table className="w-full border-collapse text-left text-sm text-gray-700 dark:text-gray-300">
@@ -30,6 +20,17 @@ const DataTable = <T,>({ columns, data, renderRow }: DataTableProps<T>) => {
       </table>
     </div>
   );
+};
+
+DataTable.propTypes = {
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  data: PropTypes.array.isRequired,
+  renderRow: PropTypes.func.isRequired,
 };
 
 export default DataTable;

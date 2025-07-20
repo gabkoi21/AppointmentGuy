@@ -2,42 +2,7 @@ import { create } from "zustand";
 import { jwtDecode } from "jwt-decode";
 import api from "../api/axios";
 
-// Business entity type
-interface Business {
-  id: number;
-  name: string;
-  status: string;
-  description?: string;
-}
-
-// Input type for creating business
-interface BusinessCreateInput {
-  name: string;
-  status: string;
-  description?: string;
-}
-
-// Zustand store interface: state + actions
-interface BusinessStore {
-  businesses: Business[];
-  currentBusiness: Business | null;
-  token: string | null;
-  loading: boolean;
-  error: string | null;
-
-  isTokenExpired: (token: string | null) => boolean;
-  clearError: () => void;
-  setToken: (token: string | null) => void;
-
-  registerBusiness: (businessData: BusinessCreateInput) => Promise<void>;
-  fetchBusinesses: () => Promise<void>;
-  getBusinessById: (id: string) => Promise<Business>;
-  deleteBusiness: (id: number) => Promise<boolean>;
-  getBusinessByAdmin: () => Promise<Business>;
-  updateBusinessStatus: (id: number) => Promise<void>;
-}
-
-const useBusinessStore = create<BusinessStore>((set, get) => ({
+const useBusinessStore = create((set, get) => ({
   // State
   businesses: [],
   currentBusiness: null,
@@ -49,7 +14,7 @@ const useBusinessStore = create<BusinessStore>((set, get) => ({
   isTokenExpired: (token) => {
     if (!token) return true;
     try {
-      const { exp } = jwtDecode<{ exp: number }>(token);
+      const { exp } = jwtDecode(token);
       return Date.now() >= exp * 1000;
     } catch {
       return true;
@@ -72,7 +37,7 @@ const useBusinessStore = create<BusinessStore>((set, get) => ({
         loading: false,
         error: null,
       }));
-    } catch (error: any) {
+    } catch (error) {
       const message =
         error?.response?.data?.message || "Failed to register business";
       set({ error: message, loading: false });
@@ -83,9 +48,9 @@ const useBusinessStore = create<BusinessStore>((set, get) => ({
   fetchBusinesses: async () => {
     set({ loading: true, error: null });
     try {
-      const { data } = await api.get<Business[]>("/business/");
+      const { data } = await api.get("/business/");
       set({ businesses: data ?? [], loading: false, error: null });
-    } catch (error: any) {
+    } catch (error) {
       const message =
         error?.response?.data?.message || "Failed to load businesses";
       set({ error: message, loading: false });
@@ -101,7 +66,7 @@ const useBusinessStore = create<BusinessStore>((set, get) => ({
     }
     set({ loading: true, error: null });
     try {
-      const { data: business } = await api.get<Business>(`/business/${id}`);
+      const { data: business } = await api.get(`/business/${id}`);
       set((state) => ({
         currentBusiness: business,
         businesses: state.businesses.some((b) => b.id === business.id)
@@ -111,7 +76,7 @@ const useBusinessStore = create<BusinessStore>((set, get) => ({
         error: null,
       }));
       return business;
-    } catch (error: any) {
+    } catch (error) {
       const message =
         error?.response?.data?.message ||
         `Failed to load business with ID ${id}`;
@@ -120,7 +85,7 @@ const useBusinessStore = create<BusinessStore>((set, get) => ({
     }
   },
 
-  deleteBusiness: async (id: number) => {
+  deleteBusiness: async (id) => {
     if (id === undefined || id === null) {
       const message = "Business ID is required";
       set({ error: message });
@@ -139,7 +104,7 @@ const useBusinessStore = create<BusinessStore>((set, get) => ({
         error: null,
       }));
       return true;
-    } catch (error: any) {
+    } catch (error) {
       const message =
         error?.response?.data?.message || "Failed to delete business";
       set({ error: message, loading: false });
@@ -157,7 +122,7 @@ const useBusinessStore = create<BusinessStore>((set, get) => ({
       });
       set({ currentBusiness: business, loading: false, error: null });
       return business;
-    } catch (error: any) {
+    } catch (error) {
       const message =
         error?.response?.data?.message || "Failed to load business";
       set({ error: message, loading: false });
@@ -165,7 +130,7 @@ const useBusinessStore = create<BusinessStore>((set, get) => ({
     }
   },
 
-  updateBusinessStatus: async (id: number) => {
+  updateBusinessStatus: async (id) => {
     if (!id) {
       const message = "Business ID is required to update status";
       set({ error: message });
@@ -194,7 +159,7 @@ const useBusinessStore = create<BusinessStore>((set, get) => ({
         loading: false,
         error: null,
       }));
-    } catch (error: any) {
+    } catch (error) {
       const message =
         error?.response?.data?.message || "Failed to update business status";
       set({ error: message, loading: false });

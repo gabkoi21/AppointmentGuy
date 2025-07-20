@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import Icon from "@mdi/react";
 import {
@@ -12,21 +13,13 @@ import {
 import useUserStore from "../../../stores/userStore";
 
 /* ----------- ActionButton Component ----------- */
-interface ActionButtonProps {
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  iconPath: string;
-  text: string;
-  colorClasses: string;
-  disabled?: boolean;
-}
-
 const ActionButton = ({
   onClick,
   iconPath,
   text,
   colorClasses,
   disabled = false,
-}: ActionButtonProps) => (
+}) => (
   <button
     onClick={onClick}
     disabled={disabled}
@@ -37,18 +30,21 @@ const ActionButton = ({
   </button>
 );
 
-/* ----------- UsersAction Component ----------- */
-interface UsersActionProps {
-  userId: number;
-  onClose: () => void;
-}
+ActionButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  iconPath: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  colorClasses: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+};
 
-const UsersAction = ({ userId, onClose }: UsersActionProps) => {
+/* ----------- UsersAction Component ----------- */
+const UsersAction = ({ userId, onClose }) => {
   const { users, updateUserStatus, deleteUser, fetchUser } = useUserStore();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const user = users.find((u: any) => u.id === userId);
+  const user = users.find((u) => u.id === userId);
   const [localIsActive, setLocalIsActive] = useState(user?.is_active ?? false);
 
   // Update localIsActive when user data changes
@@ -58,10 +54,7 @@ const UsersAction = ({ userId, onClose }: UsersActionProps) => {
 
   const statusAction = localIsActive ? "Deactivate" : "Activate";
 
-  const handleActionClick = async (
-    event: React.MouseEvent<HTMLButtonElement>,
-    actionLabel: string,
-  ) => {
+  const handleActionClick = async (event, actionLabel) => {
     event.stopPropagation();
     if (loading) return;
     setLoading(true);
@@ -133,6 +126,11 @@ const UsersAction = ({ userId, onClose }: UsersActionProps) => {
       </div>
     </div>
   );
+};
+
+UsersAction.propTypes = {
+  userId: PropTypes.number.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default UsersAction;

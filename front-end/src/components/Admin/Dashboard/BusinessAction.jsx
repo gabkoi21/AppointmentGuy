@@ -5,28 +5,15 @@ import {
   mdiAccountOffOutline,
   mdiAccountCheckOutline,
 } from "@mdi/js";
+import PropTypes from "prop-types";
 import useBusinessStore from "../../../stores/businessStore";
-
-interface BusinessActionProps {
-  business: any;
-  userId: number | null;
-  onClose: () => void;
-  isActive: boolean;
-}
-
-interface ActionButtonProps {
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  iconPath: string;
-  text: string;
-  colorClasses: string;
-}
 
 const ActionButton = ({
   onClick,
   iconPath,
   text,
   colorClasses,
-}: ActionButtonProps) => (
+}) => (
   <button
     onClick={onClick}
     className={`flex w-full items-center gap-2 rounded-md p-2 text-left transition-colors duration-200 ${colorClasses} hover:bg-gray-100`}
@@ -36,21 +23,28 @@ const ActionButton = ({
   </button>
 );
 
+ActionButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  iconPath: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  colorClasses: PropTypes.string.isRequired,
+};
+
 const BusinessAction = ({
   business,
   userId,
   onClose,
   isActive,
-}: BusinessActionProps) => {
+}) => {
   const { updateBusinessStatus, fetchBusinesses, deleteBusiness } =
     useBusinessStore();
 
-  const handleEdit = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleEdit = (event) => {
     event.stopPropagation();
     onClose();
   };
 
-  const handleDeleteBusiness = async (id: string) => {
+  const handleDeleteBusiness = async (id) => {
     if (!confirm("Are you sure you want to delete this business?")) return;
 
     try {
@@ -63,9 +57,7 @@ const BusinessAction = ({
     }
   };
 
-  const handleToggleActive = async (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => {
+  const handleToggleActive = async (event) => {
     event.stopPropagation();
 
     if (userId == null) {
@@ -116,6 +108,13 @@ const BusinessAction = ({
       </div>
     </div>
   );
+};
+
+BusinessAction.propTypes = {
+  business: PropTypes.any.isRequired,
+  userId: PropTypes.number,
+  onClose: PropTypes.func.isRequired,
+  isActive: PropTypes.bool.isRequired,
 };
 
 export default BusinessAction;

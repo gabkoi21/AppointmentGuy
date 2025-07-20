@@ -1,48 +1,12 @@
 import dayjs from "dayjs";
-
-// Define the Appointment type
-export interface AppointmentProps {
-  user_id: number;
-  business_id: number;
-  service_id: number;
-  timestamp: string;
-}
-
-// Define User, Business, and Service interfaces with example fields
-interface User {
-  first_name: string;
-  last_name: string;
-  id: number;
-  name: string;
-}
-
-interface Business {
-  id: number;
-  name: string;
-}
-
-interface Service {
-  id: number;
-  name: string;
-}
-
-type AppointmentRowProps = {
-  appointment: AppointmentProps;
-  users: User[];
-  businesses: Business[];
-  services: Service[];
-  activeActionId?: any;
-  setActiveActionId?: any;
-};
-
-// Your component now with fully typed props
+import PropTypes from "prop-types";
 
 const AppointmentRow = ({
   appointment,
   users = [],
   businesses = [],
   services = [],
-}: AppointmentRowProps) => {
+}) => {
   const { user_id, business_id, service_id, timestamp } = appointment;
 
   const user = users.find((u) => u.id === user_id);
@@ -82,6 +46,35 @@ const AppointmentRow = ({
       </td>
     </tr>
   );
+};
+
+AppointmentRow.propTypes = {
+  appointment: PropTypes.shape({
+    user_id: PropTypes.number.isRequired,
+    business_id: PropTypes.number.isRequired,
+    service_id: PropTypes.number.isRequired,
+    timestamp: PropTypes.string.isRequired,
+  }).isRequired,
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      first_name: PropTypes.string,
+      last_name: PropTypes.string,
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string,
+    })
+  ),
+  businesses: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ),
+  services: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 export default AppointmentRow;

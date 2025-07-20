@@ -2,42 +2,18 @@ import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
 import BusinessAction from "./BusinessAction";
 import StatusBadge from "../../Global/Common/StatusBadge";
+import PropTypes from "prop-types";
 
 import Icon from "@mdi/react";
 import { mdiDotsVertical } from "@mdi/js";
-
-interface User {
-  user_type: string;
-  first_name?: string;
-  last_name?: string;
-}
-
-interface Business {
-  id: number;
-  name?: string;
-  status?: any;
-  timestamp?: string;
-  users?: User[];
-}
-
-interface Appointment {
-  business_id: number | null;
-}
-
-export interface BusinessRowProps {
-  business: Business;
-  appointments: Appointment[];
-  setActiveActionId: (id: number | null) => void;
-  activeActionId: number | null;
-}
 
 const BusinessRow = ({
   business,
   appointments,
   setActiveActionId,
   activeActionId,
-}: BusinessRowProps) => {
-  const actionRef = useRef<HTMLTableCellElement>(null);
+}) => {
+  const actionRef = useRef(null);
 
   const {
     id,
@@ -49,16 +25,16 @@ const BusinessRow = ({
 
   const isActionOpen = activeActionId === id;
 
-  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleActionClick = (event) => {
     event.stopPropagation();
     setActiveActionId(isActionOpen ? null : id);
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event) => {
       if (
         actionRef.current &&
-        !actionRef.current.contains(event.target as Node)
+        !actionRef.current.contains(event.target)
       ) {
         if (activeActionId === id) {
           setActiveActionId(null);
@@ -112,6 +88,29 @@ const BusinessRow = ({
       </td>
     </tr>
   );
+};
+
+BusinessRow.propTypes = {
+  business: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string,
+    status: PropTypes.any,
+    timestamp: PropTypes.string,
+    users: PropTypes.arrayOf(
+      PropTypes.shape({
+        user_type: PropTypes.string,
+        first_name: PropTypes.string,
+        last_name: PropTypes.string,
+      })
+    ),
+  }).isRequired,
+  appointments: PropTypes.arrayOf(
+    PropTypes.shape({
+      business_id: PropTypes.number,
+    })
+  ).isRequired,
+  setActiveActionId: PropTypes.func.isRequired,
+  activeActionId: PropTypes.number,
 };
 
 export default BusinessRow;
