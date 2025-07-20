@@ -2,9 +2,9 @@
 // Each column has a key and a label for display purposes.
 
 export const Appointmentcolumns = [
-  { key: "customer", label: "Customer" },
-  { key: "Business", label: "Business" },
+  { key, label,
+  { key, label,
 
-  { key: "service", label: "Service" },
-  { key: "data&Time", label: "Date & Time" },
+  { key, label,
+  { key, label,
 ];

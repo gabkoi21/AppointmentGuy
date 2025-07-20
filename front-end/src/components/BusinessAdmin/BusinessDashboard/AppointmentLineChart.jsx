@@ -13,23 +13,21 @@ import {
 } from "@/components/Global/ui/chart";
 
 const chartData = [
-  { month: "Sunday", desktop: 186, mobile: 80 },
-  { month: "Monday", desktop: 305, mobile: 200 },
-  { month: "Tuesday", desktop: 237, mobile: 120 },
-  { month: "Wednesday", desktop: 73, mobile: 190 },
-  { month: "Thursday", desktop: 209, mobile: 130 },
-  { month: "Friday", desktop: 214, mobile: 140 },
-  { month: "Saturday", desktop: 214, mobile: 140 },
+  { month, desktop, mobile,
+  { month, desktop, mobile,
+  { month, desktop, mobile,
+  { month, desktop, mobile,
+  { month, desktop, mobile,
+  { month, desktop, mobile,
+  { month, desktop, mobile,
 ];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
+  desktop,
+    color))",
   },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
+  mobile,
+    color))",
   },
 };
 
@@ -44,8 +42,8 @@ const ComponentAriaChart = () => {
           <AreaChart
             data={chartData}
             margin={{
-              left: 12,
-              right: 12,
+              left,
+              right,
             }}
           >
             <CartesianGrid vertical={false} />

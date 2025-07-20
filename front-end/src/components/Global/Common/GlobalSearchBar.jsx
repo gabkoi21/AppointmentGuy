@@ -1,12 +1,7 @@
 import Icon from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";
 
-type GlobalSearchBarProps = {
-  children: React.ReactNode;
-  className?: string;
-};
-
-const GlobalSearchBar = ({ children, className }: GlobalSearchBarProps) => {
+const GlobalSearchBar = ({ children, className }) => {
   return (
     <div className="relative mt-5">
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">

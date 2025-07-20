@@ -1,22 +1,12 @@
-type Status = "Active" | "Inactive" | "Pending";
 
-interface StatusColorMap {
-  Active: string;
-  Inactive: string;
-  Pending: string;
-}
 
-interface StatusBadgeProps {
-  status: Status | string;
-}
-
-const statusColor: StatusColorMap = {
-  Active: "bg-green-100 text-green-700",
-  Inactive: "bg-red-100 text-red-700",
-  Pending: "bg-yellow-100 text-yellow-800",
+const statusColor = {
+  Active,
+  Inactive,
+  Pending,
 };
 
-const StatusBadge = ({ status }: StatusBadgeProps) => {
+const StatusBadge = ({ status }) => {
   const normalizedStatus =
     status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
 

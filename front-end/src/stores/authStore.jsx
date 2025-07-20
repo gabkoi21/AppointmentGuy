@@ -5,19 +5,19 @@ import api from "@/api/axios";
 const useAuthStore = create(
   persist(
     (set, get) => ({
-      user: null,
-      token: null,
-      refreshToken: null,
-      loading: false,
-      error: null,
+      user,
+      token,
+      refreshToken,
+      loading,
+      error,
 
-      login: async (credentials) => {
-        set({ loading: true, error: null });
+      login) => {
+        set({ loading, error);
 
         try {
-          console.log("Sending login request with credentials:", credentials);
+          console.log("Sending login request with credentials, credentials);
           const response = await api.post("/auth/login", credentials);
-          console.log("Login response:", response.data);
+          console.log("Login response, response.data);
 
           const { access_token, refresh_token, user_type } = response.data;
 
@@ -26,52 +26,49 @@ const useAuthStore = create(
           localStorage.setItem("refresh_token", refresh_token);
 
           set({
-            user: { user_type },
-            token: access_token,
-            refreshToken: refresh_token,
-            loading: false,
+            user,
+            token,
+            refreshToken,
+            loading,
           });
 
           return user_type;
         } catch (error) {
-          console.error("Login error:", error);
+          console.error("Login error, error);
           set({
-            error:
-              error?.response?.data?.message ||
-              error.message ||
-              "Login failed.",
-            loading: false,
+            error,
+            loading,
           });
 
           return null;
         }
       },
 
-      register: async (userData) => {
-        set({ loading: true, error: null });
+      register) => {
+        set({ loading, error);
 
         try {
           await api.post("/auth/register", userData);
-          set({ loading: false });
+          set({ loading);
           return true;
         } catch (error) {
           set({
-            error: error?.response?.data?.message || "Registration failed.",
-            loading: false,
+            error,
+            loading,
           });
           return false;
         }
       },
 
-      logout: () => {
-        set({ user: null, token: null, refreshToken: null, error: null });
+      logout) => {
+        set({ user, token, refreshToken, error);
         localStorage.removeItem("token");
         localStorage.removeItem("refresh_token");
       },
     }),
     {
-      name: "auth-storage",
-      getStorage: () => localStorage,
+      name,
+      getStorage) => localStorage,
     },
   ),
 );

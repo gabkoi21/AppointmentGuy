@@ -10,25 +10,7 @@ import AppointmentRow from "../../components/Admin/Dashboard/AppointmentRow";
 
 const ApppintmentContainer = () => (
   <div className="flex">
-    <aside className="h-screen md:w-[20%] lg:w-[23%]" />
-    <main className="mx-3 mt-14 w-full px-3 md:w-[98%]">
-      <GlobalSearchBar>
-        <input
-          placeholder="Search Business"
-          className="w-1/2 rounded-md border border-gray-300 bg-white py-2.5 pl-10 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </GlobalSearchBar>
-      <AppointmentTable />
-    </main>
-  </div>
-);
-
-type LocalAppointmentType = {
-  user_id: number;
-  business_id: number;
-  service_id: number;
-  timestamp: string;
-};
+    <aside className="h-screen md);
 
 const AppointmentTable = () => {
   const { appointments, fetchAppointment } = useAppointmentStore();
@@ -50,7 +32,7 @@ const AppointmentTable = () => {
       <DataTable
         columns={Appointmentcolumns}
         data={appointments}
-        renderRow={(appointment: LocalAppointmentType) => (
+        renderRow={(appointment) => (
           <AppointmentRow
             key={appointment.timestamp}
             appointment={appointment}

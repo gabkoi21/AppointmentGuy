@@ -30,13 +30,7 @@ const SearchBox = ({ value, onChange }) => {
         </div>
         <input
           placeholder="Search for salons"
-          className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1b0e0e] focus:outline-0 focus:ring-0 border-none bg-[#f3e7e8] focus:border-none h-full placeholder:text-[#994d51] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
-          value={value}
-          onChange={onChange}
-        />
-      </div>
-    </label>
-  );
+          className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1b0e0e] focus);
 };
 
 // SalonCard component to display individual salon details
@@ -48,9 +42,7 @@ const SalonCard = ({ salon }) => {
   if (Array.isArray(salonImage)) {
     const found = salonImage.find((img) => img.id === salon.id);
     imageUrl = found
-      ? found.image
-      : salonImage[salon.id % salonImage.length]?.image;
-  } else if (salonImage?.image) {
+      ? found.image) {
     imageUrl = salonImage.image;
   }
 
@@ -74,7 +66,7 @@ const SalonCard = ({ salon }) => {
         </div>
         <div
           className="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-1 cursor-pointer"
-          style={{ backgroundImage: `url("${imageUrl}")` }}
+          style={{ backgroundImage)` }}
           onClick={handleClick}
           role="button"
         />

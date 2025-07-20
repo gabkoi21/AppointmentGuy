@@ -10,12 +10,7 @@ import AppointmentRow from "../../components/BusinessAdmin/BusinessDashboard/Bus
 
 const BusinessAppointmentContainer = () => (
   <div className="flex">
-    <aside className="h-screen md:w-[20%] lg:w-[23%]" />
-    <main className="mx-3 mt-20 w-full px-4 md:w-[98%]">
-      <Appointment />
-    </main>
-  </div>
-);
+    <aside className="h-screen md);
 
 const Appointment = () => {
   const [activeCalendar, setActiveTab] = useState(false);
@@ -31,29 +26,7 @@ const Appointment = () => {
   return (
     <>
       <div className="flex flex-row items-center justify-between gap-10">
-        <div className="w-full md:w-96">
-          <GlobalSearchBar>
-            <input
-              placeholder="Search Business"
-              className="block w-full rounded-md border border-gray-300 bg-white py-2.5 pl-10 text-sm text-gray-900 focus:outline-none focus:ring-0"
-            />
-          </GlobalSearchBar>
-        </div>
-
-        <div className="mt-4">
-          <button
-            onClick={displayCalendar}
-            className="rounded-md border bg-black px-2 py-1.5"
-          >
-            <span className="text-white">View Calendar</span>
-          </button>
-        </div>
-      </div>
-
-      <CalendarDemo activeCalendar={activeCalendar} />
-      <AppointmentTable closeCalendar={closeCalendar} />
-    </>
-  );
+        <div className="w-full md);
 };
 
 // CalendarDemo component to display the calendar

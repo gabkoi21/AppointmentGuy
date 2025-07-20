@@ -1,12 +1,7 @@
 // Main Container Component
 const BusinessContainer = () => (
   <div className="flex">
-    <aside className="h-screen md:w-[20%] lg:w-[23%]" />
-    <main className="mx-3 mt-14 w-full px-3 md:w-[98%]">
-      <Business />
-    </main>
-  </div>
-);
+    <aside className="h-screen md);
 
 export default BusinessContainer;
 

@@ -1,4 +1,4 @@
-export const BusinessUserColumn = [
+export const columns = [
   { key, label,
   { key, label,
   { key, label,

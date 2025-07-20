@@ -7,50 +7,31 @@ import {
 } from "@mdi/js";
 import useBusinessStore from "../../../stores/businessStore";
 
-interface BusinessActionProps {
-  business: any;
-  userId: number | null;
-  onClose: () => void;
-  isActive: boolean;
-}
-
-interface ActionButtonProps {
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  iconPath: string;
-  text: string;
-  colorClasses: string;
-}
-
 const ActionButton = ({
   onClick,
   iconPath,
   text,
   colorClasses,
-}: ActionButtonProps) => (
+}) => (
   <button
     onClick={onClick}
-    className={`flex w-full items-center gap-2 rounded-md p-2 text-left transition-colors duration-200 ${colorClasses} hover:bg-gray-100`}
-  >
-    <Icon path={iconPath} size={0.8} />
-    <span className="capitalize">{text}</span>
-  </button>
-);
+    className={`flex w-full items-center gap-2 rounded-md p-2 text-left transition-colors duration-200 ${colorClasses} hover);
 
 const BusinessAction = ({
   business,
   userId,
   onClose,
   isActive,
-}: BusinessActionProps) => {
+}) => {
   const { updateBusinessStatus, fetchBusinesses, deleteBusiness } =
     useBusinessStore();
 
-  const handleEdit = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleEdit = (event) => {
     event.stopPropagation();
     onClose();
   };
 
-  const handleDeleteBusiness = async (id: string) => {
+  const handleDeleteBusiness = async (id) => {
     if (!confirm("Are you sure you want to delete this business?")) return;
 
     try {
@@ -59,12 +40,12 @@ const BusinessAction = ({
         console.error("Business delete failed.");
       }
     } catch (error) {
-      console.error("Failed to delete business:", error);
+      console.error("Failed to delete business, error);
     }
   };
 
   const handleToggleActive = async (
-    event: React.MouseEvent<HTMLButtonElement>,
+    event,
   ) => {
     event.stopPropagation();
 
@@ -80,7 +61,7 @@ const BusinessAction = ({
         `${isActive ? "Deactivate" : "Activate"} clicked for business ${userId}`,
       );
     } catch (error) {
-      console.error("Failed to toggle business status:", error);
+      console.error("Failed to toggle business status, error);
     } finally {
       onClose();
     }
@@ -93,29 +74,10 @@ const BusinessAction = ({
           onClick={handleEdit}
           iconPath={mdiPencilOutline}
           text="Edit Business"
-          colorClasses="text-blue-600 hover:text-blue-800"
-        />
-
-        <ActionButton
-          onClick={() => handleDeleteBusiness(business.id.toString())}
+          colorClasses="text-blue-600 hover) => handleDeleteBusiness(business.id.toString())}
           iconPath={mdiTrashCanOutline}
           text="Delete Business"
-          colorClasses="text-red-600 hover:text-red-800"
-        />
-
-        <ActionButton
-          onClick={handleToggleActive}
-          iconPath={isActive ? mdiAccountOffOutline : mdiAccountCheckOutline}
-          text={isActive ? "Deactivate" : "Activate"}
-          colorClasses={
-            isActive
-              ? "text-orange-600 hover:text-orange-800"
-              : "text-green-600 hover:text-green-800"
-          }
-        />
-      </div>
-    </div>
-  );
+          colorClasses="text-red-600 hover);
 };
 
 export default BusinessAction;

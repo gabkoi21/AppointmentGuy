@@ -26,15 +26,7 @@ const ApppintmentContainer = () => {
             <div>
               <input
                 placeholder="Search  Business"
-                className="block w-1/2 rounded-md border border-gray-300 bg-white py-2.5 pl-10 text-sm text-gray-900 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-white dark:text-white"
-              />
-            </div>
-          </GlobalSearchBar>
-        </div>
-      </div>
-      <AppointmentTable activeTab={activeTab} />
-    </>
-  );
+                className="block w-1/2 rounded-md border border-gray-300 bg-white py-2.5 pl-10 text-sm text-gray-900 focus);
 };
 
 const AppointmentTable = ({ activeTab }) => {
@@ -92,17 +84,5 @@ const AppointmentTableFooter = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <button className="flex items-center gap-1 rounded-md border border-gray-300 px-3 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
-            <Icon path={mdiChevronLeft} size={0.9} />
-            Previous
-          </button>
-
-          <button className="flex items-center gap-1 rounded-md border border-gray-300 px-3 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
-            Next
-            <Icon path={mdiChevronRight} size={0.9} />
-          </button>
-        </div>
-      </div>
-    </>
-  );
+          <button className="flex items-center gap-1 rounded-md border border-gray-300 px-3 py-1 text-sm hover);
 };

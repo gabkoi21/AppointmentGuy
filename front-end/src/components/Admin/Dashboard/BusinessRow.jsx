@@ -6,38 +6,14 @@ import StatusBadge from "../../Global/Common/StatusBadge";
 import Icon from "@mdi/react";
 import { mdiDotsVertical } from "@mdi/js";
 
-interface User {
-  user_type: string;
-  first_name?: string;
-  last_name?: string;
-}
-
-interface Business {
-  id: number;
-  name?: string;
-  status?: any;
-  timestamp?: string;
-  users?: User[];
-}
-
-interface Appointment {
-  business_id: number | null;
-}
-
 export interface BusinessRowProps {
-  business: Business;
-  appointments: Appointment[];
-  setActiveActionId: (id: number | null) => void;
-  activeActionId: number | null;
-}
-
-const BusinessRow = ({
-  business,
+  business) => void;
+  activeActionId,
   appointments,
   setActiveActionId,
   activeActionId,
-}: BusinessRowProps) => {
-  const actionRef = useRef<HTMLTableCellElement>(null);
+}) => {
+  const actionRef = useRef(null);
 
   const {
     id,
@@ -49,13 +25,13 @@ const BusinessRow = ({
 
   const isActionOpen = activeActionId === id;
 
-  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleActionClick = (event) => {
     event.stopPropagation();
-    setActiveActionId(isActionOpen ? null : id);
+    setActiveActionId(isActionOpen ? null);
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event) => {
       if (
         actionRef.current &&
         !actionRef.current.contains(event.target as Node)
@@ -80,15 +56,7 @@ const BusinessRow = ({
     appointments.filter((appt) => appt.business_id === id).length || 0;
 
   return (
-    <tr className="border-b hover:bg-gray-50 dark:hover:bg-gray-700">
-      <td className="px-4 py-2 font-medium text-gray-900 dark:text-white">
-        {name}
-      </td>
-      <td className="px-4 py-2">
-        {admin ? `${admin.first_name} ${admin.last_name}` : "N/A"}
-      </td>
-      <td className="px-4 py-4">
-        {timestamp ? dayjs(timestamp).format("MMM DD, YYYY") : "N/A"}
+    <tr className="border-b hover).format("MMM DD, YYYY") : "N/A"}
       </td>
       <td className="px-14 py-2">{appointmentCount}</td>
       <StatusBadge status={status} />
@@ -96,17 +64,7 @@ const BusinessRow = ({
         <button
           onClick={handleActionClick}
           aria-label="Toggle business actions"
-          className="rounded p-1 transition-colors duration-200 hover:bg-gray-100"
-        >
-          <Icon path={mdiDotsVertical} size={1} />
-        </button>
-
-        {isActionOpen && (
-          <BusinessAction
-            business={business}
-            userId={id}
-            isActive={status === "Active"}
-            onClose={() => setActiveActionId(null)}
+          className="rounded p-1 transition-colors duration-200 hover) => setActiveActionId(null)}
           />
         )}
       </td>

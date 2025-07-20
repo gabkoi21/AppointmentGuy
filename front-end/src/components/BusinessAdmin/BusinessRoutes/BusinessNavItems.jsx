@@ -8,29 +8,29 @@ import {
 // Navigation configuration with dropdown for Business Management
 export const NAV_ITEMS = [
   {
-    to: "dashboard",
-    label: "Dashboard",
-    icon: mdiViewDashboard,
-    ariaLabel: "Dashboard",
+    to,
+    label,
+    icon,
+    ariaLabel,
   },
 
   {
-    to: "appointment",
-    label: "Appointments",
-    icon: mdiCalendarCheck,
-    ariaLabel: "Appointments",
+    to,
+    label,
+    icon,
+    ariaLabel,
   },
 
   {
-    to: "usermanagement",
-    label: "User Management",
-    icon: mdiAccountGroup,
-    ariaLabel: "User Management",
+    to,
+    label,
+    icon,
+    ariaLabel,
   },
   {
-    to: "settings",
-    label: "Settings",
-    icon: mdiCog,
-    ariaLabel: "Settings",
+    to,
+    label,
+    icon,
+    ariaLabel,
   },
 ];

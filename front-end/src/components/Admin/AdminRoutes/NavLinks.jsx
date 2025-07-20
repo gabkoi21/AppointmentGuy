@@ -8,30 +8,30 @@ import {
 // Navigation configuration with dropdown for Business Management
 export const NavLinks = [
   {
-    to: "/Admindashboard",
-    label: "Dashboard ",
-    icon: mdiViewDashboard,
-    ariaLabel: "Dashboard",
+    to,
+    label,
+    icon,
+    ariaLabel,
   },
 
   {
-    to: "/Admindashboard/business",
-    label: "Business Management",
-    icon: mdiOfficeBuilding,
-    ariaLabel: "Business Management",
+    to,
+    label,
+    icon,
+    ariaLabel,
   },
 
   {
-    to: "/Admindashboard/usermanagement",
-    label: "User Management",
-    icon: mdiAccountGroup,
-    ariaLabel: "User Management",
+    to,
+    label,
+    icon,
+    ariaLabel,
   },
 
   {
-    to: "/Admindashboard/settings",
-    label: "Settings",
-    icon: mdiCog,
-    ariaLabel: "Settings",
+    to,
+    label,
+    icon,
+    ariaLabel,
   },
 ];
