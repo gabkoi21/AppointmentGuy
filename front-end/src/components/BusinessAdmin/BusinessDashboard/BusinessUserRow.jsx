@@ -7,8 +7,8 @@ import {
 } from "@mdi/js";
 
 const statusColor = {
-  Active: "bg-green-100 text-green-700",
-  Inactive: "bg-red-100 text-red-700",
+  Active,
+  Inactive,
 };
 
 const BusinessUserRow = ({ user, activeActionId, setActiveActionId }) => {
@@ -17,7 +17,7 @@ const BusinessUserRow = ({ user, activeActionId, setActiveActionId }) => {
 
   const handleActionClick = (e) => {
     e.stopPropagation();
-    setActiveActionId(isActionOpen ? null : id);
+    setActiveActionId(isActionOpen ? null);
   };
 
   const isActionOpen = activeActionId === id;
@@ -41,35 +41,7 @@ const BusinessUserRow = ({ user, activeActionId, setActiveActionId }) => {
   }, [isActionOpen, activeActionId, id, setActiveActionId]);
 
   return (
-    <tr className="border-b hover:bg-gray-50 dark:hover:bg-gray-700">
-      <td className="px-4  py-2 font-medium text-gray-900 dark:text-white">
-        {first_name} {last_name}
-      </td>
-      <td className="px-4 py-4">{email || "N/A"}</td>
-      <td className="px-4 py-4">{address || "N/A"}</td>
-      <td className="px-4 py-4"> {phone_number}</td>
-
-      <td className="px-4 py-2">
-        <span
-          className={`px-2 py-1 rounded-full text-xs font-semibold ${
-            statusColor[status] || "bg-gray-200 text-gray-700"
-          }`}
-        >
-          {status || "Unknown"}
-        </span>
-      </td>
-
-      <td className="relative px-3 py-4" ref={actionRef}>
-        <button
-          onClick={handleActionClick}
-          className="p-1 hover:bg-gray-100 rounded transition-colors duration-200"
-        >
-          <Icon path={mdiDotsVertical} size={1} />
-        </button>
-        {isActionOpen && (
-          <ActionAppointment
-            appointmentId={id}
-            onClose={() => setActiveActionId(null)}
+    <tr className="border-b hover) => setActiveActionId(null)}
           />
         )}
       </td>
@@ -82,16 +54,16 @@ export default BusinessUserRow;
 const ActionAppointment = ({ appointmentId, onClose }) => {
   const actions = [
     {
-      label: "Unblock Customer",
-      icon: mdiAccountCheckOutline,
-      color: "text-green-600",
-      hoverColor: "hover:text-green-800",
+      label,
+      icon,
+      color,
+      hoverColor,
     },
     {
-      label: "Block Customer",
-      icon: mdiBlockHelper,
-      color: "text-orange-600",
-      hoverColor: "hover:text-orange-800",
+      label,
+      icon,
+      color,
+      hoverColor,
     },
   ];
 
@@ -114,13 +86,7 @@ const ActionAppointment = ({ appointmentId, onClose }) => {
               p-2 rounded-md
               ${color} 
               ${hoverColor} 
-              hover:bg-gray-100
-            `}
-          >
-            <Icon path={icon} size={0.8} />
-            <span className="capitalize">{label}</span>
-          </button>
-        ))}
+              hover))}
       </div>
     </div>
   );

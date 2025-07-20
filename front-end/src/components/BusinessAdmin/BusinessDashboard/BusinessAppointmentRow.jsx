@@ -10,16 +10,16 @@ import Icon from "@mdi/react";
 import useAppointmentStore from "@/stores/appointmentStore";
 
 const statusColor = {
-  scheduled: "bg-blue-100 text-blue-700",
-  confirmed: "bg-blue-100 text-blue-700",
-  completed: "bg-green-100 text-green-700",
-  cancelled: "bg-red-100 text-red-700",
+  scheduled,
+  confirmed,
+  completed,
+  cancelled,
   // Fallback for capitalized versions
-  Scheduled: "bg-blue-100 text-blue-700",
-  Confirmed: "bg-blue-100 text-blue-700",
-  Completed: "bg-green-100 text-green-700",
-  Canceled: "bg-red-100 text-red-700",
-  Cancelled: "bg-red-100 text-red-700",
+  Scheduled,
+  Confirmed,
+  Completed,
+  Canceled,
+  Cancelled,
 };
 
 const AppointmentRow = ({
@@ -32,7 +32,7 @@ const AppointmentRow = ({
   const [isUpdating, setIsUpdating] = useState(false);
 
   const {
-    user: { first_name = "", last_name = "" } = {},
+    user, last_name = "" } = {},
     status,
     scheduled_time,
     service_id,
@@ -47,7 +47,7 @@ const AppointmentRow = ({
 
   const handleActionClick = (e) => {
     e.stopPropagation();
-    setActiveActionId(isActionOpen ? null : id);
+    setActiveActionId(isActionOpen ? null);
   };
 
   // Close dropdown when clicking outside
@@ -70,28 +70,7 @@ const AppointmentRow = ({
   }, [isActionOpen, activeActionId, id, setActiveActionId]);
 
   return (
-    <tr className="border-b hover:bg-gray-50 dark:hover:bg-gray-700">
-      <td className="px-4 py-4 font-medium text-gray-900 dark:text-white">
-        {fullName}
-      </td>
-      <td className="px-3 py-4 capitalize">{serviceName}</td>
-      <td className="px-3 py-4">{scheduled_time}</td>
-      <td className="px-3 py-4">
-        <div className="flex items-center gap-2">
-          <span
-            className={`rounded-full px-2 py-1 text-xs font-semibold ${
-              statusColor[status] || "bg-gray-200 text-gray-700"
-            }`}
-          >
-            {status || "Unknown"}
-          </span>
-          {isUpdating && (
-            <Icon
-              path={mdiLoading}
-              size={0.6}
-              className="animate-spin text-blue-500"
-            />
-          )}
+    <tr className="border-b hover)}
         </div>
       </td>
 
@@ -99,14 +78,7 @@ const AppointmentRow = ({
         <button
           onClick={handleActionClick}
           disabled={isUpdating}
-          className="rounded p-1 transition-colors duration-200 hover:bg-gray-100 disabled:opacity-50"
-        >
-          <Icon path={mdiDotsVertical} size={1} />
-        </button>
-        {isActionOpen && (
-          <ActionAppointment
-            appointment={appointment}
-            onClose={() => setActiveActionId(null)}
+          className="rounded p-1 transition-colors duration-200 hover) => setActiveActionId(null)}
             setIsUpdating={setIsUpdating}
           />
         )}
@@ -125,7 +97,7 @@ const ActionAppointment = ({ appointment, onClose, setIsUpdating }) => {
 
     try {
       console.log(
-        `Updating appointment ${appointment.id} to status: ${newStatus}`,
+        `Updating appointment ${appointment.id} to status,
       );
 
       // Call the store function with correct parameters
@@ -138,7 +110,7 @@ const ActionAppointment = ({ appointment, onClose, setIsUpdating }) => {
       // Close the dropdown after successful update
       onClose();
     } catch (err) {
-      console.error("Failed to update appointment status:", err);
+      console.error("Failed to update appointment status, err);
 
       // Set local error message
       const errorMessage =
@@ -177,32 +149,17 @@ const ActionAppointment = ({ appointment, onClose, setIsUpdating }) => {
           <button
             onClick={(e) => handleActionClick("cancelled", e)}
             disabled={loading}
-            className="flex items-center gap-2 rounded-md p-2 text-red-600 hover:bg-gray-100 hover:text-red-800 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <Icon path={mdiTrashCanOutline} size={0.8} />
-            <span>Cancel Appointment</span>
-          </button>
-        )}
+            className="flex items-center gap-2 rounded-md p-2 text-red-600 hover)}
         {canConfirm && (
           <button
             onClick={(e) => handleActionClick("confirmed", e)}
             disabled={loading}
-            className="flex items-center gap-2 rounded-md p-2 text-blue-600 hover:bg-gray-100 hover:text-blue-800 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <Icon path={mdiCheckCircleOutline} size={0.8} />
-            <span>Confirm</span>
-          </button>
-        )}
+            className="flex items-center gap-2 rounded-md p-2 text-blue-600 hover)}
         {canComplete && (
           <button
             onClick={(e) => handleActionClick("completed", e)}
             disabled={loading}
-            className="flex items-center gap-2 rounded-md p-2 text-green-600 hover:bg-gray-100 hover:text-green-800 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <Icon path={mdiCheckAll} size={0.8} />
-            <span>Mark as Completed</span>
-          </button>
-        )}
+            className="flex items-center gap-2 rounded-md p-2 text-green-600 hover)}
       </div>
     </div>
   );

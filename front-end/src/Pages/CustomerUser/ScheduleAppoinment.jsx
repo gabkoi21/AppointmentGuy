@@ -7,8 +7,8 @@ import useAuthStore from "@/stores/authStore"; // Add this import
 import BookingForm from "./BookingForm";
 
 // Constants
-const radioDotSvg = `url('data:image/svg+xml,...')`;
-const selectButtonSvg = `url('data:image/svg+xml,...')`;
+const radioDotSvg = `url('data,...')`;
+const selectButtonSvg = `url('data,...')`;
 
 // Main Component
 const ScheduleAppointment = () => {
@@ -32,13 +32,13 @@ const ScheduleAppointment = () => {
 
   const handleSubmit = async () => {
     console.log("Submit clicked"); // Debug log
-    console.log("Selected service:", selectedService);
-    console.log("Selected date:", selectedDate);
-    console.log("Selected time:", selectedTime);
-    console.log("Current service:", currentService);
-    console.log("User from auth store:", user); // Debug user
-    console.log("Token:", token || getAccessToken()); // Debug token
-    console.log("User ID:", user?.id); // Debug user ID specifically
+    console.log("Selected service, selectedService);
+    console.log("Selected date, selectedDate);
+    console.log("Selected time, selectedTime);
+    console.log("Current service, currentService);
+    console.log("User from auth store, user); // Debug user
+    console.log("Token, token || getAccessToken()); // Debug token
+    console.log("User ID, user?.id); // Debug user ID specifically
 
     // Validation with user feedback
     if (!selectedService) {
@@ -73,28 +73,26 @@ const ScheduleAppointment = () => {
         selectedTime.getMinutes()
       );
 
-      console.log("Scheduled time:", scheduledTime); // Debug log
+      console.log("Scheduled time, scheduledTime); // Debug log
 
       // Try multiple ways to get user ID
       let userId = user?.id;
 
-      // Fallback: try to get from localStorage
-      if (!userId) {
+      // Fallback) {
         try {
           const storedUser =
             localStorage.getItem("user") || localStorage.getItem("currentUser");
           if (storedUser) {
             const parsedUser = JSON.parse(storedUser);
             userId = parsedUser.id;
-            console.log("Got user from localStorage:", parsedUser);
+            console.log("Got user from localStorage, parsedUser);
           }
         } catch (e) {
-          console.log("Error parsing stored user:", e);
+          console.log("Error parsing stored user, e);
         }
       }
 
-      // Fallback: try to get from sessionStorage
-      if (!userId) {
+      // Fallback) {
         try {
           const sessionUser =
             sessionStorage.getItem("user") ||
@@ -102,22 +100,21 @@ const ScheduleAppointment = () => {
           if (sessionUser) {
             const parsedUser = JSON.parse(sessionUser);
             userId = parsedUser.id;
-            console.log("Got user from sessionStorage:", parsedUser);
+            console.log("Got user from sessionStorage, parsedUser);
           }
         } catch (e) {
-          console.log("Error parsing session user:", e);
+          console.log("Error parsing session user, e);
         }
       }
 
-      // TEMPORARY: For testing purposes only - remove this in production
-      if (!userId) {
+      // TEMPORARY) {
         console.warn(
           "Using hardcoded user ID for testing - REMOVE IN PRODUCTION"
         );
         userId = 1; // Replace with a valid user ID from your database
       }
 
-      console.log("Final user ID:", userId);
+      console.log("Final user ID, userId);
       const businessIdValue = businessId || currentService.business_id; // Get from route or service
 
       if (!businessIdValue) {
@@ -126,17 +123,17 @@ const ScheduleAppointment = () => {
       }
 
       const appointmentData = {
-        user_id: userId,
-        business_id: businessIdValue,
-        service_id: currentService.id,
-        scheduled_time: scheduledTime.toISOString(),
-        status: "pending", // Optional, as it has a default value
+        user_id,
+        business_id,
+        service_id,
+        scheduled_time),
+        status, // Optional, as it has a default value
       };
 
-      console.log("Appointment data:", appointmentData); // Debug log
+      console.log("Appointment data, appointmentData); // Debug log
 
       const result = await CreateAppointment(appointmentData);
-      console.log("Appointment result:", result); // Debug log
+      console.log("Appointment result, result); // Debug log
 
       if (result) {
         alert("Appointment submitted successfully!");
@@ -148,7 +145,7 @@ const ScheduleAppointment = () => {
         alert("Failed to submit appointment. Please try again.");
       }
     } catch (error) {
-      console.error("Error submitting appointment:", error);
+      console.error("Error submitting appointment, error);
       alert("Error submitting appointment. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -161,7 +158,7 @@ const ScheduleAppointment = () => {
       style={{
         "--radio-dot-svg": radioDotSvg,
         "--select-button-svg": selectButtonSvg,
-        fontFamily: 'Inter, "Noto Sans", sans-serif',
+        fontFamily, "Noto Sans", sans-serif',
       }}
     >
       <div className="layout-container flex h-full grow flex-col">
@@ -212,22 +209,22 @@ const ServiceSelector = ({
 
   const serviceOptions = [
     {
-      id: "woman-service",
-      title: `Woman's ${currentService.name}`,
-      description: "Includes wash, cut, and basic styling",
-      price: currentService.price,
+      id,
+      title,
+      description, cut, and basic styling",
+      price,
     },
     {
-      id: "man-service",
-      title: `Man's ${currentService.name}`,
-      description: "Includes cut and basic styling",
-      price: currentService.price,
+      id,
+      title,
+      description,
+      price,
     },
     {
-      id: "children-service",
-      title: `Children's ${currentService.name}`,
-      description: "For children under 12",
-      price: currentService.price,
+      id,
+      title,
+      description,
+      price,
     },
   ];
 
@@ -240,14 +237,7 @@ const ServiceSelector = ({
         {serviceOptions.map((service) => (
           <label
             key={service.id}
-            className="flex items-center gap-4 rounded-lg border p-[15px] cursor-pointer hover:bg-gray-50"
-          >
-            <input
-              type="radio"
-              className="h-5 w-5 checked:border-[#ea2832]"
-              name="service"
-              checked={selectedService === service.id}
-              onChange={() => setSelectedService(service.id)}
+            className="flex items-center gap-4 rounded-lg border p-[15px] cursor-pointer hover) => setSelectedService(service.id)}
             />
             <div className="flex grow flex-col">
               <p className="text-[#1b0e0e] text-sm font-medium">
@@ -268,16 +258,7 @@ const ServiceSelector = ({
 const SubmitButton = ({ onSubmit, isSubmitting }) => (
   <div className="flex px-4 py-3 justify-end">
     <button
-      className="rounded-lg h-10 px-4 bg-[#ea2832] text-white font-bold disabled:opacity-50 disabled:cursor-not-allowed"
-      onClick={onSubmit}
-      disabled={isSubmitting}
-    >
-      <span className="truncate">
-        {isSubmitting ? "Submitting..." : "Submit Book"}
-      </span>
-    </button>
-  </div>
-);
+      className="rounded-lg h-10 px-4 bg-[#ea2832] text-white font-bold disabled);
 
 // Export
 export default ScheduleAppointment;

@@ -2,18 +2,18 @@ import { create } from "zustand";
 import api from "@/api/axios";
 
 const useServiceStore = create((set) => ({
-  services: [],
-  loading: false,
-  error: null,
-  fetchServices: async () => {
-    set({ loading: true, error: null });
+  services,
+  loading,
+  error,
+  fetchServices) => {
+    set({ loading, error);
     try {
       const response = await api.get("/services/");
-      set({ services: response.data, loading: false });
+      set({ services, loading);
     } catch (error) {
       const errorMessage =
         error?.response?.data?.message || "Failed to load services";
-      set({ error: errorMessage, loading: false });
+      set({ error, loading);
     }
   },
 }));

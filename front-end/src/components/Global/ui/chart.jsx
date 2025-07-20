@@ -3,10 +3,8 @@ import * as RechartsPrimitive from "recharts";
 
 import { cn } from "@/lib/utils";
 
-// Format: { THEME_NAME: CSS_SELECTOR }
-const THEMES = {
-  light: "",
-  dark: ".dark",
+// Format,
+  dark,
 };
 
 const ChartContext = React.createContext(null);
@@ -60,7 +58,7 @@ const ChartStyle = ({ id, config }) => {
   return (
     <style
       dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
+        __html)
           .map(
             ([theme, prefix]) => `
 ${prefix} [data-chart=${id}] {
@@ -112,10 +110,7 @@ const ChartTooltipContent = React.forwardRef(
       const itemConfig = getPayloadConfigFromPayload(config, item, key);
       const value =
         !labelKey && typeof label === "string"
-          ? config[label]?.label || label
-          : itemConfig?.label;
-
-      if (labelFormatter) {
+          ? config[label]?.label || label) {
         return (
           <div className={cn("font-medium", labelClassName)}>
             {labelFormatter(value, payload)}
@@ -152,9 +147,7 @@ const ChartTooltipContent = React.forwardRef(
           className
         )}
       >
-        {!nestLabel ? tooltipLabel : null}
-        <div className="grid gap-1.5">
-          {payload.map((item, index) => {
+        {!nestLabel ? tooltipLabel, index) => {
             const key = `${nameKey || item.name || item.dataKey || "value"}`;
             const itemConfig = getPayloadConfigFromPayload(config, item, key);
             const indicatorColor = color || item.payload.fill || item.color;
@@ -200,14 +193,7 @@ const ChartTooltipContent = React.forwardRef(
                       )}
                     >
                       <div className="grid gap-1.5">
-                        {nestLabel ? tooltipLabel : null}
-                        <span className="text-muted-foreground">
-                          {itemConfig?.label || item.name}
-                        </span>
-                      </div>
-                      {item.value && (
-                        <span className="font-mono font-medium tabular-nums text-foreground">
-                          {item.value.toLocaleString()}
+                        {nestLabel ? tooltipLabel)}
                         </span>
                       )}
                     </div>
@@ -262,7 +248,7 @@ const ChartLegendContent = React.forwardRef(
                 <div
                   className="h-2 w-2 shrink-0 rounded-[2px]"
                   style={{
-                    backgroundColor: item.color,
+                    backgroundColor,
                   }}
                 />
               )}
@@ -286,12 +272,7 @@ function getPayloadConfigFromPayload(config, payload, key) {
     "payload" in payload &&
     typeof payload.payload === "object" &&
     payload.payload !== null
-      ? payload.payload
-      : undefined;
-
-  let configLabelKey = key;
-
-  if (key in payload && typeof payload[key] === "string") {
+      ? payload.payload) {
     configLabelKey = payload[key];
   } else if (
     payloadPayload &&

@@ -16,9 +16,9 @@ import {
 
 const NAV_ITEMS = [
   {
-    to: "/userdashboard/homepage",
-    label: "Salons",
-    ariaLabel: "Salons",
+    to,
+    label,
+    ariaLabel,
   },
 ];
 
@@ -48,13 +48,7 @@ const UserNav = () => {
                   `text-base font-semibold transition-colors duration-200 ${
                     isActive
                       ? "text-[#994d51] underline underline-offset-8"
-                      : "text-[#1b0e0e] hover:text-[#994d51]"
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
+                      : "text-[#1b0e0e] hover))}
           </nav>
         </div>
 
@@ -72,21 +66,7 @@ const UserNav = () => {
               <input
                 type="text"
                 placeholder="Search"
-                className="form-input h-full w-full flex-1 rounded-lg rounded-l-none border-none bg-[#f3e7e8] px-4 pl-2 text-base font-normal leading-normal text-[#1b0e0e] placeholder:text-[#994d51] focus:outline-0 focus:ring-2 focus:ring-[#994d51]/30"
-              />
-            </div>
-          </label>
-
-          {/*  */}
-          <div className="relative">
-            <button
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f3e7e8] text-[#994d51] shadow transition-colors duration-200 hover:bg-[#e5cfd1]"
-              aria-label="Profile"
-              onClick={toggleDropdown}
-            >
-              <Icon path={mdiAccount} size={1} />
-            </button>
-            {isOpen && <ProfileDropdown onClose={() => setIsOpen(false)} />}
+                className="form-input h-full w-full flex-1 rounded-lg rounded-l-none border-none bg-[#f3e7e8] px-4 pl-2 text-base font-normal leading-normal text-[#1b0e0e] placeholder) => setIsOpen(false)} />}
           </div>
         </div>
       </div>
@@ -104,14 +84,14 @@ const ProfileDropdown = ({ onClose }) => {
 
   const menuItems = [
     {
-      to: "/userdashboard/userprofile",
-      icon: mdiAccount,
-      label: "Profile",
+      to,
+      icon,
+      label,
     },
     {
-      to: "/userdashboard/settings",
-      icon: mdiCog,
-      label: "Settings",
+      to,
+      icon,
+      label,
     },
   ];
 
@@ -121,33 +101,13 @@ const ProfileDropdown = ({ onClose }) => {
         <h3 className="font-semibold text-[#1b0e0e]">Account</h3>
         <button
           onClick={onClose}
-          className="text-[#994d51] transition hover:text-[#ea2832]"
-        >
-          <Icon path={mdiClose} size={0.8} />
-        </button>
-      </div>
-      <ul className="py-2">
-        {menuItems.map(({ to, icon, label }) => (
+          className="text-[#994d51] transition hover, icon, label }) => (
           <li key={label}>
             <NavLink
               to={to}
-              className="flex items-center px-4 py-2 text-[#1b0e0e] transition hover:bg-[#f3e7e8]"
-            >
-              <Icon path={icon} size={0.8} className="mr-2" />
-              <span className="text-sm">{label}</span>
-            </NavLink>
-          </li>
-        ))}
+              className="flex items-center px-4 py-2 text-[#1b0e0e] transition hover))}
         <li className="mt-2 border-t border-[#e7d0d1] pt-2">
           <button
             onClick={logout}
-            className="flex w-full items-center px-4 py-2 text-[#994d51] transition hover:bg-[#f3e7e8]"
-          >
-            <Icon path={mdiLogoutVariant} size={0.8} className="mr-2" />
-            <span className="text-sm">Logout</span>
-          </button>
-        </li>
-      </ul>
-    </div>
-  );
+            className="flex w-full items-center px-4 py-2 text-[#994d51] transition hover);
 };

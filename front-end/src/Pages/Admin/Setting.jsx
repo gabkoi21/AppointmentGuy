@@ -1,11 +1,6 @@
 const SettingContainer = () => (
   <div className="flex">
-    <aside className="h-screen md:w-[16%]"></aside>
-    <main className="mx-3 mt-20 w-full px-3 md:w-[84%]">
-      <Settings />
-    </main>
-  </div>
-);
+    <aside className="h-screen md);
 
 export default SettingContainer;
 

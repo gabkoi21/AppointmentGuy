@@ -17,7 +17,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    useAuthStore.setState({ loading: true, error: "" });
+    useAuthStore.setState({ loading: true, error: null });
 
     try {
       const userType = await login(formData); // ✅ Get user_type directly
@@ -31,11 +31,11 @@ function Login() {
           navigate("/bussinessadminboard", { replace: true });
         } else {
           useAuthStore.setState({
-            error: "Unknown user type. Please contact support.",
+            error: "Unknown user type",
           });
         }
       } else {
-        useAuthStore.setState({ error: "Invalid email or password!" });
+        useAuthStore.setState({ error: "Login failed" });
       }
     } finally {
       useAuthStore.setState({ loading: false });
@@ -63,64 +63,11 @@ function Login() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm  focus:ring-teal-200  text-sm pr-10  focus:outline-none focus:ring-0 focus:border-gray-300"
-              placeholder="Enter your email"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
-              Password <span className="text-red-500">*</span>
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm  focus:ring-teal-200 text-sm pr-10  focus:outline-none focus:ring-0 focus:border-gray-300"
-                placeholder="Enter your password"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm  focus) => setShowPassword(!showPassword)}
                 className="absolute inset-y-0 right-0 flex items-center pr-3"
               >
                 <Icon
-                  path={showPassword ? mdiEyeOff : mdiEye}
-                  size={0.7}
-                  color="gray"
-                />
-              </button>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between gap-4">
-            <p className="text-sm text-gray-600">Don’t have an account?</p>
-            <Link
-              to="/register"
-              className="text-[#994d51] font-medium hover:underline"
-              aria-label="Register a new account"
-            >
-              Register
-            </Link>
-          </div>
-
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-[#994d51] hover:bg-[#994d51] uppercase text-white font-semibold text-sm py-2.5 rounded-md transition   focus:outline-none focus:ring-0 focus:border-gray-300"
-          >
-            {loading ? "Signing In..." : "Sign In"}
-          </button>
-        </form>
-      </div>
-    </div>
-  );
+                  path={showPassword ? mdiEyeOff);
 }
 
 export default Login;

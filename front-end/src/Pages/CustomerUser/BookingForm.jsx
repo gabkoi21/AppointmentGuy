@@ -38,14 +38,7 @@ const BookingForm = ({
               showTimeSelectOnly
               timeIntervals={30}
               timeCaption="Time"
-              dateFormat="hh:mm aa"
-              inline
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+              dateFormat="hh);
 };
 
 export default BookingForm;

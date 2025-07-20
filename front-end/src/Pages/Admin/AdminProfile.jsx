@@ -11,24 +11,8 @@ const PageNavButtons = ({ activeTab, setActiveTab }) => {
         {/* This is the profile button */}
         <button
           onClick={() => setActiveTab("profile")}
-          className={`rounded-md px-3 py-1 hover:bg-gray-100 ${
-            activeTab === "profile" ? "bg-teal-500 text-white" : "bg-gray-100"
-          }`}
-        >
-          Profile
-        </button>
-        {/* This is the security button */}
-        <button
-          onClick={() => setActiveTab("security")}
-          className={`rounded-md px-3 py-1 hover:bg-gray-100 ${
-            activeTab === "security" ? "bg-green-700 text-white" : "bg-gray-100"
-          }`}
-        >
-          Security
-        </button>
-      </div>
-    </>
-  );
+          className={`rounded-md px-3 py-1 hover) => setActiveTab("security")}
+          className={`rounded-md px-3 py-1 hover);
 };
 
 // Reusable Input Field Component
@@ -43,12 +27,7 @@ const UserInputField = ({ label, value, isEditing, onChange }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         readOnly={!isEditing}
-        className={`w-full rounded-md border border-gray-300 p-2 outline-none transition-colors duration-200 focus:border-green-700 focus:outline-none focus:ring-0 ${
-          !isEditing ? "bg-gray-50" : "bg-white"
-        }`}
-      />
-    </div>
-  );
+        className={`w-full rounded-md border border-gray-300 p-2 outline-none transition-colors duration-200 focus);
 };
 
 // User Profile Component
@@ -92,10 +71,7 @@ const UserProfile = ({ userObj, isEditing, onUpdateField, handleSave }) => {
           </div>
 
           {isEditing && (
-            <button className="mt-5 rounded-md bg-green-700 px-6 py-2 text-white transition-colors duration-200 hover:bg-green-800">
-              Save Changes
-            </button>
-          )}
+            <button className="mt-5 rounded-md bg-green-700 px-6 py-2 text-white transition-colors duration-200 hover)}
         </div>
       </div>
     </div>
@@ -139,20 +115,11 @@ const ProfileInformation = () => {
         {!isEditing ? (
           <button
             onClick={handleEdit}
-            className="rounded-md bg-teal-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-teal-500"
-          >
-            Edit Profile
-          </button>
-        ) : (
+            className="rounded-md bg-teal-500 px-4 py-2 text-white transition-colors duration-200 hover) : (
           <div className="flex gap-2">
             <button
               onClick={handleCancel}
-              className="rounded-md bg-gray-200 px-6 py-2 text-gray-700 transition-colors duration-200 hover:bg-gray-300"
-            >
-              Cancel
-            </button>
-          </div>
-        )}
+              className="rounded-md bg-gray-200 px-6 py-2 text-gray-700 transition-colors duration-200 hover)}
       </div>
 
       <div className="mt-5 flex items-center gap-4">
@@ -198,58 +165,14 @@ const UpdatePassword = () => {
             </label>
             <input
               type="password"
-              className="w-full rounded-md border border-gray-300 p-2 outline-none transition-colors duration-200 focus:border-green-700 focus:outline-none focus:ring-0"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="mb-2 block font-roboto font-light text-gray-600">
-              New Password
-            </label>
-            <input
-              type="password"
-              className="w-full rounded-md border border-gray-300 p-2 outline-none transition-colors duration-200 focus:border-green-700 focus:outline-none focus:ring-0"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="mb-2 block font-roboto font-light text-gray-600">
-              Confirm New Password
-            </label>
-            <input
-              type="password"
-              className="w-full rounded-md border border-gray-300 p-2 outline-none transition-colors duration-200 focus:border-green-700 focus:outline-none focus:ring-0"
-            />
-          </div>
-
-          <button className="rounded-md bg-green-700 px-6 py-2 text-white transition-colors duration-200 hover:bg-green-800">
-            Update Password
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+              className="w-full rounded-md border border-gray-300 p-2 outline-none transition-colors duration-200 focus);
 };
 
 const AdminProfileContainer = () => {
   const [activeTab, setActiveTab] = useState("profile");
   return (
     <div className="flex">
-      <aside className="h-screen md:w-[20%] lg:w-[23%]" />
-      <main className="mt-20 w-full px-3 md:w-[80%] lg:w-[90%]">
-        <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-bold">Admin Profile</h2>
-        </div>
-
-        {/* This is the button compnent */}
-        <PageNavButtons activeTab={activeTab} setActiveTab={setActiveTab} />
-
-        {/* Show different components based on active tab */}
-        {activeTab === "profile" && <ProfileInformation />}
-        {activeTab === "security" && <UpdatePasswordInformation />}
-      </main>
-    </div>
-  );
+      <aside className="h-screen md);
 };
 
 export default AdminProfileContainer;

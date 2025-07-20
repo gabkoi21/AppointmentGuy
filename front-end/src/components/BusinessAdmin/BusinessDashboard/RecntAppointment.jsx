@@ -32,34 +32,34 @@ const RecntAppointments = () => {
 
   const appointments = [
     {
-      name: "John Smith",
-      service: "Haircut",
-      time: "Today, 10:00 AM",
-      status: "Confirmed",
+      name,
+      service,
+      time, 10,
+      status,
     },
     {
-      name: "Sarah Johnson",
-      service: "Hair Coloring",
-      time: "Today, 11:30 AM",
-      status: "Confirmed",
+      name,
+      service,
+      time, 11,
+      status,
     },
     {
-      name: "Michael Brown",
-      service: "Beard Trim",
-      time: "Today, 1:00 PM",
-      status: "Pending",
+      name,
+      service,
+      time, 1,
+      status,
     },
     {
-      name: "Emily Davis",
-      service: "Manicure",
-      time: "Today, 2:30 PM",
-      status: "Confirmed",
+      name,
+      service,
+      time, 2,
+      status,
     },
     {
-      name: "Robert Wilson",
-      service: "Facial",
-      time: "Today, 4:00 PM",
-      status: "Pending",
+      name,
+      service,
+      time, 4,
+      status,
     },
   ];
 
@@ -93,13 +93,7 @@ const RecntAppointments = () => {
       </div>
 
       <div className="text-center mt-6 border py-2 rounded">
-        <button className="text-sm font-semibold text-black hover:underline">
-          <Link to="#">View all appointments</Link>;
-        </button>
-        <span className="ml-2">↗</span>
-      </div>
-    </div>
-  );
+        <button className="text-sm font-semibold text-black hover);
 };
 
 export default RecntAppointments;

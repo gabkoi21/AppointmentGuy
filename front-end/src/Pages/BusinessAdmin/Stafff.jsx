@@ -9,26 +9,13 @@ const DriverManagementContainer = () => {
 
   return (
     <div className="flex">
-      <aside className="md:w-[20%] lg:w-[23%] h-screen" />
-      <main className="md:w-[98%] w-full mx-3 px-3 mt-20">
-        <AssignedPickupHeader />
-        <DetailSection
-          selectedPickup={selectedPickup}
-          setSelectedPickup={setSelectedPickup}
-        />
-      </main>
-    </div>
-  );
+      <aside className="md);
 };
 
 // eslint-disable-next-line
 const DetailSection = ({ selectedPickup, setSelectedPickup }) => {
   return (
-    <div className="flex flex-col md:flex-row justify-between  gap-6 mt-4">
-      <div className="w-full md:w-1/2 border shadow-lg p-4  rounded-md">
-        <h2 className="text-xl font-bold  ">Today Pickups</h2>
-        <span className="text-base text-gray-500">
-          March 13, 2025 • {AssignedPickup.length} total pickups
+    <div className="flex flex-col md, 2025 • {AssignedPickup.length} total pickups
         </span>
         {AssignedPickup.map((pickup) => (
           <PickupCard
@@ -38,12 +25,7 @@ const DetailSection = ({ selectedPickup, setSelectedPickup }) => {
           />
         ))}
       </div>
-      <div className="w-full md:w-1/2 border shadow-lg p-4  rounded-md">
-        <h2 className="text-xl font-bold mb-3 ">Pickup Details</h2>
-        <PickupDetails pickupObj={selectedPickup} />
-      </div>
-    </div>
-  );
+      <div className="w-full md);
 };
 
 function AssignedPickupHeader() {
@@ -59,28 +41,7 @@ function AssignedPickupHeader() {
           <input
             type="text"
             placeholder="Search"
-            className="border rounded w-full p-1 text-sm focus:outline-none focus:ring-0"
-          />
-        </div>
-
-        {/* Filter Dropdown */}
-        <div className="w-[20%] flex items-center gap-2">
-          <Icon path={mdiFilter} size={1} />
-          <select className="bg-white border rounded w-full px-2 py-1 focus:outline-none focus:ring-2 focus:ring-gray-300">
-            <option className="bg-white text-black" value="all">
-              All Pickups
-            </option>
-            <option className="bg-white text-black" value="pending">
-              Pending
-            </option>
-            <option className="bg-white text-black" value="in-progress">
-              In Progress
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-  );
+            className="border rounded w-full p-1 text-sm focus);
 }
 // eslint-disable-next-line
 const PickupCard = ({ pickupObj, setSelectedPickup }) => {
@@ -89,8 +50,7 @@ const PickupCard = ({ pickupObj, setSelectedPickup }) => {
 
   return (
     <div
-      className="mt-4 p-4 border rounded-lg shadow-sm cursor-pointer  hover:bg-gray-100"
-      onClick={() => setSelectedPickup(pickupObj)}
+      className="mt-4 p-4 border rounded-lg shadow-sm cursor-pointer  hover) => setSelectedPickup(pickupObj)}
     >
       {/* Address */}
       <p className="font-semibold text-gray-800">{address}</p>

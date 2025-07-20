@@ -11,24 +11,8 @@ const PageNavButtons = ({ activeTab, setActiveTab }) => {
         {/* This is the profile button */}
         <button
           onClick={() => setActiveTab("profile")}
-          className={`px-3 py-1 rounded-md hover:bg-gray-100 ${
-            activeTab === "profile" ? "bg-green-700 text-white" : "bg-gray-100"
-          }`}
-        >
-          Profile
-        </button>
-        {/* This is the security button */}
-        <button
-          onClick={() => setActiveTab("security")}
-          className={`px-3 py-1 rounded-md hover:bg-gray-100 ${
-            activeTab === "security" ? "bg-green-700 text-white" : "bg-gray-100"
-          }`}
-        >
-          Security
-        </button>
-      </div>
-    </>
-  );
+          className={`px-3 py-1 rounded-md hover) => setActiveTab("security")}
+          className={`px-3 py-1 rounded-md hover);
 };
 
 // Reusable Input Field Component
@@ -43,12 +27,7 @@ const UserInputField = ({ label, value, isEditing, onChange }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         readOnly={!isEditing}
-        className={`p-2 w-full border border-gray-300 rounded-md focus:border-green-700 focus:ring-0 outline-none focus:outline-none transition-colors duration-200 ${
-          !isEditing ? "bg-gray-50" : "bg-white"
-        }`}
-      />
-    </div>
-  );
+        className={`p-2 w-full border border-gray-300 rounded-md focus);
 };
 
 // User Profile Component
@@ -92,10 +71,7 @@ const UserProfile = ({ userObj, isEditing, onUpdateField, handleSave }) => {
           </div>
 
           {isEditing && (
-            <button className="px-6 mt-5 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors duration-200">
-              Save Changes
-            </button>
-          )}
+            <button className="px-6 mt-5 py-2 bg-green-700 text-white rounded-md hover)}
         </div>
       </div>
     </div>
@@ -139,20 +115,11 @@ const ProfileInformation = () => {
         {!isEditing ? (
           <button
             onClick={handleEdit}
-            className="px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors duration-200"
-          >
-            Edit Profile
-          </button>
-        ) : (
+            className="px-4 py-2 bg-green-700 text-white rounded-md hover) : (
           <div className="flex gap-2">
             <button
               onClick={handleCancel}
-              className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-200"
-            >
-              Cancel
-            </button>
-          </div>
-        )}
+              className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover)}
       </div>
 
       <div className="mt-5 flex items-center gap-4">
@@ -198,58 +165,14 @@ const UpdatePassword = () => {
             </label>
             <input
               type="password"
-              className="p-2 w-full border border-gray-300 rounded-md focus:border-green-700  focus:ring-0 outline-none focus:outline-none transition-colors duration-200"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="text-gray-600 font-light font-roboto block mb-2">
-              New Password
-            </label>
-            <input
-              type="password"
-              className="p-2 w-full border border-gray-300 rounded-md focus:border-green-700  focus:ring-0 outline-none focus:outline-none transition-colors duration-200"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="text-gray-600 font-light font-roboto block mb-2">
-              Confirm New Password
-            </label>
-            <input
-              type="password"
-              className="p-2 w-full border border-gray-300 rounded-md focus:border-green-700  focus:ring-0 outline-none focus:outline-none transition-colors duration-200"
-            />
-          </div>
-
-          <button className="px-6 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors duration-200">
-            Update Password
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+              className="p-2 w-full border border-gray-300 rounded-md focus);
 };
 
 const AdminProfileContainer = () => {
   const [activeTab, setActiveTab] = useState("profile");
   return (
     <div className="flex">
-      <aside className="md:w-[20%] lg:w-[23%] h-screen " />
-      <main className="md:w-[80%] lg:w-[90%] w-full px-3 mt-20">
-        <div className="flex justify-between items-center">
-          <h2 className="text-3xl font-bold">User Account</h2>
-        </div>
-
-        {/* This is the button compnent */}
-        <PageNavButtons activeTab={activeTab} setActiveTab={setActiveTab} />
-
-        {/* Show different components based on active tab */}
-        {activeTab === "profile" && <ProfileInformation />}
-        {activeTab === "security" && <UpdatePasswordInformation />}
-      </main>
-    </div>
-  );
+      <aside className="md);
 };
 
 export default AdminProfileContainer;

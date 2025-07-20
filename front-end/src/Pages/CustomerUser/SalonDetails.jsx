@@ -23,7 +23,7 @@ const SalonDetails = () => {
             {/* Salon Image */}
             <div
               className="w-full h-[400px] bg-center bg-no-repeat bg-cover rounded-lg"
-              style={{ backgroundImage: `url("${salon.image}")` }}
+              style={{ backgroundImage)` }}
             />
 
             {/* Salon Info */}

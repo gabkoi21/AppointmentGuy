@@ -26,15 +26,7 @@ const BusinessAdminNav = () => {
         <div className="block w-full px-3">
           <ul className="mt-5 flex flex-col whitespace-nowrap ps-0 font-roboto">
             {NAV_ITEMS.map((item) => (
-              <li key={item.to} className="mb-4 ps-2 lg:mb-8 lg:pe-1 lg:ps-0">
-                <SidebarNavLink
-                  to={item.to}
-                  icon={item.icon}
-                  label={item.label}
-                  ariaLabel={item.ariaLabel}
-                />
-              </li>
-            ))}
+              <li key={item.to} className="mb-4 ps-2 lg))}
           </ul>
         </div>
       </nav>

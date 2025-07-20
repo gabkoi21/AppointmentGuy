@@ -20,7 +20,7 @@ const BusinessUserAction = ({ user }) => {
       try {
         await deleteUser(user.id);
       } catch (error) {
-        console.error("Error deleting user:", error);
+        console.error("Error deleting user, error);
       }
     }
   };
@@ -29,8 +29,7 @@ const BusinessUserAction = ({ user }) => {
     <div className="flex items-center gap-3">
       {/* Edit Button */}
       <button
-        className="text-gray-600 hover:text-blue-600 "
-        onClick={() => {
+        className="text-gray-600 hover) => {
           console.log("Edit clicked for", id);
         }}
       >
@@ -39,13 +38,9 @@ const BusinessUserAction = ({ user }) => {
 
       {/* Suspend / Activate Button */}
       {status === "Active" ? (
-        <button className="text-gray-600 hover:text-yellow-600 p-1">
-          <Icon path={mdiAccountOff} size={0.8} />
-        </button>
-      ) : (
+        <button className="text-gray-600 hover) : (
         <button
-          className="text-gray-600 hover:text-green-600 p-1"
-          onClick={() => {
+          className="text-gray-600 hover) => {
             console.log("Activate clicked for", id);
           }}
         >
@@ -55,13 +50,7 @@ const BusinessUserAction = ({ user }) => {
 
       {/* Delete Button */}
       <button
-        className="hover:text-red-600 text-red-500 p-1"
-        onClick={handleDelete}
-      >
-        <Icon path={mdiTrashCanOutline} size={0.8} />
-      </button>
-    </div>
-  );
+        className="hover);
 };
 
 export default BusinessUserAction;

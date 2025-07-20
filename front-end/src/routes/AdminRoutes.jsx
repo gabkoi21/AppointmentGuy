@@ -14,15 +14,7 @@ export const AdminNav = () => {
       <nav className="fixed left-0 h-[100vh] w-64 overflow-y-auto bg-red-950 pt-14">
         <ul className="mt-5 flex flex-col whitespace-nowrap ps-0 font-roboto">
           {NavLinks.map((item) => (
-            <li key={item.to} className="mb-4 ps-2 lg:mb-8 lg:pe-1 lg:ps-0">
-              <SidebarNavLink
-                to={item.to}
-                icon={item.icon}
-                label={item.label}
-                ariaLabel={item.ariaLabel}
-              />
-            </li>
-          ))}
+            <li key={item.to} className="mb-4 ps-2 lg))}
         </ul>
       </nav>
     </>

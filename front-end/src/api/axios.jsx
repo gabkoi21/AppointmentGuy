@@ -1,10 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://172.25.3.150:5000",
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
+  baseURL,
+  headers,
+    Accept,
   },
 });
 
@@ -114,11 +113,10 @@ api.interceptors.response.use(
       try {
         console.log("Refreshing token...");
         const res = await axios.post(
-          "http://172.25.3.150:5000/auth/refresh",
+          "http,
           {}, // empty body
           {
-            headers: {
-              Authorization: `Bearer ${refreshToken}`,
+            headers,
             },
           },
         );
@@ -134,7 +132,7 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch (refreshError) {
         console.error(
-          "Token refresh failed:",
+          "Token refresh failed,
           refreshError?.response?.data || refreshError,
         );
         processQueue(refreshError, null);
