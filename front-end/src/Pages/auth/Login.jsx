@@ -9,7 +9,7 @@ function Login() {
   const { login, loading, error } = useAuthStore();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({ email, password);
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) =>
@@ -17,28 +17,28 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    useAuthStore.setState({ loading, error);
+    useAuthStore.setState({ loading: true, error: null });
 
     try {
       const userType = await login(formData); // ✅ Get user_type directly
 
       if (userType) {
         if (userType === "super_admin") {
-          navigate("/Admindashboard", { replace);
+          navigate("/Admindashboard", { replace: true });
         } else if (userType === "customer") {
-          navigate("/userdashboard", { replace);
+          navigate("/userdashboard", { replace: true });
         } else if (userType === "business_admin") {
-          navigate("/bussinessadminboard", { replace);
+          navigate("/bussinessadminboard", { replace: true });
         } else {
           useAuthStore.setState({
-            error,
+            error: "Unknown user type",
           });
         }
       } else {
-        useAuthStore.setState({ error);
+        useAuthStore.setState({ error: "Login failed" });
       }
     } finally {
-      useAuthStore.setState({ loading);
+      useAuthStore.setState({ loading: false });
     }
   };
 
